@@ -2,3 +2,15 @@ baseURL: http://awethon.github.io/
 languageCode: en-us
 title: Awethon's Blog
 theme: PaperMod
+params:
+  profileMode:
+    enabled: true
+    buttons:
+      - name: Posts
+      url: "/posts"
+        - name: Github
+      url: "https://github.com/"
+
+  socialIcons:
+    - name: "LinkedIn"
+        url: "https://www.linkedin.com/in/awethon/"
