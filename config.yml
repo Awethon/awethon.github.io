@@ -1,16 +1,21 @@
 baseURL: http://awethon.github.io/
 languageCode: en-us
-title: Awethon's Blog
+title: Awethon's Page
 theme: PaperMod
 params:
   profileMode:
     enabled: true
+    title: "Awethon"
+    subtitle: "Scala developer at Yandex.Verticals \n\n
+               Disclaimer: shitty code in my posts is my own and does not represent the quality of a code at the company I work for"
     buttons:
       - name: Posts
-      url: "/posts"
-        - name: Github
-      url: "https://github.com/"
+        url: "/posts"
 
   socialIcons:
+    - name: "Github"
+      url: "https://github.com/awethon/"
     - name: "LinkedIn"
-        url: "https://www.linkedin.com/in/awethon/"
+      url: "https://linkedin.com/in/awethon/"
+    - name: "Telegram"
+      url: "https://telegram.me/awethon/"
