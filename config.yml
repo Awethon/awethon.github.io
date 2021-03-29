@@ -33,7 +33,8 @@ params:
     enabled: true
     title: "Awethon"
     subtitle: "Scala developer at Yandex.Verticals \n\n
-               Disclaimer: shitty code in my posts is my own and does not represent the quality of a code at the company I work for"
+               Disclaimer: shitty code in my posts is my own \n\n
+               and does not represent the quality of a code at the company I work for"
 
   socialIcons:
     - name: "Github"
