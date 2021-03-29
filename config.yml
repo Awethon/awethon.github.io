@@ -43,6 +43,8 @@ params:
       url: "https://linkedin.com/in/awethon/"
     - name: "Telegram"
       url: "https://telegram.me/awethon/"
+    - name: "Email"
+      url: "mailto:awethon@gmail.com"
 
   fuseOpts:
     isCaseSensitive: false
