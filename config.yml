@@ -2,15 +2,38 @@ baseURL: http://awethon.github.io/
 languageCode: en-us
 title: Awethon's Page
 theme: PaperMod
+
+enableRobotsTXT: true
+minify:
+  disableXML: true
+  minifyOutput: true
+
+outputs:
+  home:
+    - HTML
+    - JSON
+
+menu:
+  main:
+    - identifier: posts
+      name: Posts
+      url: /posts/
+      weight: 10
+    - identifier: tags
+      name: Tags
+      url: /tags/
+      weight: 20
+    - identifier: search
+      name: Search
+      url: /search/
+      weight: 30
+
 params:
   profileMode:
     enabled: true
     title: "Awethon"
     subtitle: "Scala developer at Yandex.Verticals \n\n
                Disclaimer: shitty code in my posts is my own and does not represent the quality of a code at the company I work for"
-    buttons:
-      - name: Posts
-        url: "/posts"
 
   socialIcons:
     - name: "Github"
@@ -19,3 +42,17 @@ params:
       url: "https://linkedin.com/in/awethon/"
     - name: "Telegram"
       url: "https://telegram.me/awethon/"
+
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+
+  editPost:
+    URL: "https://github.com/Awethon/awethon.github.io/blob/master/content"
+    Text: "Suggest Changes"
+    appendFilePath: true
