@@ -13,9 +13,9 @@
       <pubDate>Sun, 12 Dec 2021 21:55:20 +0300</pubDate>
       
       <guid>http://awethon.github.io/posts/scala-aop/</guid>
-      <description>Let&amp;rsquo;s imagine that we have the trait that defines an interface for ItemDao: trait ItemDao { def upsert(item: Item): Unit def get(id: Id): Option[Item] }
-One of the possible ways to do AOP is trait mixins. We just make a trait that calls parent implementation of a method, and then we write our code before and after it.
-trait LoggedItemDaoAspect extends ItemDao with StrictLogging { abstract override def upsert(item: Item): Unit = { logger.</description>
+      <description>I made this article to overview different approaches to make AOP in Scala and to show downsides and limitations they have. These approaches are: trait mixin, class wrapper, and tofu mid.
+Let&amp;rsquo;s imagine that we have the trait that defines an interface for ItemDao: trait ItemDao { def upsert(item: Item): Unit def get(id: Id): Option[Item] }
+One of the possible ways to do AOP is trait mixins. We just make a trait that calls parent implementation of a method, and then we write our code before and after it.</description>
     </item>
     
   </channel>
