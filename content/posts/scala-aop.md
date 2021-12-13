@@ -5,6 +5,9 @@ draft: false
 tags: ["scala"]
 ---
 
+I made this article to overview different approaches to make AOP in Scala and to show downsides and limitations they have.
+These approaches are: trait mixin, class wrapper, and tofu mid.
+
 Let's imagine that we have the trait that defines an interface for ItemDao:
 {{< highlight scala >}}
 trait ItemDao {
@@ -65,6 +68,7 @@ val itemDao: ItemDao =
 {{< / highlight >}}
 
 The initialization code is not as clear as before since we provide ExecutionContext through override mechanism, and now we need to keep in mind initialization order because it's easy to get NullPointerException there.
+
 If we have Tagless Final in a code then we're doomed because different aspects will require different typeclass instances to be provided as function definitions.
 Since we can't ask for a typeclass via context bounds we have to use the same mechanism as shown before.
 
@@ -141,4 +145,5 @@ val itemDao: ItemDao[F] =
     with SuperProvider[F]
 {{< / highlight >}}
 
-As you can see every step we do with traits and Tagless Final the code only gets uglier.
+As you can see every step we do with traits and Tagless Final the code only gets more and more complex.
+Even though ItemDao initialization doesn't take many lines of code now and looks clean, it's hard to reason about provided dependencies and their initialization.
