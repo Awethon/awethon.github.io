@@ -41,7 +41,7 @@ new ItemDaoImpl(...) extends LoggedItemDaoAspect
 {{< / highlight >}}
 
 Things become messy if there are dependencies to provide.
-Whenever we have an interface that returns scala.concurrent.Future we need to provide ExecutionContext in our aspects to be able to call map, flatMap, and other methods.
+Whenever we have an interface that returns scala.concurrent.Future we need to provide ExecutionContext to our aspects to be able to call map, flatMap, and other methods.
 
 {{< highlight scala >}}
 trait ItemDao {
