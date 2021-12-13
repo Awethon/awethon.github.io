@@ -8,7 +8,7 @@ tags: ["scala"]
 I made this article to overview different approaches to make AOP in Scala and to show downsides and limitations they have.
 These approaches are: trait mixin, class wrapper, and tofu mid.
 
-Let's imagine that we have the trait that defines an interface for ItemDao:
+Let's imagine that we have the trait that defines an interface of dao:
 {{< highlight scala >}}
 trait ItemDao {
   def upsert(item: Item): Unit
