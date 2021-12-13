@@ -71,7 +71,7 @@ Different ways to make AOP in Scala 2.x
 </header>
 <section class=entry-content>
 <p>I made this article to overview different approaches to make AOP in Scala and to show downsides and limitations they have. These approaches are: trait mixin, class wrapper, and tofu mid.
-Let’s imagine that we have the trait that defines an interface for ItemDao: trait ItemDao { def upsert(item: Item): Unit def get(id: Id): Option[Item] }
+Let’s imagine that we have the trait that defines an interface of dao: trait ItemDao { def upsert(item: Item): Unit def get(id: Id): Option[Item] }
 One of the possible ways to do AOP is trait mixins. We just make a trait that calls parent implementation of a method, and then we write our code before and after it....</p>
 </section>
 <footer class=entry-footer>December 12, 2021
