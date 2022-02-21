@@ -5,9 +5,9 @@ draft: false
 tags: ["scala"]
 ---
 
-I made this article to overview different approaches to make wrappers in Scala.
-Wrapper pattern is useful to add additional logic to methods of a class: logging, metering, tracing, timeouts, retries. 
-Scala is a great language and provides many ways to create wrappers.
+This article is made to overview different approaches to make wrappers in Scala.\n
+Wrapper pattern is useful when you need add additional logic to methods of a class: logging, metering, tracing, timeouts, retries. It helps to keep code clean and focused on business logic.
+Scala is a great language and provides many ways to create wrappers. Maybe even too many.\n
 I decided to create this article because it seems that there's no consensus between Scala developers on how to write them and no clear understanding of downsides and limitations.
 
 I'm going to review the following ways: trait mixin, class wrapper, and tofu mid.
@@ -20,7 +20,7 @@ trait ItemDao {
 }
 {{< / highlight >}}
 
-One of the possible ways to create a wrapper is trait mixin technique.
+One of the possible ways to create a wrapper is trait mixin technique.\n
 We just need to make a trait that calls parent implementation of a method, and write our code.
 
 {{< highlight scala >}}
@@ -44,7 +44,7 @@ To make it work all we need to do is to connect it to our implementation:
 new ItemDaoImpl(...) extends LoggedItemDaoWrapper
 {{< / highlight >}}
 
-So far it looks nice and seems easy to understand.
+So far it looks nice and seems easy to understand.\n
 Unfortunately, things become messy if there are dependencies to provide.
 
 Let's make our trait to have asynchronous interface:
@@ -55,7 +55,7 @@ trait ItemDao {
 }
 {{< / highlight >}}
 
-If we have an interface that returns scala.concurrent.Future, then we have to provide ExecutionContext to our wrappers to be able to call map, flatMap, and other methods.
+If we have an interface that returns scala.concurrent.Future, then we have to provide ExecutionContext to our wrappers to be able to call map, flatMap, and other methods.\n
 Many developers create global single thread execution context to keep things simple, but let's pretend I didn't say that.
 
 {{< highlight scala >}}
@@ -79,11 +79,11 @@ val itemDao: ItemDao =
   }
 {{< / highlight >}}
 
-The initialization code is not as clear as before since we provide ExecutionContext through override mechanism, and now we need to keep in mind initialization order because it's easy to get NullPointerException there.
+The initialization code is not as clear as before since we provide ExecutionContext through override mechanism, and now we need to keep in mind initialization order because it's easy to get NullPointerException there.\n
 Initialization gets uglier if we have many wrappers for a class with different dependencies.
 
-It can become even worse if we have Tagless Final.
-When we write wrappers with TF we have to keep granularity of type classes, but when it comes to initialization, we're doomed because different wrappers require different type class instances to be provided as function definitions.
+It can become even worse if we have Tagless Final.\n
+When we write wrappers with TF we have to keep granularity of type classes, but when it comes to initialization, we're doomed because different wrappers require different type class instances to be provided as function definitions.\n
 Since we can't ask for a type class via context bounds we have to use the same mechanism as shown before.
 
 Here's an example how TF code might look like:
@@ -165,5 +165,5 @@ val itemDao: ItemDao[F] =
     with SuperProvider[F]
 {{< / highlight >}}
 
-We managed to hide all the ugly stuff behind SuperProvider trait and support traits, but it's hard to reason about provided dependencies and their initialization.
+We managed to hide all the ugly stuff behind SuperProvider trait and support traits, but it's hard to reason about provided dependencies and their initialization.\n
 Initialization of components themselves looks clean but there's a strong feeling that Tagless Final went wrong and code shouldn't be written this way.
