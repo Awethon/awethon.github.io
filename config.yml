@@ -32,7 +32,7 @@ params:
   profileMode:
     enabled: true
     title: "Aleksey Polovinkin"
-    subtitle: "Scala developer and Functional Programming enthusiast\n\nWanna be Principal Software Engineer\n\nAlways open to the new opportunities"
+    subtitle: "Scala developer and Functional Programming enthusiast\n\nWanna be Principal Software Engineer\n\nAlways open to new opportunities"
 
   socialIcons:
     - name: "Github"
