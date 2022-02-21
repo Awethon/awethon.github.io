@@ -241,7 +241,7 @@ implicit class WrapperHelper[A](private val a: A) extends AnyVal {
 {{< / highlight >}}
 \
 I think it's great and simple solution that helps to migrate from mixins smoothly. 
-To achieve the best result make sure that in wrappers you have companion with `apply` function with dependencies listed before to-be-wrapped class and that dependencies and class are separated with curring e.g.
+To achieve the best result make sure that wrappers have companion with `apply` function with dependencies listed before to-be-wrapped class and that dependencies and class are separated with curring e.g.
 {{< highlight scala >}}
   class Wrapper[F[_]: TC1: TC2](dep1: Dep1, dep2: Dep2[F])(o: MyClass[F]) extends MyClass[F] { ... }
 {{< / highlight >}}
