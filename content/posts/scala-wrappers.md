@@ -1,13 +1,12 @@
 ---
-title: "Different ways to make wrappers in Scala 2.x"
+title: "Different ways to implement wrappers in Scala 2.x"
 date: 2022-02-20T21:55:20+03:00
 draft: false
 tags: ["scala"]
 ---
 
-This article is made to overview different approaches to make wrappers in Scala.  
-Wrapper pattern is useful for adding extra logic to methods of a class: logging, metering, tracing, timeouts, retries. It helps to keep code clean and focused on business logic.  
-Scala is a great language and provides many ways to create wrappers. Maybe even too many. 
+The wrapper pattern is useful for adding extra logic to methods of a class: logging, metering, tracing, timeouts, retries. It helps to keep code clean and focused on business logic.  
+Scala is a great language and provides many ways to create wrappers. Maybe even too many.
 
 I decided to create this article because it seems that there's no consensus among Scala developers on how to write them and no clear understanding of downsides and limitations.
 
@@ -15,7 +14,7 @@ I decided to create this article because it seems that there's no consensus amon
 
 ## Trait mixin
 
-One of the possible ways to create a wrapper is trait mixin technique.
+One of the possible ways to create a wrapper is the trait mixin technique.
 
 Let's introduce a simple trait to start with:
 {{< highlight scala >}}
@@ -25,7 +24,7 @@ trait ItemDao {
 }
 {{< / highlight >}}
 
-To write mixin wrapper for ItemDao we need to create the trait that extends ItemDao interface, and make abstract override to change methods behavior.  
+To write a mixin wrapper for ItemDao we need to create the trait that extends ItemDao interface and make an abstract override to change methods behavior.  
 It's important not to forget to call parent implementation of a method.
 
 {{< highlight scala >}}
@@ -44,7 +43,7 @@ trait LoggedItemDaoWrapper extends ItemDao with StrictLogging {
 }
 {{< / highlight >}}
 
-To make it work mixin wrapper should be mixed in to implementation:
+To make it work mixin wrapper should be mixed into implementation:
 {{< highlight scala >}}
 new ItemDaoImpl(...) extends LoggedItemDaoWrapper
 {{< / highlight >}}
@@ -60,7 +59,7 @@ trait ItemDao {
 }
 {{< / highlight >}}
 \
-If trait has an interface that returns `scala.concurrent.Future`, then ExecutionContext must be provided to our wrappers to be able to call `map`, `flatMap`, and other methods.  
+If a trait has an interface that returns `scala.concurrent.Future`, then ExecutionContext must be provided to our wrappers to be able to call `map`, `flatMap`, and other methods.  
 Many developers create global single thread execution context to keep things simple, but let's pretend I didn't say that.
 
 {{< highlight scala >}}
@@ -84,12 +83,13 @@ val itemDao: ItemDao =
   }
 {{< / highlight >}}
 \
-The code of initialization is not as clear as before because `ExecutionContext` has to provided through override def mechanism. Initialization order has to be kept in mind because it's easy to get `NullPointerException` there.  
-The more dependencies are stacked together the worse code looks.
+The code of initialization is not as clear as before because `ExecutionContext` has to be provided through the `override def` mechanism. Initialization order has to be kept in mind because it's possible to get `NullPointerException` there.  
+The more dependencies are stacked together the worse the code looks.
 
 It becomes even worse with Tagless Final. When we write wrappers using TF we want to keep granularity of type classes, but when it comes to initialization, we're doomed because different wrappers require different type class instances to be provided as function definitions. Since a type class cannot be provided via context bounds, we have to use the same mechanism as shown before.
 
-Here's an example how TF code might look like:
+Here's an example of what TF code might look like:
+
 
 {{< highlight scala >}}
 trait ItemDao[F[_]] {
@@ -144,7 +144,7 @@ trait LoggedItemDaoWrapper[F[_]] extends ItemDao[F] with LoggingProvider[F] {
 }
 {{< / highlight >}}
 
-Composition of all providers into a super-provider might be a good idea to reduce boilerplate in initialization code.
+The composition of all providers into a super-provider might be a good idea to reduce boilerplate in the initialization code.
 
 {{< highlight scala >}}
 trait SuperProvider[F[_]]
@@ -168,8 +168,8 @@ val itemDao: ItemDao[F] =
     with SuperProvider[F]
 {{< / highlight >}}
 \
-We managed to hide all the ugly stuff behind SuperProvider trait and provider-traits, but it's hard to reason about provided dependencies and their initialization.  
-Initialization of components themselves looks clean but there's a strong feeling that Tagless Final went wrong and code shouldn't be written this way.
+We managed to hide all the ugly stuff behind SuperProvider trait and provider traits, but it's hard to reason about provided dependencies and their initialization.  
+Initialization of components themselves looks clean, but there's a strong feeling that Tagless Final went wrong and code shouldn't be written this way.
 
 ## Classic wrapper class
 
@@ -231,8 +231,8 @@ val itemDao: ItemDao[F] =
   )
 {{< / highlight >}}
 \
-Although initialization is simple reverse order (compared to traits) might be confusing.  
-With power of Scala implicits it is pretty easy to make code look like mixins are being added to class.
+Although initialization is in reverse order (compared to traits) might be confusing.  
+With the power of Scala implicits, it is pretty easy to make code look like mixins are being added to a class.
 
 {{< highlight scala >}}
 implicit class WrapperHelper[A](private val a: A) extends AnyVal {
@@ -240,8 +240,8 @@ implicit class WrapperHelper[A](private val a: A) extends AnyVal {
 }
 {{< / highlight >}}
 \
-I think it's great and simple solution that helps to migrate from mixins smoothly. 
-To achieve the best result make sure that wrappers have companion with `apply` function with dependencies listed before to-be-wrapped class and that dependencies and class are separated with curring e.g.
+I think it's a great and simple solution that helps to migrate from mixins smoothly.
+To achieve the best result, make sure that wrappers have a companion with `apply` function with dependencies listed before to-be-wrapped class and that dependencies and class are separated with curring e.g.
 {{< highlight scala >}}
   class Wrapper[F[_]: TC1: TC2](dep1: Dep1, dep2: Dep2[F])(o: MyClass[F]) extends MyClass[F] { ... }
 {{< / highlight >}}
@@ -257,26 +257,26 @@ myClassImpl
 
 Tofu is a scala library made by Tagless Final enthusiasts that boosts TF experience to new levels. It has many features worth checking out but the feature we need for wrappers is [Mid](https://docs.tofu.tf/docs/mid).
 
-Mid is not an easy abstraction to understand. It is even harder to understand deriving mechanism of type class `ApplyK`.  
+Mid is not an easy abstraction to understand. It is even harder to understand the deriving mechanism of type class `ApplyK`.  
 Nevertheless, it doesn't make it hard to use.
 
 ## Pros and Cons
 
-At the end of the article it might seem that choice is clear, however, after digging into details many limitations and downsides are found.
+At the end of the article, it might seem that choice is clear, however after digging into details, many limitations and downsides are found.
 
 ### Trait mixin
 
 Pros:  
 **\+** Saves specific type after wrapping. `new ItemDaoImpl(...) extends LoggedItemDao` has type `ItemDaoImpl with LoggedItemDao`. So it is possible to use any methods from `ItemDaoImpl`.  
-**\+** Only those methods that are to be wrapped need to be present in wrappers. If you have a trait with 10 methods but want to add logging to one of them then only one abstract override of the method needs to be written in a mixin.  
+**\+** Only those methods that are to be wrapped need to be present in wrappers. If you have a trait with 10 methods but want to add logging to one of them, then only one abstract override of the method needs to be written in a mixin.  
 **\+** Doesn't require any libraries to use.  
-**\+** Well explained in scala books.  
+**\+** Well explained in scala books.
 
 Cons:  
 **\-** Providing dependencies creates a lot of boilerplate.  
-**\-** Wrapping uses inheritance mechanism, sometimes order of initialization is not clear.  
+**\-** Wrapping uses an inheritance mechanism. The order of initialization may not be clear.  
 **\-** Might lead to NPEs during initialization.  
-**\-** Looks ugly with Tagless Final.  
+**\-** Looks ugly with Tagless Final.
 
 ### Classic wrapper class
 
@@ -285,33 +285,33 @@ Pros:
 **\+** Doesn't get complicated no matter how many wrappers are composed.  
 **\+** It's possible to make initialization look like with mixins.  
 **\+** Easy to use with Tagless Final.  
-**\+** Doesn't require any libraries to use.  
+**\+** Doesn't require any libraries to use.
 
 Cons:  
 **\-** All the methods of a trait have to be overridden in a wrapper.
 **\-** It's possible to compile code with super.method() instead of x.method().  
-**\-** StrictLogging gets wrapper class instead of implementation by default. It makes it hard to find source of log in case where wrapper is used for many implementations.  
-**\-** A wrapper loses implementation type after wrapping making it impossible to call methods specific to implementation.  
+**\-** StrictLogging gets wrapper class instead of implementation by default. It makes it hard to find the source of log in case where wrapper is used for many implementations.  
+**\-** A wrapper loses implementation type after wrapping making it impossible to call methods specific to the implementation.
 
 ### Tofu Mid
 
 Pros:  
-**\+** No need to call original method directly. Less boilerplate.  
-**\+** Has dsl for initialization that is easy to use.  
+**\+** No need to call an original method directly. Less boilerplate.  
+**\+** Has dsl for initialization that is easy to use.
 
 Cons:  
 **\-** It's possible to compile code with super.method().  
 **\-** The same problem with StrictLogging as for classic wrapper class. Tofu provides Logging type class but its implementation is too specific.  
 **\-** Mid wrapper also loses original type.  
 **\-** Even though all the methods of a trait have to be overridden, it's much easier with mid. `x => x` or in other words `identity` is enough.  
-**\-** One type parameter type have to be introduced to do initialization. It won't work automatically with type KVDao[F[_], K, V] or similar.  
-**\-** The annotation that derives ApplyK have to be added to a class or have to be derived it manually.  
-**\-** ApplyK cannot be derived if at least one of methods returns anything other than F[...]. So it won't be derived if a trait has constant method like `def groupId: String` or method that returns fs2.Stream.  
-**\-** Its usage is limited to TF algebras and only to them.  
+**\-** One type parameter type has to be introduced to do initialization. It won't work automatically with type KVDao[F[_], K, V] or similar.  
+**\-** The annotation that derives ApplyK has to be added to a class or has to be derived manually.  
+**\-** ApplyK cannot be derived if at least one of the methods returns anything other than F[...]. So it won't be derived if a trait has a constant method like `def groupId: String` or a method that returns fs2.Stream.  
+**\-** Mid usage is limited to TF algebras and only to them.
 
 ## Conclusion
 
 Although usage of Mid reduces boilerplate in wrappers it adds boilerplate in `ApplyK` derivation and temporary one type parameter introduction cases.  
-Usage of Mid is very limited and cannot be used as universal wrapping approach unless you have ideal Tagless Final application which is a rare thing in reality.  
+Usage of Mid is very limited and cannot be used as a universal wrapping approach unless you have an ideal Tagless Final application which is a rare thing in reality.
 
-I would personally recommend to use classic wrapper classes.
+I would personally recommend using classic wrapper classes.
