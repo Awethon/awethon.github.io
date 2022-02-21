@@ -8,13 +8,12 @@
     <language>en-us</language>
     <lastBuildDate>Sun, 20 Feb 2022 21:55:20 +0300</lastBuildDate><atom:link href="http://awethon.github.io/tags/scala/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Different ways to make wrappers in Scala 2.x</title>
+      <title>Different ways to implement wrappers in Scala 2.x</title>
       <link>http://awethon.github.io/posts/scala-wrappers/</link>
       <pubDate>Sun, 20 Feb 2022 21:55:20 +0300</pubDate>
       
       <guid>http://awethon.github.io/posts/scala-wrappers/</guid>
-      <description>This article is made to overview different approaches to make wrappers in Scala.
-Wrapper pattern is useful for adding extra logic to methods of a class: logging, metering, tracing, timeouts, retries. It helps to keep code clean and focused on business logic.
+      <description>The wrapper pattern is useful for adding extra logic to methods of a class: logging, metering, tracing, timeouts, retries. It helps to keep code clean and focused on business logic.
 Scala is a great language and provides many ways to create wrappers. Maybe even too many.
 I decided to create this article because it seems that there&amp;rsquo;s no consensus among Scala developers on how to write them and no clear understanding of downsides and limitations.</description>
     </item>
