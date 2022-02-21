@@ -31,10 +31,8 @@ menu:
 params:
   profileMode:
     enabled: true
-    title: "Awethon"
-    subtitle: "Scala developer at Yandex.Classifieds \n\n
-               Disclaimer: the shitty code in my posts is my own \n\n
-               and does not represent the quality of a code at the company I work for"
+    title: "Aleksey Polovinkin"
+    subtitle: "Scala developer and Functional Programming enthusiast\n\nWanna be Principal Software Engineer\n\nAlways open to the new opportunities"
 
   socialIcons:
     - name: "Github"
