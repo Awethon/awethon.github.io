@@ -6,16 +6,14 @@
     <description>Recent content in Posts on Awethon&#39;s Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Dec 2021 21:55:20 +0300</lastBuildDate><atom:link href="http://awethon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 20 Feb 2022 21:55:20 +0300</lastBuildDate><atom:link href="http://awethon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Different ways to make AOP in Scala 2.x</title>
-      <link>http://awethon.github.io/posts/scala-aop/</link>
-      <pubDate>Sun, 12 Dec 2021 21:55:20 +0300</pubDate>
+      <title>Different ways to make wrappers in Scala 2.x</title>
+      <link>http://awethon.github.io/posts/scala-wrappers/</link>
+      <pubDate>Sun, 20 Feb 2022 21:55:20 +0300</pubDate>
       
-      <guid>http://awethon.github.io/posts/scala-aop/</guid>
-      <description>I made this article to overview different approaches to make AOP in Scala and to show downsides and limitations they have. These approaches are: trait mixin, class wrapper, and tofu mid.
-Let&amp;rsquo;s imagine that we have the trait that defines an interface of dao: trait ItemDao { def upsert(item: Item): Unit def get(id: Id): Option[Item] }
-One of the possible ways to do AOP is trait mixins. We just make a trait that calls parent implementation of a method, and then we write our code before and after it.</description>
+      <guid>http://awethon.github.io/posts/scala-wrappers/</guid>
+      <description>I made this article to overview different approaches to make wrappers in Scala. Wrapper pattern is useful to add additional logic to methods of a class: logging, metering, tracing, timeouts, retries. Scala is a great language and provides many ways to create wrappers. I decided to create this article because it seems that there&amp;rsquo;s no consensus between Scala developers on how to write them and no clear understanding of downsides and limitations.</description>
     </item>
     
   </channel>
