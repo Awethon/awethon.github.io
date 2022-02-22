@@ -350,7 +350,7 @@ Pros:
 **\+** Doesn't require any libraries to use.
 
 Cons:  
-**\-** All the methods of a trait have to be overridden in a wrapper.
+**\-** All the methods of a trait have to be overridden in a wrapper.  
 **\-** StrictLogging gets wrapper class instead of implementation by default. It makes it hard to find the source of log in case where wrapper is used for many implementations.  
 **\-** A wrapper loses implementation type after wrapping making it impossible to call methods specific to the implementation.
 
