@@ -374,4 +374,4 @@ Cons:
 Although usage of Mid reduces boilerplate in wrappers it adds boilerplate in `ApplyK` derivation and temporary one type parameter introduction cases.  
 Usage of Mid is very limited and cannot be used as a universal wrapping approach unless you have an ideal Tagless Final application which is a rare thing in reality.
 
-I would personally recommend using classic wrapper classes.
+I'd recommend using classic wrapper classes as it is a comprehensive, readable, and easy-to-understand solution.
