@@ -343,7 +343,7 @@ Cons:
 ### Classic wrapper class
 
 Pros:  
-**\+** Easy to understand GOF pattern from OOP languages.  
+**\+** Easy-to-understand GOF pattern from OOP languages.  
 **\+** Doesn't get complicated no matter how many wrappers are composed.  
 **\+** It's possible to make initialization look like with mixins.  
 **\+** Easy to use with Tagless Final.  
