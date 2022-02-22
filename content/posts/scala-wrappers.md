@@ -314,8 +314,12 @@ val noop     = new NoOpItemDaoWrapper[F]
 \
 As you can see code looks very clean without a need to pass arguments to the original method. 
 But internal mechanism of Mid may not be clear.  
-To put things simple, all the mid wrappers are composed like `mid3.andThen(mid2).andThen(mid1)` and method call chain in composite wrapper looks like `x => mid1.method(mid2.method(mid3.method(x)))`. After composition, Mid wrapper attaches to implementation which is application of implementation to a wrapper that returns wrapped instance of a class:  `compositeMid.apply(impl)`.  
+
+To put things simple, all the mid wrappers are composed like `mid2.andThen(mid1)` and method call chain in composite wrapper looks like `x => mid1.method(mid2.method(x))`. 
+After composition, Mid wrapper attaches to implementation. 
+Attachment means application of implementation to a wrapper and as a result it returns wrapped instance of a class:  `compositeMid.apply(impl)`.  
 So basically, when you introduce a type like `ItemDao[Mid[F, *]]`, you introduce a wrapper.  
+
 Unfortunately, Tofu Mid usage is limited to Tagless Final algebras due to `ApplyK` magic.
 
 ## Pros and Cons
