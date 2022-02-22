@@ -5,7 +5,7 @@ draft: false
 tags: ["scala"]
 ---
 
-The wrapper pattern is useful for adding extra logic to methods of a class: logging, metering, tracing, timeouts, retries. It helps to keep code clean and focused on business logic.  
+The wrapper pattern (or the proxy pattern) is a useful way of adding extra logic to methods of a class: logging, metering, tracing, timeouts, retries. It helps to keep code clean and focused on business logic.  
 Scala is a great language and provides many ways to create wrappers. Maybe even too many.
 
 I've decided to create this article because it seems that there's no consensus among Scala developers on how to write them and no clear understanding of downsides and limitations.
