@@ -25,7 +25,6 @@ trait ItemDao {
 {{< / highlight >}}
 
 To write a mixin wrapper for ItemDao we need to create the trait that extends ItemDao interface and make an abstract override to change methods behavior.  
-It's important not to forget to call parent implementation of a method.
 
 {{< highlight scala >}}
 trait LoggedItemDaoWrapper extends ItemDao with StrictLogging {
@@ -59,7 +58,7 @@ trait ItemDao {
 }
 {{< / highlight >}}
 \
-If a trait has an interface that returns `scala.concurrent.Future`, then ExecutionContext must be provided to our wrappers to be able to call `map`, `flatMap`, and other methods.  
+If a trait has an interface that returns `scala.concurrent.Future`, then `ExecutionContext` must be provided to our wrappers to be able to call `map`, `flatMap`, and other methods.  
 Many developers create global single thread execution context to keep things simple, but let's pretend I didn't say that.
 
 {{< highlight scala >}}
@@ -119,10 +118,10 @@ val itemDao: ItemDao[F] =
       override def concurrent: Concurrent[F] = async
       override def timer: Timer[F] = _timer
       override def gauge: Gauge = methodCallGauge
-  }
+    } 
 {{< / highlight >}}
 \
-In order to reduce the amount of boilerplate and make sure dependency names are the same for the same dependencies, type class provider traits have to be implemented.
+In order to reduce the amount of boilerplate and make sure dependencies names are the same for the same dependencies, type class provider traits have to be implemented.
 
 {{< highlight scala >}}
 trait MonadThrowProvider[F[_]] extends ApplicativeThrowProvider[F] {
@@ -231,7 +230,7 @@ val itemDao: ItemDao[F] =
   )
 {{< / highlight >}}
 \
-Although initialization is in reverse order (compared to traits) might be confusing.  
+Although initialization is in reverse order (compared to mixins) might be confusing.  
 With the power of Scala implicits, it is pretty easy to make code look like mixins are being added to a class.
 
 {{< highlight scala >}}
@@ -255,10 +254,69 @@ myClassImpl
 
 ## Tofu Mid
 
-Tofu is a scala library made by Tagless Final enthusiasts that boosts TF experience to new levels. It has many features worth checking out but the feature we need for wrappers is [Mid](https://docs.tofu.tf/docs/mid).
+Tofu is a scala library made by Tagless Final enthusiasts that boosts TF experience to new levels. It has many features worth checking out, but the feature we need for wrappers is [Mid](https://docs.tofu.tf/docs/mid).
 
 Mid is not an easy abstraction to understand. It is even harder to understand the deriving mechanism of type class `ApplyK`.  
-Nevertheless, it doesn't make it hard to use.
+Nevertheless, it doesn't make it hard to use. Mid is a function from the result of the original method to the result of the same type: `F[A] => F[A]`.
+
+{{< highlight scala >}}
+@derive(applyK)
+trait ItemDao[F[_]] {
+  def upsert(item: Item): F[Unit]
+  def get(id: Id): F[Option[Item]]
+}
+
+class LoggingItemDaoWrapper[F[_]: Sync]
+  extends ItemDao[Mid[F, *]] with StrictLogging {
+
+  private def info(str: String): F[Unit] = Sync[F].delay(logger.info(str))
+  
+  override def upsert(item: Item): Mid[F, Unit] = { upsert =>
+    info(s"upserting $item") *> upsert <* info(s"upsert of $item is successful")
+  }
+  
+  override def get(id: Id): Mid[F, Option[Item]] = { get =>
+    info(s"getting $id") *> get.flatTap(result => info(s"get of $id is successful = $result"))
+  }
+}
+
+class TimeoutItemDaoWrapper[F[_]: Concurrent](timeoutValue: FiniteDuration)(implicit timer: Timer[F])
+  extends ItemDao[Mid[F, *]] {
+
+  override def upsert(item: Item): Mid[F, Unit] = _.timeout(timeoutValue)
+
+  override def get(id: Id): Mid[F, Option[Item]] = _.timeout(timeoutValue)
+}
+
+class NoOpItemDaoWrapper[F[_]]
+  extends ItemDao[Mid[F, *]] {
+
+  override def upsert(item: Item): Mid[F, Unit] = identity
+
+  override def get(id: Id): Mid[F, Option[Item]] = identity
+}
+
+val service  = new ItemDaoImpl[F](...)
+val logging  = new LoggingItemDaoWrapper[F]
+val timeouts = new TimeoutItemDaoWrapper[F](timeoutValue)
+val noop     = new NoOpItemDaoWrapper[F]
+
+// logging before
+// timeouts before
+// noop before
+// original method
+// noop after
+// timeouts after
+// logging after
+(logging |+| timeouts |+| noop).attach(service)
+
+{{< / highlight >}}
+\
+As you can see code looks very clean without a need to pass arguments to the original method. 
+But internal mechanism of Mid may not be clear.  
+To put things simple, all the mid wrappers are composed like `mid3.andThen(mid2).andThen(mid1)` and method call chain in composite wrapper looks like `x => mid1.method(mid2.method(mid3.method(x)))`. After composition, Mid wrapper attaches to implementation which is application of implementation to a wrapper that returns wrapped instance of a class:  `compositeMid.apply(impl)`.  
+So basically, when you introduce a type like `ItemDao[Mid[F, *]]`, you introduce a wrapper.  
+Unfortunately, Tofu Mid usage is limited to Tagless Final algebras due to `ApplyK` magic.
 
 ## Pros and Cons
 
@@ -289,7 +347,6 @@ Pros:
 
 Cons:  
 **\-** All the methods of a trait have to be overridden in a wrapper.
-**\-** It's possible to compile code with super.method() instead of x.method().  
 **\-** StrictLogging gets wrapper class instead of implementation by default. It makes it hard to find the source of log in case where wrapper is used for many implementations.  
 **\-** A wrapper loses implementation type after wrapping making it impossible to call methods specific to the implementation.
 
@@ -300,7 +357,6 @@ Pros:
 **\+** Has dsl for initialization that is easy to use.
 
 Cons:  
-**\-** It's possible to compile code with super.method().  
 **\-** The same problem with StrictLogging as for classic wrapper class. Tofu provides Logging type class but its implementation is too specific.  
 **\-** Mid wrapper also loses original type.  
 **\-** Even though all the methods of a trait have to be overridden, it's much easier with mid. `x => x` or in other words `identity` is enough.  
