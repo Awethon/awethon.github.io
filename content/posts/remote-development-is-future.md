@@ -45,7 +45,7 @@ PC on Windows at home is able to become a work tool in just a few minutes.
 ## Reduction of costs by using cloud infrastructure
 
 Big tech companies are able to use the advantages of cloud infrastructure.  
-Since they have developers distributed around the globe, it means that remote machines' resources usage is distributed in time, so not so many resources simultaneously.  
+Since they have developers distributed around the globe, it means that remote machines' resources usage is distributed in time, therefore not so many resources are used simultaneously.  
 If there's a need to have more CPU/RAM, then virtual machines can easily be scaled in a cloud.
 
 ## Code is not stored on disk locally
