@@ -364,7 +364,7 @@ Cons:
 **\-** The same problem with StrictLogging as for classic wrapper class. Tofu provides Logging type class but its implementation is too specific.  
 **\-** Mid wrapper also loses original type.  
 **\-** Even though all the methods of a trait have to be overridden, it's much easier with mid. `x => x` or in other words `identity` is enough.  
-**\-** One type parameter type has to be introduced to do initialization. It won't work automatically with type KVDao[F[_], K, V] or similar.  
+**\-** One type parameter type has to be introduced to do initialization. It won't work automatically with type `KVDao[F[_], K, V]` or similar.  
 **\-** The annotation that derives ApplyK has to be added to a class or has to be derived manually.  
 **\-** ApplyK cannot be derived if at least one of the methods returns anything other than F[...]. So it won't be derived if a trait has a constant method like `def groupId: String` or a method that returns fs2.Stream.  
 **\-** Mid usage is limited to TF algebras and only to them.
