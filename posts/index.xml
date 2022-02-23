@@ -2,17 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Awethon&#39;s Page</title>
-    <link>http://awethon.github.io/posts/</link>
+    <link>https://awethon.github.io/posts/</link>
     <description>Recent content in Posts on Awethon&#39;s Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 20 Feb 2022 21:55:20 +0300</lastBuildDate><atom:link href="http://awethon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Feb 2022 09:00:00 +0300</lastBuildDate><atom:link href="https://awethon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Remote development is a future of big tech</title>
+      <link>https://awethon.github.io/posts/remote-development-is-future/</link>
+      <pubDate>Wed, 23 Feb 2022 09:00:00 +0300</pubDate>
+      
+      <guid>https://awethon.github.io/posts/remote-development-is-future/</guid>
+      <description>The remote development feature allows you to use IDE or code editor on a remote machine. All that local machine needs is a client that draws interface, sends, and receives data, like a browser.
+VSCode was the first to introduce this feature. Things are much easier for VSCode since it&amp;rsquo;s a code editor built on electron, while for example, IntelliJ IDEA is an IDE and uses Java Swing library for UI.</description>
+    </item>
+    
     <item>
       <title>Different ways to implement wrappers in Scala 2.x</title>
-      <link>http://awethon.github.io/posts/scala-wrappers/</link>
+      <link>https://awethon.github.io/posts/scala-wrappers/</link>
       <pubDate>Sun, 20 Feb 2022 21:55:20 +0300</pubDate>
       
-      <guid>http://awethon.github.io/posts/scala-wrappers/</guid>
+      <guid>https://awethon.github.io/posts/scala-wrappers/</guid>
       <description>The wrapper pattern (or the proxy pattern) is a useful way of adding extra logic to methods of a class: logging, metering, tracing, timeouts, retries. It helps to keep code clean and focused on business logic.
 Scala is a great language and provides many ways to create wrappers. Maybe even too many.
 I&amp;rsquo;ve decided to create this article because it seems that there&amp;rsquo;s no consensus among Scala developers on how to write them and no clear understanding of downsides and limitations.</description>

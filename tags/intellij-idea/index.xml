@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Intellij IDEA on Awethon&#39;s Page</title>
+    <link>https://awethon.github.io/tags/intellij-idea/</link>
+    <description>Recent content in Intellij IDEA on Awethon&#39;s Page</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 23 Feb 2022 09:00:00 +0300</lastBuildDate><atom:link href="https://awethon.github.io/tags/intellij-idea/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Remote development is a future of big tech</title>
+      <link>https://awethon.github.io/posts/remote-development-is-future/</link>
+      <pubDate>Wed, 23 Feb 2022 09:00:00 +0300</pubDate>
+      
+      <guid>https://awethon.github.io/posts/remote-development-is-future/</guid>
+      <description>The remote development feature allows you to use IDE or code editor on a remote machine. All that local machine needs is a client that draws interface, sends, and receives data, like a browser.
+VSCode was the first to introduce this feature. Things are much easier for VSCode since it&amp;rsquo;s a code editor built on electron, while for example, IntelliJ IDEA is an IDE and uses Java Swing library for UI.</description>
+    </item>
+    
+  </channel>
+</rss>
