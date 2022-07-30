@@ -1,20 +1,50 @@
 ---
-title: "Different ways to implement wrappers in Scala 2.x"
+title: "Different ways to implement wrappers in Scala"
 date: 2022-02-20T21:55:20+03:00
 draft: false
 tags: ["scala"]
 ---
 
-The wrapper pattern (or the proxy pattern) is a useful way of adding extra logic to methods of a class: logging, metering, tracing, timeouts, retries. It helps to keep code clean and focused on business logic.  
-Scala is a great language and provides many ways to create wrappers. Maybe even too many.
+The wrapper pattern (or the proxy pattern) is a useful way of adding extra logic to methods of a class without changing it. It might be handy in scenarios where an application needs to be heavily instrumented and puting all the instrumentation in business logic will make code less readable. To be more specific, wrappers are useful for logging, metering, and tracing, but not limited to it. For example it might be useful to set timeouts and retries in wrappers. However, tranforming arguments or return value in a wrapper is considered to be an anti-pattern.  
+
+Scala is a great language with many features and complex type system. Thus, it provides many ways to create wrappers, but not all of them will fit well in your application.  
 
 I've decided to create this article because it seems that there's no consensus among Scala developers on how to write them and no clear understanding of downsides and limitations.
-
 {{< table_of_contents >}}
 
 ## Trait mixin
 
-One of the possible ways to create a wrapper is the trait mixin technique.
+One of the possible ways to create a wrapper is the trait mixin and abstract override techniques. Scala has a sophisticated mechanism of dynamic class composition that allows to build a class from pieces (traits). While abstract override allows a trait to inherit another trait and to provide the implementation of a method that is able call super-trait implementation of it.  
+
+Sounds difficult but in fact it is easy to understand.
+{{< highlight scala >}}
+// Our interface
+trait Printer {
+  def print(): Unit
+}
+
+// Sub-trait of Printer that overrides print
+// and makes a call of a parent class implementation
+// without any knowledge of what parent it is going to be.
+// Thus, abstract keyword is needed.
+trait PrinterButCooler extends Printer {
+  abstract override def print(): Unit = {
+    printf("Hello ")
+    super.print()
+    printf("!")
+  }
+}
+
+// Implementation of Printer interface
+class PrinterImpl() extends Printer {
+  override def print() = printf("World")
+}
+
+new PrinterImpl().print() // Output: World
+
+// PrinterImpl becomes a super-class for PrinterButCooler
+(new PrinterImpl() with PrinterButCooler).print() // Output: Hello World!
+{{< / highlight >}}
 
 Let's introduce a simple trait to start with:
 {{< highlight scala >}}
