@@ -57,3 +57,5 @@ params:
     URL: "https://github.com/Awethon/awethon.github.io/blob/master/content"
     Text: "Suggest Changes"
     appendFilePath: true
+
+  ShowShareButtons: true
