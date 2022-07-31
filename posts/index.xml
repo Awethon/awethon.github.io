@@ -18,14 +18,12 @@ VSCode was the first to introduce this feature. Things are much easier for VSCod
     </item>
     
     <item>
-      <title>Different ways to implement wrappers in Scala 2.x</title>
+      <title>Different ways to implement wrappers in Scala</title>
       <link>https://awethon.github.io/posts/scala-wrappers/</link>
       <pubDate>Sun, 20 Feb 2022 21:55:20 +0300</pubDate>
       
       <guid>https://awethon.github.io/posts/scala-wrappers/</guid>
-      <description>The wrapper pattern (or the proxy pattern) is a useful way of adding extra logic to methods of a class: logging, metering, tracing, timeouts, retries. It helps to keep code clean and focused on business logic.
-Scala is a great language and provides many ways to create wrappers. Maybe even too many.
-I&amp;rsquo;ve decided to create this article because it seems that there&amp;rsquo;s no consensus among Scala developers on how to write them and no clear understanding of downsides and limitations.</description>
+      <description>The wrapper pattern (or the proxy pattern) is a useful way of adding extra logic to the methods of a class without changing it. It might be handy in scenarios where an application needs to be heavily instrumented and putting all the instrumentation in business logic will make code less readable. To be more specific, wrappers are useful for logging, metering, and tracing, but not limited to it. For example, it might be useful to set timeouts and retries in wrappers.</description>
     </item>
     
   </channel>
