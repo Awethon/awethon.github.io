@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Big Tech on Awethon&#39;s Page</title>
     <link>https://awethon.github.io/tags/big-tech/</link>
     <description>Recent content in Big Tech on Awethon&#39;s Page</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.136.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Feb 2022 09:00:00 +0300</lastBuildDate><atom:link href="https://awethon.github.io/tags/big-tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 19 Feb 2022 09:00:00 +0300</lastBuildDate>
+    <atom:link href="https://awethon.github.io/tags/big-tech/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Remote development is a future of big tech</title>
+      <title>Remote development is the future of big tech</title>
       <link>https://awethon.github.io/posts/remote-development-is-future/</link>
-      <pubDate>Wed, 23 Feb 2022 09:00:00 +0300</pubDate>
-      
+      <pubDate>Sat, 19 Feb 2022 09:00:00 +0300</pubDate>
       <guid>https://awethon.github.io/posts/remote-development-is-future/</guid>
-      <description>The remote development feature allows you to use IDE or code editor on a remote machine. All that local machine needs is a client that draws interface, sends, and receives data, like a browser.
-VSCode was the first to introduce this feature. Things are much easier for VSCode since it&amp;rsquo;s a code editor built on electron, while for example, IntelliJ IDEA is an IDE and uses Java Swing library for UI.</description>
+      <description>&lt;p&gt;The remote development feature allows its users to have an IDE or a code editor server on a remote machine.
+All the local machine needs is a client that draws an interface, and sends, and receives data.&lt;/p&gt;
+&lt;p&gt;The industry is already pushing in this direction: VSCode was the first to introduce this feature.
+It&amp;rsquo;s much easier for VSCode since it&amp;rsquo;s a code editor built on electron (JS), while for example, IntelliJ IDEA is an IDE and uses Java Swing library for UI.&lt;br&gt;
+In Autumn 2022, JetBrains also caught this trend and announced a remote development feature for its products and a completely new IDE built from scratch that also supports this feature.
+GitHub has also introduced a remote development feature which allows using VSCode in a browser.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>
