@@ -423,4 +423,4 @@ Cons:
 
 In my experience, the classic wrapper classes are the way to go. 
 They are easy to understand, easy to use, and easy to maintain.
-I'm yet to see a case it's not the best choice.
+I'm yet to see a case where it's not the best choice.
