@@ -29,6 +29,7 @@ menu:
       weight: 30
 
 params:
+  social: true
   profileMode:
     enabled: true
     title: "Aleksey Polovinkin"
