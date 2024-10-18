@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on Awethon&#39;s Page</title>
     <link>https://awethon.github.io/posts/</link>
     <description>Recent content in Posts on Awethon&#39;s Page</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.136.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Feb 2022 09:00:00 +0300</lastBuildDate><atom:link href="https://awethon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Remote development is a future of big tech</title>
-      <link>https://awethon.github.io/posts/remote-development-is-future/</link>
-      <pubDate>Wed, 23 Feb 2022 09:00:00 +0300</pubDate>
-      
-      <guid>https://awethon.github.io/posts/remote-development-is-future/</guid>
-      <description>The remote development feature allows you to use IDE or code editor on a remote machine. All that local machine needs is a client that draws interface, sends, and receives data, like a browser.
-VSCode was the first to introduce this feature. Things are much easier for VSCode since it&amp;rsquo;s a code editor built on electron, while for example, IntelliJ IDEA is an IDE and uses Java Swing library for UI.</description>
-    </item>
-    
+    <lastBuildDate>Fri, 18 Oct 2024 23:43:11 +0300</lastBuildDate>
+    <atom:link href="https://awethon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Different ways to implement wrappers in Scala</title>
       <link>https://awethon.github.io/posts/scala-wrappers/</link>
       <pubDate>Sun, 20 Feb 2022 21:55:20 +0300</pubDate>
-      
       <guid>https://awethon.github.io/posts/scala-wrappers/</guid>
-      <description>The wrapper pattern (or the proxy pattern) is a useful way of adding extra logic to the methods of a class without changing it. It might be handy in scenarios where an application needs to be heavily instrumented and putting all the instrumentation in business logic will make code less readable. To be more specific, wrappers are useful for logging, metering, and tracing, but not limited to it. For example, it might be useful to set timeouts and retries in wrappers.</description>
+      <description>&lt;p&gt;Scala is a great language with many features and a complex type system.
+It provides many ways to solve the same problem, but each way has its own pros and cons.
+Unfortunately, it&amp;rsquo;s a common problem of scala developers to utilize the features of Scala, disregarding the cognitive load that it might bring to the team. &lt;br&gt;
+In this article, I&amp;rsquo;ll try to advocate for a simple and easy-to-understand way of implementing wrappers in Scala.&lt;/p&gt;</description>
     </item>
-    
+    <item>
+      <title>Remote development is the future of big tech</title>
+      <link>https://awethon.github.io/posts/remote-development-is-future/</link>
+      <pubDate>Sat, 19 Feb 2022 09:00:00 +0300</pubDate>
+      <guid>https://awethon.github.io/posts/remote-development-is-future/</guid>
+      <description>&lt;p&gt;The remote development feature allows its users to have an IDE or a code editor server on a remote machine.
+All the local machine needs is a client that draws an interface, and sends, and receives data.&lt;/p&gt;
+&lt;p&gt;The industry is already pushing in this direction: VSCode was the first to introduce this feature.
+It&amp;rsquo;s much easier for VSCode since it&amp;rsquo;s a code editor built on electron (JS), while for example, IntelliJ IDEA is an IDE and uses Java Swing library for UI.&lt;br&gt;
+In Autumn 2022, JetBrains also caught this trend and announced a remote development feature for its products and a completely new IDE built from scratch that also supports this feature.
+GitHub has also introduced a remote development feature which allows using VSCode in a browser.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>

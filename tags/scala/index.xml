@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>scala on Awethon&#39;s Page</title>
+    <title>Scala on Awethon&#39;s Page</title>
     <link>https://awethon.github.io/tags/scala/</link>
-    <description>Recent content in scala on Awethon&#39;s Page</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Scala on Awethon&#39;s Page</description>
+    <generator>Hugo -- 0.136.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 20 Feb 2022 21:55:20 +0300</lastBuildDate><atom:link href="https://awethon.github.io/tags/scala/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Oct 2024 23:43:11 +0300</lastBuildDate>
+    <atom:link href="https://awethon.github.io/tags/scala/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Different ways to implement wrappers in Scala</title>
       <link>https://awethon.github.io/posts/scala-wrappers/</link>
       <pubDate>Sun, 20 Feb 2022 21:55:20 +0300</pubDate>
-      
       <guid>https://awethon.github.io/posts/scala-wrappers/</guid>
-      <description>The wrapper pattern (or the proxy pattern) is a useful way of adding extra logic to the methods of a class without changing it. It might be handy in scenarios where an application needs to be heavily instrumented and putting all the instrumentation in business logic will make code less readable. To be more specific, wrappers are useful for logging, metering, and tracing, but not limited to it. For example, it might be useful to set timeouts and retries in wrappers.</description>
+      <description>&lt;p&gt;Scala is a great language with many features and a complex type system.
+It provides many ways to solve the same problem, but each way has its own pros and cons.
+Unfortunately, it&amp;rsquo;s a common problem of scala developers to utilize the features of Scala, disregarding the cognitive load that it might bring to the team. &lt;br&gt;
+In this article, I&amp;rsquo;ll try to advocate for a simple and easy-to-understand way of implementing wrappers in Scala.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>
