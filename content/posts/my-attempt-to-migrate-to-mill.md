@@ -49,7 +49,7 @@ These are the options that are used in our projects and none of them are present
 {{< highlight scala >}}
 BuildInfoOption.ToJson,
 BuildInfoOption.BuildTime,
-BuildInfoOption.Traits("com.chilipiper.common.BuildInfoT"),
+BuildInfoOption.Traits("com.organization.common.BuildInfoT"),
 BuildInfoOption.PackagePrivate,
 {{< /highlight >}}
 
@@ -58,6 +58,8 @@ Having a trait for BuildInfo is important for us as we have internal libraries t
 # Conclusion
 Besides the fact that Mill is easier to understand and write than SBT, it is not a drop-in replacement for SBT for Scala 2.13 projects.
 And even for Scala 3 projects, the benefits of using Mill are not that great to justify the migration effort.
+
 What I have not tested though is the parallel test execution of Mill vs SBT, where Mill can easily be better than SBT.
+
 Also, it's worth to mention how great `./mill init` migration tool is. I was able to quickly migrate most of my SBT project to Mill to test it out.
 
