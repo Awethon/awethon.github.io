@@ -4,10 +4,21 @@
     <title>Posts on Awethon&#39;s Page</title>
     <link>https://awethon.github.io/posts/</link>
     <description>Recent content in Posts on Awethon&#39;s Page</description>
-    <generator>Hugo -- 0.136.2</generator>
+    <generator>Hugo -- 0.145.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 18 Oct 2024 23:43:11 +0300</lastBuildDate>
+    <lastBuildDate>Mon, 31 Mar 2025 03:10:43 +0200</lastBuildDate>
     <atom:link href="https://awethon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My Attempt to Migrate to Mill</title>
+      <link>https://awethon.github.io/posts/my-attempt-to-migrate-to-mill/</link>
+      <pubDate>Mon, 31 Mar 2025 03:10:43 +0200</pubDate>
+      <guid>https://awethon.github.io/posts/my-attempt-to-migrate-to-mill/</guid>
+      <description>&lt;p&gt;In the year of 2025 I have attended Scalar Conference in Warsaw that had Li Haoyi as one of the speakers.
+He was talking about Mill and how it is better than SBT.
+I have decided to give it a try and migrate one of my projects to Mill.&lt;/p&gt;
+&lt;p&gt;Unfortunately, I have failed. Mill is marketed as a replacement for any other build tool but it is not the case at least for Scala 2.13.
+Below I will state the reasons why Mill is not a drop-in replacement for SBT for my case.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Different ways to implement wrappers in Scala</title>
       <link>https://awethon.github.io/posts/scala-wrappers/</link>
