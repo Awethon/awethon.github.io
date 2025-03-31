@@ -321,7 +321,7 @@ myClassImpl
   .`with`(Wrapper2(dep3))
 {{< / highlight >}}
 
-## Game-changing distinction between inheritance-based wrapping (trait mixins) and composition-based wrapping (classic wrapper class)
+## Crucial distinction between inheritance-based wrapping (trait mixins) and composition-based wrapping (classic wrapper class)
 
 This distinction can be both very useful and very harmful, depending on the use case.
 The fact of the matter is that inheritance-based wrapping is able to call wrapped methods inside the implementation, while composition-based wrapping is not able to do so.
