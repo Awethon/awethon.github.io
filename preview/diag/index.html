@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>diag</title>
+<style>
+body{margin:0;background:#0a0b0d;color:#e6e8ec;font:14px/1.6 ui-monospace,Menlo,monospace;padding:20px}
+h1{font-size:14px;color:#8b909b;font-weight:500;margin:0 0 14px}
+tr td{padding:5px 0;border-bottom:1px solid #1a1d22;vertical-align:top}
+td:first-child{color:#8b909b;padding-right:14px;white-space:nowrap}
+.y{color:#7ee0a8}.n{color:#ff8b8b}
+#probe{width:60px;height:22px;background:#4a6cff;border-radius:6px;margin-top:12px;
+  animation:mv 2s ease-in-out infinite alternate}
+@keyframes mv{to{transform:translateX(120px)}}
+#ua{color:#5b616d;font-size:11.5px;word-break:break-all;margin-top:16px}
+</style></head><body>
+<h1>aurora capability probe</h1>
+<table id="t"></table>
+<div id="probe"></div>
+<div id="ua"></div>
+<script>
+const s=(p,v)=>{try{return CSS.supports(p,v)}catch(e){return false}};
+const rows=[
+ ['Reduce Motion is ON', matchMedia('(prefers-reduced-motion: reduce)').matches, true],
+ ['backdrop-filter', s('backdrop-filter','blur(10px)')||s('-webkit-backdrop-filter','blur(10px)')],
+ ['mix-blend-mode: screen', s('mix-blend-mode','screen')],
+ ['mask-image', s('mask-image','radial-gradient(#000,transparent)')||s('-webkit-mask-image','radial-gradient(#000,transparent)')],
+ ['conic-gradient', s('background','conic-gradient(red,blue)')],
+ ['filter: blur', s('filter','blur(40px)')],
+ ['var() in animation', s('animation-duration','var(--x)')],
+ ['color-mix', s('color','color-mix(in oklch,red,blue)')],
+];
+const t=document.getElementById('t');
+for(const [k,v,invert] of rows){
+  const ok=invert? !v : v;
+  t.insertAdjacentHTML('beforeend',
+    `<tr><td>${k}</td><td class="${ok?'y':'n'}">${v?'yes':'no'}</td></tr>`);
+}
+setTimeout(()=>{
+  const a=document.getElementById('probe').getAnimations?.()||[];
+  const running=a.length>0 && a.some(x=>x.playState==='running');
+  t.insertAdjacentHTML('beforeend',
+    `<tr><td>CSS animation running</td><td class="${running?'y':'n'}">${running?'yes':'no'}</td></tr>`
+    +`<tr><td>devicePixelRatio</td><td>${devicePixelRatio}</td></tr>`
+    +`<tr><td>viewport</td><td>${innerWidth}x${innerHeight}</td></tr>`);
+},600);
+document.getElementById('ua').textContent=navigator.userAgent;
+</script>
+<p style="color:#5b616d;font-size:12px">The blue bar above should slide left↔right. If it is frozen, animations are disabled system-wide.</p>
+</body></html>
