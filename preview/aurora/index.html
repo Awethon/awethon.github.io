@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5 · Aurora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08090c; --ink:#edeff3; --dim:#8f95a3; --faint:#5d6371;
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  --a1:#8ea2ff; --a2:#7fd6d0;
+  --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;
+  overflow-x:hidden}
+.aurora{position:fixed;inset:-28% -18% auto -18%;height:96vh;z-index:0;pointer-events:none;
+  animation:hue 240s linear infinite;
+  -webkit-mask-image:radial-gradient(98% 92% at 50% 8%,#000 38%,rgba(0,0,0,.6) 70%,transparent 96%);
+  mask-image:radial-gradient(98% 92% at 50% 8%,#000 38%,rgba(0,0,0,.6) 70%,transparent 96%)}
+.field{position:absolute;inset:0;filter:blur(72px) saturate(160%);opacity:.95}
+.veil{position:absolute;inset:-25%;filter:blur(58px);opacity:.42;mix-blend-mode:screen;
+  background:conic-gradient(from 210deg at 50% 38%,
+    transparent 0deg,rgba(120,150,255,.30) 42deg,transparent 96deg,
+    rgba(110,226,214,.24) 150deg,transparent 206deg,
+    rgba(172,128,255,.26) 262deg,transparent 318deg,transparent 360deg);
+  animation:spin 150s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.aurora i{position:absolute;display:block;border-radius:48% 52% 60% 40%/55% 45% 58% 42%;mix-blend-mode:screen;
+  animation:drift var(--d) cubic-bezier(.45,.05,.55,.95) infinite alternate;will-change:transform}
+.aurora i:nth-child(1){--d:17s;--x:5vw;--y:4vh;--s:1.16;--r:14deg;
+  width:48vw;height:38vw;left:2%;top:-4%;background:rgba(104,124,255,.42)}
+.aurora i:nth-child(2){--d:23s;--x:-6vw;--y:5vh;--s:1.1;--r:-18deg;
+  width:42vw;height:34vw;right:2%;top:-8%;background:rgba(96,216,208,.34);animation-delay:-9s}
+.aurora i:nth-child(3){--d:29s;--x:4vw;--y:-4vh;--s:1.22;--r:24deg;
+  width:36vw;height:32vw;left:38%;top:14%;background:rgba(168,118,255,.30);animation-delay:-14s}
+.aurora i:nth-child(4){--d:37s;--x:-5vw;--y:-3vh;--s:1.14;--r:-10deg;
+  width:30vw;height:26vw;left:16%;top:26%;background:rgba(88,178,232,.20);animation-delay:-21s}
+.aurora i:nth-child(5){--d:43s;--x:6vw;--y:6vh;--s:1.28;--r:30deg;
+  width:26vw;height:24vw;right:20%;top:22%;background:rgba(150,196,255,.16);animation-delay:-31s}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.75;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E")}
+@keyframes drift{to{transform:translate3d(var(--x),var(--y),0) scale(var(--s)) rotate(var(--r))}}
+@keyframes hue{to{filter:hue-rotate(34deg)}}
+@media (prefers-reduced-motion:reduce){.aurora,.aurora i,.veil{animation:none}}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(100% - 2.5rem,50rem);margin-inline:auto;position:relative;z-index:1}
+header{position:sticky;top:0;z-index:20;
+  background:linear-gradient(180deg,rgba(8,9,12,.85),rgba(8,9,12,.55));
+  backdrop-filter:blur(16px) saturate(170%);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:-.01em}
+.logo span{background:linear-gradient(90deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav{display:flex;gap:4px;align-items:center}
+nav a{font-size:13.5px;color:var(--dim);padding:7px 12px;border-radius:8px;transition:.18s}
+nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+.dot{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;margin-left:4px;transition:.2s}
+.dot:hover{background:rgba(255,255,255,.06)}
+.dot i{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#fff 50%,transparent 50%);opacity:.8}
+.hero{text-align:center;padding:120px 0 72px}
+.status{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);
+  margin:0;display:inline-flex;align-items:baseline;gap:.7em}
+.status b{color:var(--a2);font-weight:400;font-size:13px;line-height:1}
+.hero h1{font-size:40px;font-weight:600;letter-spacing:-.035em;line-height:1.12;margin:26px auto 14px;max-width:16ch;
+  background:linear-gradient(180deg,#fff,#a9b0c0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--dim);margin:0 auto;max-width:40ch}
+.links{display:flex;gap:26px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+.links a{position:relative;font-family:var(--mono);font-size:12.5px;color:var(--dim);padding:4px 2px;
+  transition:color .2s}
+.links a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--a1),transparent);
+  transform:scaleX(0);transition:transform .28s cubic-bezier(.22,1,.36,1)}
+.links a:hover{color:var(--ink)}
+.links a:hover::after{transform:scaleX(1)}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+  text-align:center;margin:0 0 18px}
+.list{display:grid;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:76px;
+  background:rgba(255,255,255,.045);backdrop-filter:blur(26px) saturate(170%);
+  box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 26px 60px -30px rgba(0,0,0,.72)}
+.item{position:relative;display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:center;
+  padding:21px 24px;transition:background .22s}
+.item+.item::before{content:'';position:absolute;inset-inline:24px;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1) 14%,rgba(255,255,255,.1) 86%,transparent)}
+.item:hover{background:rgba(255,255,255,.055)}
+.item .t{font-size:16.5px;font-weight:500;letter-spacing:-.015em;grid-column:1}
+.item .m{font-family:var(--mono);font-size:11.5px;color:var(--faint);grid-column:1}
+.item .go{grid-column:2;grid-row:1/3;color:var(--faint);font-size:16px;transition:.22s}
+.item:hover .go{color:var(--a1);transform:translateX(3px)}
+footer{text-align:center;padding-bottom:40px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="aurora"><div class="veil"></div><div class="field"><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="grain"></div>
+<header><div class="wrap bar">
+  <a class="logo" href="#"><span>/</span>awethon</a>
+  <nav><a href="#">Posts</a><a href="#">Tags</a><a href="#">RSS</a><div class="dot"><i></i></div></nav>
+</div></header>
+
+<div class="wrap">
+  <section class="hero">
+    <p class="status"><b>/</b>open to new opportunities</p>
+    <h1>Scala developer and functional programming enthusiast</h1>
+    <p>Backend engineering, JVM tooling and type systems — written down so I stop re-deriving them.</p>
+    <div class="links"><a href="#">GitHub</a><a href="#">LinkedIn</a><a href="#">Telegram</a><a href="#">Email</a></div>
+  </section>
+
+  <p class="label">Writing</p>
+  <section class="list">
+    <a class="item" href="#"><span class="t">My Attempt to Migrate to Mill</span><span class="m">31 Mar 2025 · 2 min</span><span class="go">→</span></a>
+    <a class="item" href="#"><span class="t">Different ways to implement wrappers in Scala</span><span class="m">20 Feb 2022 · 11 min · scala</span><span class="go">→</span></a>
+    <a class="item" href="#"><span class="t">Remote development is the future of big tech</span><span class="m">19 Feb 2022 · 4 min</span><span class="go">→</span></a>
+  </section>
+  <footer>© 2026 Aleksey Polovinkin · Concept 5 — Aurora</footer>
+</div>
+</body></html>
