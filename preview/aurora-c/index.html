@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>5 · Aurora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html{background:#08090c}
+body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+:root{
+  --bg:#08090c; --ink:#edeff3; --dim:#8f95a3; --faint:#5d6371;
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  --a1:#8ea2ff; --a2:#7fd6d0;
+  --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;
+  overflow-x:hidden}
+.aurora{position:fixed;inset:-12% -14% auto -14%;height:112vmax;z-index:0;pointer-events:none;
+  -webkit-mask-image:radial-gradient(118% 80% at 50% 4%,#000 42%,rgba(0,0,0,.72) 72%,transparent 96%);
+  mask-image:radial-gradient(118% 80% at 50% 4%,#000 42%,rgba(0,0,0,.72) 72%,transparent 96%)}
+.sky{position:absolute;inset:0;
+  background:radial-gradient(76% 46% at 50% -4%,rgba(46,104,138,.55),transparent 72%)}
+.curtains{position:absolute;inset:0}
+.curtains b{position:absolute;display:block;top:-26vmax;height:96vmax;border-radius:46% 54% 50% 50%;
+  mix-blend-mode:screen;will-change:transform,opacity;transform-origin:50% 12%;
+  -webkit-mask-image:radial-gradient(52% 56% at 50% 46%,#000 34%,rgba(0,0,0,.55) 66%,transparent 88%);
+  mask-image:radial-gradient(52% 56% at 50% 46%,#000 34%,rgba(0,0,0,.55) 66%,transparent 88%);
+  -webkit-animation-timing-function:cubic-bezier(.4,.05,.6,.95);
+  animation-timing-function:cubic-bezier(.4,.05,.6,.95);
+  -webkit-animation-iteration-count:infinite;animation-iteration-count:infinite;
+  -webkit-animation-direction:alternate;animation-direction:alternate;
+  -webkit-animation-fill-mode:both;animation-fill-mode:both}
+.curtains b:nth-child(1){left:-6vmax;width:34vmax;-webkit-filter:blur(26px) saturate(1.7);filter:blur(26px) saturate(1.7);
+  background-image:repeating-linear-gradient(94deg,rgba(255,255,255,.17) 0 3px,rgba(255,255,255,0) 3px 17px),
+    linear-gradient(to bottom,transparent 4%,rgba(72,232,170,.62) 30%,rgba(60,206,232,.5) 62%,transparent 92%);
+  -webkit-animation-name:k1;animation-name:k1;-webkit-animation-duration:19s;animation-duration:19s}
+.curtains b:nth-child(2){left:12vmax;width:27vmax;-webkit-filter:blur(30px) saturate(1.7);filter:blur(30px) saturate(1.7);
+  background-image:repeating-linear-gradient(86deg,rgba(255,255,255,.14) 0 3px,rgba(255,255,255,0) 3px 19px),
+    linear-gradient(to bottom,transparent 6%,rgba(56,206,238,.56) 34%,rgba(126,124,255,.46) 68%,transparent 94%);
+  -webkit-animation-name:k2;animation-name:k2;-webkit-animation-duration:26s;animation-duration:26s;
+  -webkit-animation-delay:-8s;animation-delay:-8s}
+.curtains b:nth-child(3){left:30vmax;width:31vmax;-webkit-filter:blur(24px) saturate(1.7);filter:blur(24px) saturate(1.7);
+  background-image:repeating-linear-gradient(98deg,rgba(255,255,255,.18) 0 3px,rgba(255,255,255,0) 3px 15px),
+    linear-gradient(to bottom,transparent 2%,rgba(96,240,196,.58) 28%,rgba(78,182,244,.46) 64%,transparent 90%);
+  -webkit-animation-name:k3;animation-name:k3;-webkit-animation-duration:31s;animation-duration:31s;
+  -webkit-animation-delay:-15s;animation-delay:-15s}
+.curtains b:nth-child(4){right:16vmax;width:29vmax;-webkit-filter:blur(32px) saturate(1.7);filter:blur(32px) saturate(1.7);
+  background-image:repeating-linear-gradient(83deg,rgba(255,255,255,.13) 0 3px,rgba(255,255,255,0) 3px 21px),
+    linear-gradient(to bottom,transparent 8%,rgba(138,126,255,.52) 32%,rgba(196,126,240,.42) 66%,transparent 92%);
+  -webkit-animation-name:k4;animation-name:k4;-webkit-animation-duration:38s;animation-duration:38s;
+  -webkit-animation-delay:-22s;animation-delay:-22s}
+.curtains b:nth-child(5){right:-2vmax;width:36vmax;-webkit-filter:blur(28px) saturate(1.7);filter:blur(28px) saturate(1.7);
+  background-image:repeating-linear-gradient(101deg,rgba(255,255,255,.15) 0 3px,rgba(255,255,255,0) 3px 18px),
+    linear-gradient(to bottom,transparent 5%,rgba(64,222,182,.5) 30%,rgba(112,140,255,.42) 66%,transparent 93%);
+  -webkit-animation-name:k5;animation-name:k5;-webkit-animation-duration:45s;animation-duration:45s;
+  -webkit-animation-delay:-30s;animation-delay:-30s}
+.curtains b:nth-child(6){left:44vmax;width:24vmax;-webkit-filter:blur(34px) saturate(1.7);filter:blur(34px) saturate(1.7);
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.12) 0 3px,rgba(255,255,255,0) 3px 23px),
+    linear-gradient(to bottom,transparent 10%,rgba(186,124,246,.44) 34%,rgba(70,214,220,.38) 70%,transparent 95%);
+  -webkit-animation-name:k6;animation-name:k6;-webkit-animation-duration:53s;animation-duration:53s;
+  -webkit-animation-delay:-41s;animation-delay:-41s}
+@keyframes k1{from{transform:translateX(-7vmax) rotate(-11deg) skewX(-7deg) scaleY(.94);opacity:.45}
+  to{transform:translateX(7vmax) rotate(-3deg) skewX(5deg) scaleY(1.14);opacity:1}}
+@keyframes k2{from{transform:translateX(6vmax) rotate(7deg) skewX(6deg) scaleY(1.12);opacity:1}
+  to{transform:translateX(-8vmax) rotate(-4deg) skewX(-8deg) scaleY(.92);opacity:.4}}
+@keyframes k3{from{transform:translateX(-5vmax) rotate(4deg) skewX(-4deg) scaleY(1.05);opacity:.55}
+  to{transform:translateX(9vmax) rotate(13deg) skewX(9deg) scaleY(1.2);opacity:1}}
+@keyframes k4{from{transform:translateX(8vmax) rotate(-9deg) skewX(8deg) scaleY(1.16);opacity:.95}
+  to{transform:translateX(-6vmax) rotate(2deg) skewX(-5deg) scaleY(.96);opacity:.38}}
+@keyframes k5{from{transform:translateX(-9vmax) rotate(9deg) skewX(-9deg) scaleY(.9);opacity:.42}
+  to{transform:translateX(5vmax) rotate(-6deg) skewX(6deg) scaleY(1.18);opacity:1}}
+@keyframes k6{from{transform:translateX(4vmax) rotate(-5deg) skewX(4deg) scaleY(1.08);opacity:.8}
+  to{transform:translateX(-7vmax) rotate(8deg) skewX(-7deg) scaleY(.94);opacity:.35}}
+@media (prefers-reduced-motion:reduce){
+  .curtains b{animation:none;opacity:.8}
+  .curtains b:nth-child(odd){transform:rotate(-5deg) skewX(-3deg)}
+  .curtains b:nth-child(even){transform:rotate(6deg) skewX(4deg)}
+}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(100% - 2.5rem,50rem);margin-inline:auto;position:relative;z-index:1}
+header{position:sticky;top:0;z-index:20;
+  background:linear-gradient(180deg,rgba(8,9,12,.85),rgba(8,9,12,.55));
+  backdrop-filter:blur(16px) saturate(170%);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:-.01em}
+.logo span{background:linear-gradient(90deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav{display:flex;gap:4px;align-items:center}
+nav a{font-size:13.5px;color:var(--dim);padding:7px 12px;border-radius:8px;transition:.18s}
+nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+.dot{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;margin-left:4px;transition:.2s}
+.dot:hover{background:rgba(255,255,255,.06)}
+.dot i{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#fff 50%,transparent 50%);opacity:.8}
+.hero{text-align:center;padding:120px 0 72px}
+.status{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);
+  margin:0;display:inline-flex;align-items:baseline;gap:.7em}
+.status b{color:var(--a2);font-weight:400;font-size:13px;line-height:1}
+.hero h1{font-size:40px;font-weight:600;letter-spacing:-.035em;line-height:1.12;margin:26px auto 14px;max-width:16ch;
+  background:linear-gradient(180deg,#fff,#a9b0c0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--dim);margin:0 auto;max-width:40ch}
+.links{display:flex;gap:26px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+.links a{position:relative;font-family:var(--mono);font-size:12.5px;color:var(--dim);padding:4px 2px;
+  transition:color .2s}
+.links a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--a1),transparent);
+  transform:scaleX(0);transition:transform .28s cubic-bezier(.22,1,.36,1)}
+.links a:hover{color:var(--ink)}
+.links a:hover::after{transform:scaleX(1)}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+  text-align:center;margin:0 0 18px}
+.list{display:grid;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:76px;
+  background:rgba(255,255,255,.045);backdrop-filter:blur(26px) saturate(170%);
+  box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 26px 60px -30px rgba(0,0,0,.72)}
+.item{position:relative;display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:center;
+  padding:21px 24px;transition:background .22s}
+.item+.item::before{content:'';position:absolute;inset-inline:24px;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1) 14%,rgba(255,255,255,.1) 86%,transparent)}
+.item:hover{background:rgba(255,255,255,.055)}
+.item .t{font-size:16.5px;font-weight:500;letter-spacing:-.015em;grid-column:1}
+.item .m{font-family:var(--mono);font-size:11.5px;color:var(--faint);grid-column:1}
+.item .go{grid-column:2;grid-row:1/3;color:var(--faint);font-size:16px;transition:.22s}
+.item:hover .go{color:var(--a1);transform:translateX(3px)}
+footer{text-align:center;padding-bottom:40px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="aurora"><div class="sky"></div>
+  <div class="curtains"><b></b><b></b><b></b><b></b><b></b><b></b></div></div>
+<div class="grain"></div>
+<header><div class="wrap bar">
+  <a class="logo" href="#"><span>/</span>awethon</a>
+  <nav><a href="#">Posts</a><a href="#">Tags</a><a href="#">RSS</a><div class="dot"><i></i></div></nav>
+</div></header>
+
+<div class="wrap">
+  <section class="hero">
+    <p class="status"><b>/</b>open to new opportunities</p>
+    <h1>Scala developer and functional programming enthusiast</h1>
+    <p>Backend engineering, JVM tooling and type systems — written down so I stop re-deriving them.</p>
+    <div class="links"><a href="#">GitHub</a><a href="#">LinkedIn</a><a href="#">Telegram</a><a href="#">Email</a></div>
+  </section>
+
+  <p class="label">Writing</p>
+  <section class="list">
+    <a class="item" href="#"><span class="t">My Attempt to Migrate to Mill</span><span class="m">31 Mar 2025 · 2 min</span><span class="go">→</span></a>
+    <a class="item" href="#"><span class="t">Different ways to implement wrappers in Scala</span><span class="m">20 Feb 2022 · 11 min · scala</span><span class="go">→</span></a>
+    <a class="item" href="#"><span class="t">Remote development is the future of big tech</span><span class="m">19 Feb 2022 · 4 min</span><span class="go">→</span></a>
+  </section>
+  <footer>© 2026 Aleksey Polovinkin · Concept 5 — Aurora</footer>
+</div>
+</body></html>
