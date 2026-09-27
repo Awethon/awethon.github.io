@@ -1,0 +1,69 @@
+---
+interface Props {
+  title: string
+}
+
+const { title } = Astro.props
+---
+
+<details>
+  <summary>{title}</summary>
+  <div class="body">
+    <slot />
+  </div>
+</details>
+
+<style>
+  details {
+    margin-block: 1.5em;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: color-mix(in oklch, var(--surface) 70%, transparent);
+    overflow: hidden;
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.1rem;
+    cursor: pointer;
+    user-select: none;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--ink-muted);
+    list-style: none;
+    transition: color 0.18s ease;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::before {
+    content: '';
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    border-inline-end: 1.8px solid currentColor;
+    border-block-end: 1.8px solid currentColor;
+    rotate: -45deg;
+    translate: 0 -1px;
+    transition: rotate 0.22s ease;
+  }
+
+  details[open] summary::before {
+    rotate: 45deg;
+  }
+
+  summary:hover {
+    color: var(--accent);
+  }
+
+  .body {
+    padding: 0 1.1rem 0.4rem;
+  }
+
+  .body :global(pre.astro-code) {
+    margin-block-start: 0;
+  }
+</style>

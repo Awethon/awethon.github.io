@@ -46,12 +46,12 @@ And Mill not having it means it can't be an easy replacement for SBT for Scala 2
 # Mill's BuildInfo plugin is not a 1:1 replacement for sbt-buildinfo
 Besides the basic functionality of generating a file with build information, sbt-buildinfo has a lot of features that Mill's BuildInfo plugin doesn't have.
 These are the options that are used in our projects and none of them are present in Mill's BuildInfo plugin:
-{{< highlight scala >}}
+```scala
 BuildInfoOption.ToJson,
 BuildInfoOption.BuildTime,
 BuildInfoOption.Traits("com.organization.common.BuildInfoT"),
 BuildInfoOption.PackagePrivate,
-{{< /highlight >}}
+```
 
 Having a trait for BuildInfo is important for us as we have internal libraries that accept it as a parameter.
 
@@ -62,4 +62,3 @@ And even for Scala 3 projects, the benefits of using Mill are not that great to 
 What I have not tested though is the parallel test execution of Mill vs SBT, where Mill can easily be better than SBT.
 
 Also, it's worth to mention how great `./mill init` migration tool is. I was able to quickly migrate most of my SBT project to Mill to test it out.
-

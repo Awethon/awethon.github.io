@@ -17,7 +17,6 @@ I've tried it with IntelliJ IDEA and was inspired by the number of advantages re
 
 Let's now look at all the advantages remote development gives to software developers and companies.
 
-
 ## No need for powerful laptops anymore
 
 No need to upgrade employees' laptops every 2-3 years. Cheaper alternatives, such as an iPad with a keyboard instead of a MacBook Pro, could be bought. Even Raspberry Pi could be used!   
@@ -70,4 +69,3 @@ Hope that you'll like the new era of remote development too!
 [Remote Development for JetBrains products](https://www.jetbrains.com/remote-development/)  
 [JetBrains Remote Development announcement post](https://blog.jetbrains.com/blog/2021/11/29/introducing-remote-development-for-jetbrains-ides/)  
 [GitHub Codespaces](https://docs.github.com/en/codespaces/overview)
-

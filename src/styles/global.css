@@ -1,0 +1,243 @@
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+
+:root {
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  --step--1: clamp(0.83rem, 0.81rem + 0.1vw, 0.89rem);
+  --step-0: clamp(1.02rem, 0.99rem + 0.17vw, 1.13rem);
+  --step-1: clamp(1.22rem, 1.16rem + 0.31vw, 1.42rem);
+  --step-2: clamp(1.47rem, 1.36rem + 0.53vw, 1.8rem);
+  --step-3: clamp(1.76rem, 1.59rem + 0.85vw, 2.27rem);
+  --step-4: clamp(2.11rem, 1.85rem + 1.3vw, 2.87rem);
+  --step-5: clamp(2.53rem, 2.14rem + 1.95vw, 3.63rem);
+
+  --measure: 68ch;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+  --radius: 0.75rem;
+
+  --bg: oklch(98.5% 0.004 95);
+  --surface: oklch(96% 0.006 95);
+  --border: oklch(88% 0.008 95);
+  --ink: oklch(26% 0.015 265);
+  --ink-muted: oklch(52% 0.015 265);
+  --accent: oklch(54% 0.19 28);
+  --accent-ink: oklch(98% 0.01 28);
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: oklch(17.5% 0.014 265);
+  --surface: oklch(21.5% 0.016 265);
+  --border: oklch(30% 0.018 265);
+  --ink: oklch(92% 0.012 95);
+  --ink-muted: oklch(68% 0.016 265);
+  --accent: oklch(72% 0.17 32);
+  --accent-ink: oklch(18% 0.03 32);
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.7;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration-color: color-mix(in oklch, var(--accent) 60%, transparent);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.08em;
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.shell {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.wrap {
+  width: min(100% - var(--gutter) * 2, 74rem);
+  margin-inline: auto;
+}
+
+.prose {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--gutter), 1fr)
+    [content-start] min(var(--measure), 100% - var(--gutter) * 2) [content-end]
+    minmax(var(--gutter), 1fr) [full-end];
+}
+
+.prose > * {
+  grid-column: content;
+}
+
+.prose > .bleed {
+  grid-column: full;
+}
+
+.prose h2 {
+  font-size: var(--step-2);
+  margin-block: 2.4em 0.6em;
+}
+
+.prose h3 {
+  font-size: var(--step-1);
+  margin-block: 1.9em 0.5em;
+}
+
+.prose p,
+.prose ul,
+.prose ol {
+  margin-block: 0 1.15em;
+}
+
+.prose blockquote {
+  margin: 1.6em 0;
+  padding: 0.2em 0 0.2em 1.2em;
+  border-left: 3px solid var(--accent);
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  font-variant-ligatures: none;
+}
+
+:not(pre) > code {
+  background: color-mix(in oklch, var(--accent) 12%, var(--surface));
+  padding: 0.15em 0.38em;
+  border-radius: 0.35em;
+  white-space: nowrap;
+}
+
+pre.astro-code {
+  margin-block: 1.5em;
+  padding: 1.15rem 1.3rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+:root[data-theme='dark'] .astro-code,
+:root[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin-block: 3rem;
+}
+
+::selection {
+  background: color-mix(in oklch, var(--accent) 28%, transparent);
+}
+
+.progress {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: 0 50%;
+  z-index: 50;
+  animation: grow linear both;
+  animation-timeline: scroll(root block);
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .progress {
+    display: none;
+  }
+}
+
+@view-transition {
+  navigation: auto;
+}

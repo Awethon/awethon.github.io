@@ -1,0 +1,87 @@
+---
+interface Props {
+  href: string
+  title: string
+  date: Date
+  tags: string[]
+  minutes: number
+}
+
+const { href, title, date, tags, minutes } = Astro.props
+const stamp = date.toISOString().slice(0, 10)
+const label = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+---
+
+<article>
+  <a class="hit" href={href} aria-label={title}></a>
+  <div class="meta">
+    <time datetime={stamp}>{label}</time>
+    <span class="dot">&middot;</span>
+    <span>{minutes} min</span>
+  </div>
+  <h2 style={`view-transition-name: post-${href.replace(/\W+/g, '-')}`}>{title}</h2>
+  <ul class="tags">
+    {tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+</article>
+
+<style>
+  article {
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+    padding-block: 1.75rem;
+    border-block-end: 1px solid var(--border);
+    transition: border-color 0.2s ease;
+  }
+
+  article:hover {
+    border-color: color-mix(in oklch, var(--accent) 45%, var(--border));
+  }
+
+  .hit {
+    position: absolute;
+    inset: -0.5rem -1rem;
+    border-radius: var(--radius);
+    z-index: 1;
+  }
+
+  article:hover .hit {
+    background: color-mix(in oklch, var(--accent) 5%, transparent);
+  }
+
+  .meta {
+    display: flex;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--ink-muted);
+  }
+
+  h2 {
+    font-size: var(--step-3);
+    transition: color 0.2s ease;
+  }
+
+  article:hover h2 {
+    color: var(--accent);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags li {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+  }
+</style>
