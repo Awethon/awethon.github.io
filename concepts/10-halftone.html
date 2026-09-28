@@ -17,78 +17,12 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;
   overflow-x:hidden}
-.aurora{position:fixed;inset:-12% -14% auto -14%;height:112vmax;z-index:0;pointer-events:none;
-  -webkit-mask-image:radial-gradient(112% 70% at 50% 0%,#000 30%,rgba(0,0,0,.6) 62%,transparent 90%);
-  mask-image:radial-gradient(112% 70% at 50% 0%,#000 30%,rgba(0,0,0,.6) 62%,transparent 90%)}
-.sky{position:absolute;inset:0;
-  background:radial-gradient(76% 46% at 50% -4%,rgba(46,104,138,.5),transparent 72%)}
-.curtains{position:absolute;inset:0;opacity:.72;
-  -webkit-mask-image:radial-gradient(circle at 50% 50%,#000 0%,rgba(0,0,0,.5) 30%,transparent 62%);
-  mask-image:radial-gradient(circle at 50% 50%,#000 0%,rgba(0,0,0,.5) 30%,transparent 62%);
-  -webkit-mask-size:5px 5px;mask-size:5px 5px;
-  -webkit-mask-repeat:repeat;mask-repeat:repeat}
-.curtains b{position:absolute;display:block;top:-16.4vmax;height:76.8vmax;width:34vw;
-  border-radius:46% 54% 50% 50%;mix-blend-mode:screen;transform-origin:50% 12%;
-  -webkit-mask-image:radial-gradient(52% 56% at 50% 46%,#000 34%,rgba(0,0,0,.55) 66%,transparent 88%);
-  mask-image:radial-gradient(52% 56% at 50% 46%,#000 34%,rgba(0,0,0,.55) 66%,transparent 88%);
-  -webkit-animation-timing-function:cubic-bezier(.4,.05,.6,.95);
-  animation-timing-function:cubic-bezier(.4,.05,.6,.95);
-  -webkit-animation-iteration-count:infinite;animation-iteration-count:infinite;
-  -webkit-animation-direction:alternate;animation-direction:alternate;
-  -webkit-animation-fill-mode:both;animation-fill-mode:both}
-.curtains b:nth-child(1){--rb:-3deg;left:-18vw;-webkit-filter:blur(16px);filter:blur(16px);
-  background:linear-gradient(to bottom,transparent 5%,rgba(72,232,170,.52) 31%,rgba(84,238,186,.38) 66%,transparent 93%);
-  -webkit-animation-name:driftA,swayA;animation-name:driftA,swayA;
-  -webkit-animation-duration:15s,83s;animation-duration:15s,83s;
-  -webkit-animation-delay:0s,-52s;animation-delay:0s,-52s}
-.curtains b:nth-child(2){--rb:2deg;left:-4vw;-webkit-filter:blur(20px);filter:blur(20px);
-  background:linear-gradient(to bottom,transparent 5%,rgba(84,238,186,.52) 31%,rgba(76,228,214,.38) 66%,transparent 93%);
-  -webkit-animation-name:driftB,swayB;animation-name:driftB,swayB;
-  -webkit-animation-duration:23s,97s;animation-duration:23s,97s;
-  -webkit-animation-delay:-14s,-26s;animation-delay:-14s,-26s}
-.curtains b:nth-child(3){--rb:-2deg;left:10vw;-webkit-filter:blur(14px);filter:blur(14px);
-  background:linear-gradient(to bottom,transparent 5%,rgba(76,228,214,.54) 31%,rgba(64,216,226,.4) 66%,transparent 93%);
-  -webkit-animation-name:driftC,swayA;animation-name:driftC,swayA;
-  -webkit-animation-duration:31s,71s;animation-duration:31s,71s;
-  -webkit-animation-delay:-8s,-64s;animation-delay:-8s,-64s}
-.curtains b:nth-child(4){--rb:3deg;left:24vw;-webkit-filter:blur(22px);filter:blur(22px);
-  background:linear-gradient(to bottom,transparent 5%,rgba(64,216,226,.5) 31%,rgba(90,170,248,.37) 66%,transparent 93%);
-  -webkit-animation-name:driftA,swayB;animation-name:driftA,swayB;
-  -webkit-animation-duration:19s,109s;animation-duration:19s,109s;
-  -webkit-animation-delay:-17s,-59s;animation-delay:-17s,-59s}
-.curtains b:nth-child(5){--rb:-3deg;left:38vw;-webkit-filter:blur(17px);filter:blur(17px);
-  background:linear-gradient(to bottom,transparent 5%,rgba(90,170,248,.5) 31%,rgba(104,156,250,.37) 66%,transparent 93%);
-  -webkit-animation-name:driftB,swayA;animation-name:driftB,swayA;
-  -webkit-animation-duration:41s,61s;animation-duration:41s,61s;
-  -webkit-animation-delay:-22s,-11s;animation-delay:-22s,-11s}
-.curtains b:nth-child(6){--rb:1deg;left:52vw;-webkit-filter:blur(21px);filter:blur(21px);
-  background:linear-gradient(to bottom,transparent 5%,rgba(104,156,250,.5) 31%,rgba(118,144,252,.37) 66%,transparent 93%);
-  -webkit-animation-name:driftC,swayB;animation-name:driftC,swayB;
-  -webkit-animation-duration:27s,89s;animation-duration:27s,89s;
-  -webkit-animation-delay:-4s,-72s;animation-delay:-4s,-72s}
-.curtains b:nth-child(7){--rb:-2deg;left:66vw;-webkit-filter:blur(15px);filter:blur(15px);
-  background:linear-gradient(to bottom,transparent 5%,rgba(134,138,252,.5) 31%,rgba(150,132,250,.37) 66%,transparent 93%);
-  -webkit-animation-name:driftA,swayA;animation-name:driftA,swayA;
-  -webkit-animation-duration:35s,103s;animation-duration:35s,103s;
-  -webkit-animation-delay:-28s,-46s;animation-delay:-28s,-46s}
-.curtains b:nth-child(8){--rb:2deg;left:80vw;-webkit-filter:blur(19px);filter:blur(19px);
-  background:linear-gradient(to bottom,transparent 5%,rgba(150,132,250,.48) 31%,rgba(164,130,248,.35) 66%,transparent 93%);
-  -webkit-animation-name:driftB,swayB;animation-name:driftB,swayB;
-  -webkit-animation-duration:17s,67s;animation-duration:17s,67s;
-  -webkit-animation-delay:-7s,-6s;animation-delay:-7s,-6s}
-@keyframes driftA{from{transform:translateX(-7vmax) skewX(-5deg) scaleY(.93);opacity:.5}
-  to{transform:translateX(7vmax) skewX(6deg) scaleY(1.16);opacity:1}}
-@keyframes driftB{from{transform:translateX(5vmax) skewX(5deg) scaleY(.95);opacity:.48}
-  to{transform:translateX(-5vmax) skewX(-6deg) scaleY(1.14);opacity:1}}
-@keyframes driftC{from{transform:translateX(-10vmax) skewX(-4deg) scaleY(.9);opacity:.52}
-  to{transform:translateX(10vmax) skewX(5deg) scaleY(1.2);opacity:1}}
-@keyframes swayA{from{rotate:calc(var(--rb) - 5deg)}to{rotate:calc(var(--rb) + 5deg)}}
-@keyframes swayB{from{rotate:calc(var(--rb) + 4deg)}to{rotate:calc(var(--rb) - 4deg)}}
-@media (prefers-reduced-motion:reduce){
-  .curtains b{animation:none;rotate:var(--rb);opacity:.85}
-  .curtains b:nth-child(odd){transform:skewX(-3deg)}
-  .curtains b:nth-child(even){transform:skewX(4deg)}
-}
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(74% 44% at 50% -6%,rgba(44,96,130,.4),transparent 72%),
+  radial-gradient(28% 20% at 50% -4%,rgba(127,214,208,.14),transparent 74%)}
+.dots{position:fixed;inset:0;z-index:0;width:100%;height:100%;display:block;pointer-events:none;
+  -webkit-mask-image:radial-gradient(128% 88% at 50% -4%,#000 30%,rgba(0,0,0,.6) 62%,transparent 94%);
+  mask-image:radial-gradient(128% 88% at 50% -4%,#000 30%,rgba(0,0,0,.6) 62%,transparent 94%)}
 .grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E")}
 a{color:inherit;text-decoration:none}
@@ -123,7 +57,7 @@ nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
 .label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
   text-align:center;margin:0 0 18px}
 .list{display:grid;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:76px;
-  background:rgba(255,255,255,.045);backdrop-filter:blur(26px) saturate(170%);
+  background:rgba(8,9,12,.5);backdrop-filter:blur(26px) saturate(170%);
   box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 26px 60px -30px rgba(0,0,0,.72)}
 .item{position:relative;display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:center;
   padding:21px 24px;transition:background .22s}
@@ -138,8 +72,8 @@ footer{text-align:center;padding-bottom:40px;font-family:var(--mono);font-size:1
 </style>
 </head>
 <body>
-<div class="aurora" aria-hidden="true"><div class="sky"></div>
-  <div class="curtains"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div></div>
+<div class="sky" aria-hidden="true"></div>
+<canvas class="dots" id="dots" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
 <header><div class="wrap bar">
   <a class="logo" href="#"><span>/</span>awethon</a>
@@ -162,4 +96,74 @@ footer{text-align:center;padding-bottom:40px;font-family:var(--mono);font-size:1
   </section>
   <footer>© 2026 Aleksey Polovinkin · Concept 10 — Halftone</footer>
 </div>
+
+<script>
+(function(){
+  var cv=document.getElementById('dots');
+  var ctx=cv.getContext&&cv.getContext('2d');
+  if(!ctx)return;
+  var mq=window.matchMedia('(prefers-reduced-motion: reduce)');
+  var STEP=13,MAXR=4.6,TAU=Math.PI*2,PI=Math.PI;
+  var w=0,h=0,grad=null,raf=0;
+
+  function resize(){
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    w=cv.clientWidth;h=cv.clientHeight;
+    cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    grad=ctx.createLinearGradient(0,0,w,0);
+    grad.addColorStop(0,'#48e8aa');
+    grad.addColorStop(.26,'#4ce4d6');
+    grad.addColorStop(.54,'#5aaaf8');
+    grad.addColorStop(.78,'#8e8afc');
+    grad.addColorStop(1,'#a482f8');
+  }
+
+  function draw(t){
+    ctx.clearRect(0,0,w,h);
+    ctx.globalAlpha=.88;
+    ctx.fillStyle=grad;
+    ctx.beginPath();
+    var cols=Math.ceil(w/STEP)+1,rows=Math.ceil(h/STEP)+1,r,c,px,py,x,y,fall,v,rad;
+    for(r=0;r<rows;r++){
+      py=r*STEP;y=py/h;
+      fall=Math.exp(-Math.pow(y*1.5,1.9));
+      if(fall<.01)break;
+      for(c=0;c<cols;c++){
+        px=c*STEP;x=px/w;
+        v=(.5+.5*Math.sin((x*2.6+y*0.9)*PI-t*.55))*.36
+         +(.5+.5*Math.sin((x*-1.9+y*2.4)*PI+t*.37))*.32
+         +(.5+.5*Math.sin((x*5.3-y*0.7)*PI+t*.83))*.32;
+        v=(v-.34)*1.52;
+        if(v<=0)continue;
+        v*=fall;
+        rad=MAXR*Math.pow(v,1.35);
+        if(rad<.35)continue;
+        ctx.moveTo(px+rad,py);
+        ctx.arc(px,py,rad,0,TAU);
+      }
+    }
+    ctx.fill();
+  }
+
+  var t0=0,last=-1e9;
+  function frame(now){
+    if(!t0)t0=now;
+    if(now-last>=33){last=now;draw((now-t0)/1000);}
+    raf=requestAnimationFrame(frame);
+  }
+  function start(){
+    if(raf)cancelAnimationFrame(raf);
+    raf=0;
+    resize();
+    if(mq.matches){draw(3);return;}
+    t0=0;last=-1e9;
+    raf=requestAnimationFrame(frame);
+  }
+  var rt=0;
+  window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(start,160);});
+  if(mq.addEventListener)mq.addEventListener('change',start);
+  start();
+})();
+</script>
 </body></html>
