@@ -137,6 +137,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font
 @keyframes r12{from{rotate:-3deg}to{rotate:7deg}}
 @keyframes r13{from{rotate:-9deg}to{rotate:1deg}}
 @media (prefers-reduced-motion:reduce){
+  .led{animation:none}
   .curtains b{animation:none;rotate:0deg;opacity:.8}
   .curtains b:nth-child(odd){transform:rotate(-5deg) skewX(-3deg)}
   .curtains b:nth-child(even){transform:rotate(6deg) skewX(4deg)}
@@ -157,7 +158,25 @@ nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
 .dot i{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#fff 50%,transparent 50%);opacity:.8}
 .hero{text-align:center;padding:120px 0 72px}
 .status{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);
-  margin:0;display:inline-flex;align-items:baseline;gap:.7em}
+  margin:0;display:inline-flex;align-items:center;gap:.8em;white-space:nowrap}
+.slot{display:block;flex:none;padding:1.5px;border-radius:4.5px;
+  background:linear-gradient(to bottom,rgba(0,0,0,.55),rgba(255,255,255,.04));
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.85),inset 0 -.5px 0 rgba(255,255,255,.1),
+    0 .5px 0 rgba(255,255,255,.08)}
+.led{position:relative;display:block;width:11.7px;height:5.4px;border-radius:3px;
+  background:linear-gradient(to bottom,#8df6e4 0%,#3ad2bb 42%,#16907a 78%,#0d6354 100%);
+  box-shadow:0 0 7px .5px rgba(74,226,198,.55),0 0 20px rgba(74,226,198,.22),
+    0 .5px 1px rgba(0,0,0,.6),
+    inset 0 .5px 0 rgba(255,255,255,.85),
+    inset 0 -1.2px 2px rgba(0,0,0,.5);
+  animation:breathe 5.5s ease-in-out infinite}
+.led::after{content:'';position:absolute;left:1.8px;right:1.8px;top:.6px;height:1.8px;
+  border-radius:2px 2px 3px 3px;
+  background:linear-gradient(to bottom,rgba(255,255,255,.82),rgba(255,255,255,.12) 70%,rgba(255,255,255,0))}
+@keyframes breathe{0%,100%{box-shadow:0 0 7px .5px rgba(74,226,198,.55),0 0 20px rgba(74,226,198,.22),
+    0 .5px 1px rgba(0,0,0,.6),inset 0 .5px 0 rgba(255,255,255,.85),inset 0 -1.2px 2px rgba(0,0,0,.5)}
+  50%{box-shadow:0 0 10px 1px rgba(74,226,198,.78),0 0 28px rgba(74,226,198,.34),
+    0 .5px 1px rgba(0,0,0,.6),inset 0 .5px 0 rgba(255,255,255,.95),inset 0 -1.2px 2px rgba(0,0,0,.5)}}
 .status b{color:var(--a2);font-weight:400;font-size:13px;line-height:1}
 .hero h1{font-size:40px;font-weight:600;letter-spacing:-.035em;line-height:1.12;margin:26px auto 14px;max-width:16ch;
   background:linear-gradient(180deg,#fff,#a9b0c0);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -198,7 +217,7 @@ footer{text-align:center;padding-bottom:40px;font-family:var(--mono);font-size:1
 
 <div class="wrap">
   <section class="hero">
-    <p class="status"><b>/</b>open to new opportunities</p>
+    <p class="status"><span class="slot"><span class="led"></span></span>open to new opportunities</p>
     <h1>Scala developer and functional programming enthusiast</h1>
     <p>Backend engineering, JVM tooling and type systems — written down so I stop re-deriving them.</p>
     <div class="links"><a href="#">GitHub</a><a href="#">LinkedIn</a><a href="#">Telegram</a><a href="#">Email</a></div>
