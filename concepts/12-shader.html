@@ -133,15 +133,17 @@ float fbm(vec2 p){
   }
   return v;
 }
-vec3 band(vec2 p,float t,float yb,float a1,float f1,float s1,float a2,float f2,float s2,
-          float th,vec3 ca,vec3 cb,float seed){
-  float bob=0.024*sin(t*0.13+seed);
-  float warp=(fbm(vec2(p.x*1.7+seed*3.0,t*0.06+seed))-0.5)*0.08;
-  float c=yb+bob+warp+a1*sin(p.x*f1+t*s1+seed)+a2*sin(p.x*f2-t*s2+seed*2.0);
-  float thm=th*(0.6+0.4*sin(p.x*2.3-t*0.21+seed));
-  float d=(p.y-c)/max(thm,0.012);
-  float hn=clamp((fbm(vec2(p.x*1.9+t*0.05+seed*5.0,yb*4.0+t*0.03))-0.30)/0.36,0.0,1.0);
-  return mix(ca,cb,hn)*exp(-d*d);
+vec3 band(vec2 p,float t,float yb,float a1,float f1,float a2,float f2,
+          float drift,float sp2,float ext,float feather,vec3 ca,vec3 cb,float seed){
+  float xx=p.x+t*drift;
+  float bob=0.032*sin(t*0.11+seed);
+  float warp=(fbm(vec2(p.x*1.6+seed*3.0,t*0.05+seed))-0.5)*0.07;
+  float c=yb+bob+warp+a1*sin(xx*f1+seed)+a2*sin(xx*f2-t*sp2+seed*2.0);
+  float d=p.y-c;
+  float edge=smoothstep(feather,-feather*0.6,d);
+  float up=exp(-max(-d,0.0)/ext);
+  float hn=clamp((fbm(vec2(p.x*1.8+t*0.05+seed*5.0,yb*4.0+t*0.03))-0.30)/0.36,0.0,1.0);
+  return mix(ca,cb,hn)*edge*up;
 }
 void main(){
   vec2 p=gl_FragCoord.xy/u_res;
@@ -156,13 +158,14 @@ void main(){
     +vec3(0.010,0.030,0.038)*smoothstep(0.42,-0.12,p.y);
 
   vec3 glow=vec3(0.0);
-  glow+=band(q,t,0.075,0.075,5.0,0.30,0.030, 9.0,0.47,0.085,vec3(0.18,0.98,0.56),vec3(0.20,0.86,0.92),0.0)*0.66;
-  glow+=band(q,t,0.135,0.100,3.4,0.22,0.038, 7.2,0.35,0.112,vec3(0.20,0.88,0.95),vec3(0.30,0.68,1.00),1.7)*0.76;
-  glow+=band(q,t,0.215,0.065,6.6,0.38,0.028,11.5,0.55,0.070,vec3(0.36,0.72,1.00),vec3(0.20,0.95,0.70),3.1)*0.56;
-  glow+=band(q,t,0.295,0.120,2.6,0.17,0.045, 5.4,0.29,0.138,vec3(0.52,0.46,1.00),vec3(0.26,0.76,0.98),4.6)*0.50;
-  glow+=band(q,t,0.385,0.085,4.2,0.26,0.032, 8.8,0.42,0.096,vec3(0.78,0.44,0.98),vec3(0.46,0.48,1.00),6.2)*0.38;
+  glow+=band(q,t,0.34,0.090,4.2,0.034, 8.1, 0.055,0.31,0.30,0.052,vec3(0.15,0.98,0.52),vec3(0.16,0.90,0.80),0.0)*0.34;
+  glow+=band(q,t,0.29,0.120,2.8,0.042, 6.3,-0.040,0.24,0.34,0.060,vec3(0.16,0.82,1.00),vec3(0.30,0.56,1.00),1.7)*0.30;
+  glow+=band(q,t,0.40,0.070,6.0,0.026,11.2, 0.080,0.43,0.26,0.044,vec3(0.34,0.54,1.00),vec3(0.62,0.38,1.00),3.1)*0.27;
+  glow+=band(q,t,0.25,0.140,2.0,0.050, 4.6,-0.028,0.19,0.38,0.068,vec3(0.66,0.36,1.00),vec3(0.96,0.36,0.80),4.6)*0.24;
+  glow+=band(q,t,0.45,0.100,3.4,0.030, 7.4, 0.065,0.36,0.24,0.050,vec3(0.18,0.94,0.74),vec3(0.20,0.78,0.98),6.2)*0.26;
   glow*=smoothstep(0.80,0.02,p.y);
-  glow=vec3(1.0)-exp(-glow*1.35);
+  glow=vec3(1.0)-exp(-glow*1.15);
+  glow=max(mix(vec3(dot(glow,vec3(0.299,0.587,0.114))),glow,1.4),vec3(0.0));
 
   float vig=smoothstep(1.40,0.34,length((p-vec2(0.5,0.16))*vec2(0.98,1.08)));
   vec3 col=sky+glow*vig;
