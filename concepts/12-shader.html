@@ -133,15 +133,22 @@ float fbm(vec2 p){
   }
   return v;
 }
-vec3 tint(float y){
-  vec3 c=mix(vec3(0.16,0.96,0.58),vec3(0.20,0.82,0.96),smoothstep(0.0,0.32,y));
-  return mix(c,vec3(0.54,0.42,1.00),smoothstep(0.28,0.72,y));
+vec3 tint(float y,float n){
+  vec3 c=mix(vec3(0.16,0.98,0.52),vec3(0.18,0.80,0.98),smoothstep(0.20,0.68,n));
+  c=mix(c,vec3(0.56,0.40,1.00),smoothstep(0.26,0.82,y*0.75+n*0.45));
+  c=mix(c,vec3(0.98,0.38,0.74),smoothstep(0.74,0.97,n)*smoothstep(0.22,0.70,y)*0.8);
+  return c;
+}
+float hue(vec2 p,float t,float seed){
+  return clamp((fbm(vec2(p.x*2.2+t*0.07+seed,p.y*1.4-t*0.05))-0.30)/0.36,0.0,1.0);
 }
 float sheet(vec2 p,float t,float seed,float freq,float amp,float spd,out float wx){
+  float depth=smoothstep(-0.05,0.75,p.y);
   float w1=fbm(vec2(p.y*1.5+seed*3.1,t*spd+seed));
-  float w2=fbm(vec2(p.y*4.4-t*spd*1.9,seed*6.7+11.0));
-  wx=p.x+(w1-0.5)*amp+(w2-0.5)*amp*0.42;
-  float band=fbm(vec2(wx*freq+t*0.02+seed*2.0,seed*9.0));
+  float w2=fbm(vec2(p.y*4.4-t*spd*2.2,seed*6.7+11.0));
+  float wave=sin(p.y*8.5-t*0.85+seed*2.3)*0.055+sin(p.y*14.0-t*1.35+seed*4.1)*0.026;
+  wx=p.x+(w1-0.5)*amp+(w2-0.5)*amp*0.42+wave*(0.35+depth);
+  float band=fbm(vec2(wx*freq+t*0.06+seed*2.0,seed*9.0));
   float body=smoothstep(0.47,0.64,band);
   float head=smoothstep(-0.16,0.07,p.y);
   float tail=smoothstep(0.66,0.04,p.y);
@@ -166,12 +173,12 @@ void main(){
   float fade=mix(1.0,0.26,smoothstep(0.02,0.58,q.y));
   vec3 glow=vec3(0.0);
   float wx;
-  float s1=sheet(q,t,0.0,2.8,0.30,0.13,wx);
-  glow+=tint(q.y)*s1*filament(wx,q.y,t,0.0)*fade*0.58;
-  float s2=sheet(q,t,4.3,4.2,0.22,0.09,wx);
-  glow+=tint(q.y+0.10)*s2*filament(wx,q.y,t,4.3)*fade*0.48;
-  float s3=sheet(q,t,9.1,2.0,0.40,0.17,wx);
-  glow+=tint(q.y-0.07)*s3*filament(wx,q.y,t,9.1)*fade*0.40;
+  float s1=sheet(q,t,0.0,2.8,0.30,0.22,wx);
+  glow+=tint(q.y,hue(vec2(wx,q.y),t,0.0))*s1*filament(wx,q.y,t,0.0)*fade*0.58;
+  float s2=sheet(q,t,4.3,4.2,0.22,0.16,wx);
+  glow+=tint(q.y+0.10,hue(vec2(wx,q.y),t,5.4))*s2*filament(wx,q.y,t,4.3)*fade*0.48;
+  float s3=sheet(q,t,9.1,2.0,0.40,0.28,wx);
+  glow+=tint(q.y-0.07,hue(vec2(wx,q.y),t,12.7))*s3*filament(wx,q.y,t,9.1)*fade*0.40;
   glow=vec3(1.0)-exp(-glow*1.6);
 
   float vig=smoothstep(1.25,0.32,length((p-vec2(0.5,0.14))*vec2(1.05,1.05)));
