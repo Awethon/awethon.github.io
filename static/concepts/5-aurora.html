@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
+<title>5 · Aurora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html{background:#08090c}
+body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+:root{
+  --bg:#08090c; --ink:#edeff3; --dim:#8f95a3; --faint:#5d6371;
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  --a1:#8ea2ff; --a2:#7fd6d0;
+  --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;
+  overflow-x:hidden}
+.aurora{position:fixed;inset:-12% -14% auto -14%;height:112vmax;z-index:0;pointer-events:none;
+  -webkit-mask-image:radial-gradient(118% 80% at 50% 4%,#000 42%,rgba(0,0,0,.72) 72%,transparent 96%);
+  mask-image:radial-gradient(118% 80% at 50% 4%,#000 42%,rgba(0,0,0,.72) 72%,transparent 96%)}
+.sky{position:absolute;inset:0;
+  background:radial-gradient(76% 46% at 50% -4%,rgba(46,104,138,.55),transparent 72%)}
+.curtains{position:absolute;inset:0}
+.curtains b{position:absolute;display:block;top:-16.4vmax;height:76.8vmax;border-radius:46% 54% 50% 50%;
+  mix-blend-mode:screen;transform-origin:50% 12%;
+  -webkit-mask-image:radial-gradient(52% 56% at 50% 46%,#000 34%,rgba(0,0,0,.55) 66%,transparent 88%);
+  mask-image:radial-gradient(52% 56% at 50% 46%,#000 34%,rgba(0,0,0,.55) 66%,transparent 88%);
+  -webkit-animation-timing-function:cubic-bezier(.4,.05,.6,.95);
+  animation-timing-function:cubic-bezier(.4,.05,.6,.95);
+  -webkit-animation-iteration-count:infinite;animation-iteration-count:infinite;
+  -webkit-animation-direction:alternate;animation-direction:alternate;
+  -webkit-animation-fill-mode:both;animation-fill-mode:both}
+.curtains b:nth-child(1){rotate:-4deg;left:-21.8vw;width:27.6vw;-webkit-filter:blur(22px);filter:blur(22px);
+  background-image:repeating-linear-gradient(93deg,rgba(255,255,255,.13) 0 3px,rgba(255,255,255,0) 3px 13px),
+    linear-gradient(to bottom,transparent 5%,rgba(72, 232, 170, 0.4) 31%,rgba(84, 238, 186, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k1,r1;animation-name:k1,r1;-webkit-animation-duration:15s,83s;animation-duration:15s,83s;
+  -webkit-animation-delay:0s,-52s;animation-delay:0s,-52s}
+.curtains b:nth-child(2){rotate:3deg;left:-14.4vw;width:32.2vw;-webkit-filter:blur(26px);filter:blur(26px);
+  background-image:repeating-linear-gradient(86deg,rgba(255,255,255,.09) 0 3px,rgba(255,255,255,0) 3px 19px),
+    linear-gradient(to bottom,transparent 5%,rgba(84, 238, 186, 0.4) 31%,rgba(96, 240, 200, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k2,r2;animation-name:k2,r2;-webkit-animation-duration:23s,97s;animation-duration:23s,97s;
+  -webkit-animation-delay:-14s,-26s;animation-delay:-14s,-26s}
+.curtains b:nth-child(3){rotate:-2deg;left:-7.1vw;width:36.8vw;-webkit-filter:blur(20px);filter:blur(20px);
+  background-image:repeating-linear-gradient(98deg,rgba(255,255,255,.15) 0 3px,rgba(255,255,255,0) 3px 11px),
+    linear-gradient(to bottom,transparent 5%,rgba(96, 240, 200, 0.4) 31%,rgba(76, 228, 214, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k3,r3;animation-name:k3,r3;-webkit-animation-duration:31s,71s;animation-duration:31s,71s;
+  -webkit-animation-delay:-8s,-64s;animation-delay:-8s,-64s}
+.curtains b:nth-child(4){rotate:4deg;left:7.2vw;width:27.6vw;-webkit-filter:blur(30px);filter:blur(30px);
+  background-image:repeating-linear-gradient(83deg,rgba(255,255,255,.08) 0 3px,rgba(255,255,255,0) 3px 23px),
+    linear-gradient(to bottom,transparent 5%,rgba(76, 228, 214, 0.4) 31%,rgba(64, 216, 226, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k4,r4;animation-name:k4,r4;-webkit-animation-duration:19s,109s;animation-duration:19s,109s;
+  -webkit-animation-delay:-17s,-59s;animation-delay:-17s,-59s}
+.curtains b:nth-child(5){rotate:-3deg;left:14.6vw;width:32.2vw;-webkit-filter:blur(24px);filter:blur(24px);
+  background-image:repeating-linear-gradient(101deg,rgba(255,255,255,.12) 0 3px,rgba(255,255,255,0) 3px 15px),
+    linear-gradient(to bottom,transparent 5%,rgba(64, 216, 226, 0.4) 31%,rgba(60, 206, 234, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k5,r5;animation-name:k5,r5;-webkit-animation-duration:41s,61s;animation-duration:41s,61s;
+  -webkit-animation-delay:-22s,-11s;animation-delay:-22s,-11s}
+.curtains b:nth-child(6){rotate:1deg;left:21.9vw;width:36.8vw;-webkit-filter:blur(28px);filter:blur(28px);
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.10) 0 3px,rgba(255,255,255,0) 3px 29px),
+    linear-gradient(to bottom,transparent 5%,rgba(60, 206, 234, 0.4) 31%,rgba(66, 194, 242, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k6,r6;animation-name:k6,r6;-webkit-animation-duration:27s,89s;animation-duration:27s,89s;
+  -webkit-animation-delay:-4s,-72s;animation-delay:-4s,-72s}
+.curtains b:nth-child(7){rotate:-3deg;left:36.2vw;width:27.6vw;-webkit-filter:blur(22px);filter:blur(22px);
+  background-image:repeating-linear-gradient(95deg,rgba(255,255,255,.14) 0 3px,rgba(255,255,255,0) 3px 17px),
+    linear-gradient(to bottom,transparent 5%,rgba(66, 194, 242, 0.4) 31%,rgba(78, 182, 246, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k7,r7;animation-name:k7,r7;-webkit-animation-duration:35s,103s;animation-duration:35s,103s;
+  -webkit-animation-delay:-28s,-46s;animation-delay:-28s,-46s}
+.curtains b:nth-child(8){rotate:2deg;left:43.6vw;width:32.2vw;-webkit-filter:blur(32px);filter:blur(32px);
+  background-image:repeating-linear-gradient(88deg,rgba(255,255,255,.08) 0 3px,rgba(255,255,255,0) 3px 21px),
+    linear-gradient(to bottom,transparent 5%,rgba(78, 182, 246, 0.4) 31%,rgba(90, 170, 248, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k8,r8;animation-name:k8,r8;-webkit-animation-duration:17s,67s;animation-duration:17s,67s;
+  -webkit-animation-delay:-7s,-6s;animation-delay:-7s,-6s}
+.curtains b:nth-child(9){rotate:-1deg;left:50.9vw;width:36.8vw;-webkit-filter:blur(26px);filter:blur(26px);
+  background-image:repeating-linear-gradient(97deg,rgba(255,255,255,.11) 0 3px,rgba(255,255,255,0) 3px 13px),
+    linear-gradient(to bottom,transparent 5%,rgba(90, 170, 248, 0.4) 31%,rgba(104, 156, 250, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k9,r9;animation-name:k9,r9;-webkit-animation-duration:47s,93s;animation-duration:47s,93s;
+  -webkit-animation-delay:-4s,-67s;animation-delay:-4s,-67s}
+.curtains b:nth-child(10){rotate:4deg;left:65.2vw;width:27.6vw;-webkit-filter:blur(20px);filter:blur(20px);
+  background-image:repeating-linear-gradient(84deg,rgba(255,255,255,.13) 0 3px,rgba(255,255,255,0) 3px 25px),
+    linear-gradient(to bottom,transparent 5%,rgba(104, 156, 250, 0.4) 31%,rgba(118, 144, 252, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k10,r10;animation-name:k10,r10;-webkit-animation-duration:25s,79s;animation-duration:25s,79s;
+  -webkit-animation-delay:-18s,-28s;animation-delay:-18s,-28s}
+.curtains b:nth-child(11){rotate:-2deg;left:72.6vw;width:32.2vw;-webkit-filter:blur(30px);filter:blur(30px);
+  background-image:repeating-linear-gradient(99deg,rgba(255,255,255,.09) 0 3px,rgba(255,255,255,0) 3px 19px),
+    linear-gradient(to bottom,transparent 5%,rgba(118, 144, 252, 0.4) 31%,rgba(134, 138, 252, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k11,r11;animation-name:k11,r11;-webkit-animation-duration:37s,111s;animation-duration:37s,111s;
+  -webkit-animation-delay:-13s,0s;animation-delay:-13s,0s}
+.curtains b:nth-child(12){rotate:2deg;left:79.9vw;width:36.8vw;-webkit-filter:blur(24px);filter:blur(24px);
+  background-image:repeating-linear-gradient(91deg,rgba(255,255,255,.12) 0 3px,rgba(255,255,255,0) 3px 31px),
+    linear-gradient(to bottom,transparent 5%,rgba(134, 138, 252, 0.4) 31%,rgba(150, 132, 250, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k12,r12;animation-name:k12,r12;-webkit-animation-duration:21s,73s;animation-duration:21s,73s;
+  -webkit-animation-delay:0s,-46s;animation-delay:0s,-46s}
+.curtains b:nth-child(13){rotate:-4deg;left:94.2vw;width:27.6vw;-webkit-filter:blur(28px);filter:blur(28px);
+  background-image:repeating-linear-gradient(87deg,rgba(255,255,255,.10) 0 3px,rgba(255,255,255,0) 3px 15px),
+    linear-gradient(to bottom,transparent 5%,rgba(150, 132, 250, 0.4) 31%,rgba(164, 130, 248, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k13,r13;animation-name:k13,r13;-webkit-animation-duration:51s,101s;animation-duration:51s,101s;
+  -webkit-animation-delay:-32s,-27s;animation-delay:-32s,-27s}
+@keyframes k1{from{transform:translateX(-7vmax) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(7vmax) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k2{from{transform:translateX(4vmax) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-4vmax) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k3{from{transform:translateX(-9vmax) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(9vmax) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k4{from{transform:translateX(5vmax) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-5vmax) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k5{from{transform:translateX(-3vmax) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(3vmax) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k6{from{transform:translateX(8vmax) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-8vmax) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k7{from{transform:translateX(-4vmax) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(4vmax) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k8{from{transform:translateX(10vmax) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-10vmax) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k9{from{transform:translateX(-6vmax) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(6vmax) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k10{from{transform:translateX(3vmax) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-3vmax) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k11{from{transform:translateX(-7vmax) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(7vmax) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k12{from{transform:translateX(5vmax) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-5vmax) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k13{from{transform:translateX(-9vmax) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(9vmax) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes r1{from{rotate:-9deg}to{rotate:1deg}}
+@keyframes r2{from{rotate:-2deg}to{rotate:8deg}}
+@keyframes r3{from{rotate:-7deg}to{rotate:3deg}}
+@keyframes r4{from{rotate:-1deg}to{rotate:9deg}}
+@keyframes r5{from{rotate:-8deg}to{rotate:2deg}}
+@keyframes r6{from{rotate:-4deg}to{rotate:6deg}}
+@keyframes r7{from{rotate:-8deg}to{rotate:2deg}}
+@keyframes r8{from{rotate:-3deg}to{rotate:7deg}}
+@keyframes r9{from{rotate:-6deg}to{rotate:4deg}}
+@keyframes r10{from{rotate:-1deg}to{rotate:9deg}}
+@keyframes r11{from{rotate:-7deg}to{rotate:3deg}}
+@keyframes r12{from{rotate:-3deg}to{rotate:7deg}}
+@keyframes r13{from{rotate:-9deg}to{rotate:1deg}}
+@media (prefers-reduced-motion:reduce){
+  .curtains b{animation:none;rotate:0deg;opacity:.8}
+  .curtains b:nth-child(odd){transform:rotate(-5deg) skewX(-3deg)}
+  .curtains b:nth-child(even){transform:rotate(6deg) skewX(4deg)}
+}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(100% - 2.5rem,50rem);margin-inline:auto;position:relative;z-index:1}
+header{position:sticky;top:0;z-index:20;
+  background:linear-gradient(180deg,rgba(8,9,12,.85),rgba(8,9,12,.55));
+  backdrop-filter:blur(16px) saturate(170%);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:-.01em}
+.logo span{background:linear-gradient(90deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav{display:flex;gap:4px;align-items:center}
+nav a{font-size:13.5px;color:var(--dim);padding:7px 12px;border-radius:8px;transition:.18s}
+nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+.dot{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;margin-left:4px;transition:.2s}
+.dot:hover{background:rgba(255,255,255,.06)}
+.dot i{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#fff 50%,transparent 50%);opacity:.8}
+.hero{text-align:center;padding:120px 0 72px}
+.status{display:inline-flex;align-items:center;gap:9px;margin:0;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--dim);
+  padding:6px 15px 6px 13px;border-radius:999px;white-space:nowrap;
+  background:rgba(255,255,255,.045);backdrop-filter:blur(26px) saturate(170%);
+  -webkit-backdrop-filter:blur(26px) saturate(170%);border:1px solid var(--line);
+  box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 12px 28px -18px rgba(0,0,0,.72)}
+.status b{width:6px;height:6px;border-radius:50%;flex:none;background:var(--a2);
+  box-shadow:0 0 8px var(--a2),0 0 16px rgba(127,214,208,.45)}
+.hero h1{font-size:40px;font-weight:600;letter-spacing:-.035em;line-height:1.12;margin:26px auto 14px;max-width:16ch;
+  background:linear-gradient(180deg,#fff,#a9b0c0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--dim);margin:0 auto;max-width:40ch}
+.links{display:flex;gap:26px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+.links a{position:relative;font-family:var(--mono);font-size:12.5px;color:var(--dim);padding:4px 2px;
+  transition:color .2s}
+.links a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--a1),transparent);
+  transform:scaleX(0);transition:transform .28s cubic-bezier(.22,1,.36,1)}
+.links a:hover{color:var(--ink)}
+.links a:hover::after{transform:scaleX(1)}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+  text-align:center;margin:0 0 18px}
+.list{display:grid;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:76px;
+  background:rgba(255,255,255,.045);backdrop-filter:blur(26px) saturate(170%);
+  box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 26px 60px -30px rgba(0,0,0,.72)}
+.item{position:relative;display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:center;
+  padding:21px 24px;transition:background .22s}
+.item+.item::before{content:'';position:absolute;inset-inline:24px;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1) 14%,rgba(255,255,255,.1) 86%,transparent)}
+.item:hover{background:rgba(255,255,255,.055)}
+.item .t{font-size:16.5px;font-weight:500;letter-spacing:-.015em;grid-column:1}
+.item .m{font-family:var(--mono);font-size:11.5px;color:var(--faint);grid-column:1}
+.item .go{grid-column:2;grid-row:1/3;color:var(--faint);font-size:16px;transition:.22s}
+.item:hover .go{color:var(--a1);transform:translateX(3px)}
+footer{text-align:center;padding-bottom:40px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="aurora"><div class="sky"></div>
+  <div class="curtains"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div></div>
+<div class="grain"></div>
+<header><div class="wrap bar">
+  <a class="logo" href="#"><span>/</span>awethon</a>
+  <nav><a href="#">Posts</a><a href="#">Tags</a><a href="#">RSS</a><div class="dot"><i></i></div></nav>
+</div></header>
+
+<div class="wrap">
+  <section class="hero">
+    <p class="status"><b></b>Open to new opportunities</p>
+    <h1>Scala developer and functional programming enthusiast</h1>
+    <p>Backend engineering, JVM tooling and type systems — written down so I stop re-deriving them.</p>
+    <div class="links"><a href="#">GitHub</a><a href="#">LinkedIn</a><a href="#">Telegram</a><a href="#">Email</a></div>
+  </section>
+
+  <p class="label">Writing</p>
+  <section class="list">
+    <a class="item" href="#"><span class="t">My Attempt to Migrate to Mill</span><span class="m">31 Mar 2025 · 2 min</span><span class="go">→</span></a>
+    <a class="item" href="#"><span class="t">Different ways to implement wrappers in Scala</span><span class="m">20 Feb 2022 · 11 min · scala</span><span class="go">→</span></a>
+    <a class="item" href="#"><span class="t">Remote development is the future of big tech</span><span class="m">19 Feb 2022 · 4 min</span><span class="go">→</span></a>
+  </section>
+  <footer>© 2026 Aleksey Polovinkin · Concept 5 — Aurora</footer>
+</div>
+</body></html>
