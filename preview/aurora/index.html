@@ -25,54 +25,104 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font
 .curtains{position:absolute;inset:0}
 .curtains b{position:absolute;display:block;top:-26vmax;height:96vmax;border-radius:46% 54% 50% 50%;
   mix-blend-mode:screen;will-change:transform,opacity;transform-origin:50% 12%;
-  -webkit-mask-image:radial-gradient(78% 68% at 50% 44%,rgba(0,0,0,.97) 0%,rgba(0,0,0,.66) 36%,rgba(0,0,0,.26) 68%,transparent 100%);
-  mask-image:radial-gradient(78% 68% at 50% 44%,rgba(0,0,0,.97) 0%,rgba(0,0,0,.66) 36%,rgba(0,0,0,.26) 68%,transparent 100%);
+  -webkit-mask-image:radial-gradient(52% 56% at 50% 46%,#000 34%,rgba(0,0,0,.55) 66%,transparent 88%);
+  mask-image:radial-gradient(52% 56% at 50% 46%,#000 34%,rgba(0,0,0,.55) 66%,transparent 88%);
   -webkit-animation-timing-function:cubic-bezier(.4,.05,.6,.95);
   animation-timing-function:cubic-bezier(.4,.05,.6,.95);
   -webkit-animation-iteration-count:infinite;animation-iteration-count:infinite;
   -webkit-animation-direction:alternate;animation-direction:alternate;
   -webkit-animation-fill-mode:both;animation-fill-mode:both}
-.curtains b:nth-child(1){left:-24vw;width:50vw;-webkit-filter:blur(26px);filter:blur(26px);
-  background-image:repeating-linear-gradient(94deg,rgba(255,255,255,.11) 0 3px,rgba(255,255,255,0) 3px 17px),
-    linear-gradient(to bottom,transparent 4%,rgba(72,232,170,.50) 30%,rgba(96,240,196,.42) 62%,transparent 92%);
-  -webkit-animation-name:k1;animation-name:k1;-webkit-animation-duration:19s;animation-duration:19s}
-.curtains b:nth-child(2){left:-2vw;width:48vw;-webkit-filter:blur(30px);filter:blur(30px);
+.curtains b:nth-child(1){left:-20.0vw;width:24vw;-webkit-filter:blur(22px);filter:blur(22px);
+  background-image:repeating-linear-gradient(93deg,rgba(255,255,255,.13) 0 3px,rgba(255,255,255,0) 3px 13px),
+    linear-gradient(to bottom,transparent 5%,rgba(72, 232, 170, 0.4) 31%,rgba(84, 238, 186, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k1;animation-name:k1;-webkit-animation-duration:15s;animation-duration:15s;
+  -webkit-animation-delay:0s;animation-delay:0s}
+.curtains b:nth-child(2){left:-12.3vw;width:28vw;-webkit-filter:blur(26px);filter:blur(26px);
   background-image:repeating-linear-gradient(86deg,rgba(255,255,255,.09) 0 3px,rgba(255,255,255,0) 3px 19px),
-    linear-gradient(to bottom,transparent 6%,rgba(96,240,196,.48) 34%,rgba(60,214,226,.42) 68%,transparent 94%);
-  -webkit-animation-name:k2;animation-name:k2;-webkit-animation-duration:26s;animation-duration:26s;
-  -webkit-animation-delay:-8s;animation-delay:-8s}
-.curtains b:nth-child(3){left:20vw;width:48vw;-webkit-filter:blur(24px);filter:blur(24px);
-  background-image:repeating-linear-gradient(98deg,rgba(255,255,255,.12) 0 3px,rgba(255,255,255,0) 3px 15px),
-    linear-gradient(to bottom,transparent 2%,rgba(60,206,232,.48) 28%,rgba(78,182,244,.42) 64%,transparent 90%);
+    linear-gradient(to bottom,transparent 5%,rgba(84, 238, 186, 0.4) 31%,rgba(96, 240, 200, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k2;animation-name:k2;-webkit-animation-duration:23s;animation-duration:23s;
+  -webkit-animation-delay:-14s;animation-delay:-14s}
+.curtains b:nth-child(3){left:-4.7vw;width:32vw;-webkit-filter:blur(20px);filter:blur(20px);
+  background-image:repeating-linear-gradient(98deg,rgba(255,255,255,.15) 0 3px,rgba(255,255,255,0) 3px 11px),
+    linear-gradient(to bottom,transparent 5%,rgba(96, 240, 200, 0.4) 31%,rgba(76, 228, 214, 0.32) 66%,transparent 93%);
   -webkit-animation-name:k3;animation-name:k3;-webkit-animation-duration:31s;animation-duration:31s;
-  -webkit-animation-delay:-15s;animation-delay:-15s}
-.curtains b:nth-child(4){left:40vw;width:48vw;-webkit-filter:blur(32px);filter:blur(32px);
-  background-image:repeating-linear-gradient(83deg,rgba(255,255,255,.085) 0 3px,rgba(255,255,255,0) 3px 21px),
-    linear-gradient(to bottom,transparent 8%,rgba(78,182,244,.46) 32%,rgba(126,134,252,.42) 66%,transparent 92%);
-  -webkit-animation-name:k4;animation-name:k4;-webkit-animation-duration:38s;animation-duration:38s;
+  -webkit-animation-delay:-8s;animation-delay:-8s}
+.curtains b:nth-child(4){left:9.0vw;width:24vw;-webkit-filter:blur(30px);filter:blur(30px);
+  background-image:repeating-linear-gradient(83deg,rgba(255,255,255,.08) 0 3px,rgba(255,255,255,0) 3px 23px),
+    linear-gradient(to bottom,transparent 5%,rgba(76, 228, 214, 0.4) 31%,rgba(64, 216, 226, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k4;animation-name:k4;-webkit-animation-duration:19s;animation-duration:19s;
+  -webkit-animation-delay:-17s;animation-delay:-17s}
+.curtains b:nth-child(5){left:16.7vw;width:28vw;-webkit-filter:blur(24px);filter:blur(24px);
+  background-image:repeating-linear-gradient(101deg,rgba(255,255,255,.12) 0 3px,rgba(255,255,255,0) 3px 15px),
+    linear-gradient(to bottom,transparent 5%,rgba(64, 216, 226, 0.4) 31%,rgba(60, 206, 234, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k5;animation-name:k5;-webkit-animation-duration:41s;animation-duration:41s;
   -webkit-animation-delay:-22s;animation-delay:-22s}
-.curtains b:nth-child(5){left:60vw;width:50vw;-webkit-filter:blur(28px);filter:blur(28px);
-  background-image:repeating-linear-gradient(101deg,rgba(255,255,255,.10) 0 3px,rgba(255,255,255,0) 3px 18px),
-    linear-gradient(to bottom,transparent 5%,rgba(126,124,255,.46) 30%,rgba(168,128,250,.40) 66%,transparent 93%);
-  -webkit-animation-name:k5;animation-name:k5;-webkit-animation-duration:45s;animation-duration:45s;
-  -webkit-animation-delay:-30s;animation-delay:-30s}
-.curtains b:nth-child(6){left:78vw;width:50vw;-webkit-filter:blur(34px);filter:blur(34px);
-  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.08) 0 3px,rgba(255,255,255,0) 3px 23px),
-    linear-gradient(to bottom,transparent 10%,rgba(178,126,248,.44) 34%,rgba(206,132,240,.38) 70%,transparent 95%);
-  -webkit-animation-name:k6;animation-name:k6;-webkit-animation-duration:53s;animation-duration:53s;
-  -webkit-animation-delay:-41s;animation-delay:-41s}
-@keyframes k1{from{transform:translateX(-7vmax) rotate(-11deg) skewX(-7deg) scaleY(.94);opacity:.45}
-  to{transform:translateX(7vmax) rotate(-3deg) skewX(5deg) scaleY(1.14);opacity:1}}
-@keyframes k2{from{transform:translateX(6vmax) rotate(7deg) skewX(6deg) scaleY(1.12);opacity:1}
-  to{transform:translateX(-8vmax) rotate(-4deg) skewX(-8deg) scaleY(.92);opacity:.4}}
-@keyframes k3{from{transform:translateX(-5vmax) rotate(4deg) skewX(-4deg) scaleY(1.05);opacity:.55}
-  to{transform:translateX(9vmax) rotate(13deg) skewX(9deg) scaleY(1.2);opacity:1}}
-@keyframes k4{from{transform:translateX(8vmax) rotate(-9deg) skewX(8deg) scaleY(1.16);opacity:.95}
-  to{transform:translateX(-6vmax) rotate(2deg) skewX(-5deg) scaleY(.96);opacity:.38}}
-@keyframes k5{from{transform:translateX(-9vmax) rotate(9deg) skewX(-9deg) scaleY(.9);opacity:.42}
-  to{transform:translateX(5vmax) rotate(-6deg) skewX(6deg) scaleY(1.18);opacity:1}}
-@keyframes k6{from{transform:translateX(4vmax) rotate(-5deg) skewX(4deg) scaleY(1.08);opacity:.8}
-  to{transform:translateX(-7vmax) rotate(8deg) skewX(-7deg) scaleY(.94);opacity:.35}}
+.curtains b:nth-child(6){left:24.3vw;width:32vw;-webkit-filter:blur(28px);filter:blur(28px);
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.10) 0 3px,rgba(255,255,255,0) 3px 29px),
+    linear-gradient(to bottom,transparent 5%,rgba(60, 206, 234, 0.4) 31%,rgba(66, 194, 242, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k6;animation-name:k6;-webkit-animation-duration:27s;animation-duration:27s;
+  -webkit-animation-delay:-4s;animation-delay:-4s}
+.curtains b:nth-child(7){left:38.0vw;width:24vw;-webkit-filter:blur(22px);filter:blur(22px);
+  background-image:repeating-linear-gradient(95deg,rgba(255,255,255,.14) 0 3px,rgba(255,255,255,0) 3px 17px),
+    linear-gradient(to bottom,transparent 5%,rgba(66, 194, 242, 0.4) 31%,rgba(78, 182, 246, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k7;animation-name:k7;-webkit-animation-duration:35s;animation-duration:35s;
+  -webkit-animation-delay:-28s;animation-delay:-28s}
+.curtains b:nth-child(8){left:45.7vw;width:28vw;-webkit-filter:blur(32px);filter:blur(32px);
+  background-image:repeating-linear-gradient(88deg,rgba(255,255,255,.08) 0 3px,rgba(255,255,255,0) 3px 21px),
+    linear-gradient(to bottom,transparent 5%,rgba(78, 182, 246, 0.4) 31%,rgba(90, 170, 248, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k8;animation-name:k8;-webkit-animation-duration:17s;animation-duration:17s;
+  -webkit-animation-delay:-7s;animation-delay:-7s}
+.curtains b:nth-child(9){left:53.3vw;width:32vw;-webkit-filter:blur(26px);filter:blur(26px);
+  background-image:repeating-linear-gradient(97deg,rgba(255,255,255,.11) 0 3px,rgba(255,255,255,0) 3px 13px),
+    linear-gradient(to bottom,transparent 5%,rgba(90, 170, 248, 0.4) 31%,rgba(104, 156, 250, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k9;animation-name:k9;-webkit-animation-duration:47s;animation-duration:47s;
+  -webkit-animation-delay:-4s;animation-delay:-4s}
+.curtains b:nth-child(10){left:67.0vw;width:24vw;-webkit-filter:blur(20px);filter:blur(20px);
+  background-image:repeating-linear-gradient(84deg,rgba(255,255,255,.13) 0 3px,rgba(255,255,255,0) 3px 25px),
+    linear-gradient(to bottom,transparent 5%,rgba(104, 156, 250, 0.4) 31%,rgba(118, 144, 252, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k10;animation-name:k10;-webkit-animation-duration:25s;animation-duration:25s;
+  -webkit-animation-delay:-18s;animation-delay:-18s}
+.curtains b:nth-child(11){left:74.7vw;width:28vw;-webkit-filter:blur(30px);filter:blur(30px);
+  background-image:repeating-linear-gradient(99deg,rgba(255,255,255,.09) 0 3px,rgba(255,255,255,0) 3px 19px),
+    linear-gradient(to bottom,transparent 5%,rgba(118, 144, 252, 0.4) 31%,rgba(134, 138, 252, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k11;animation-name:k11;-webkit-animation-duration:37s;animation-duration:37s;
+  -webkit-animation-delay:-13s;animation-delay:-13s}
+.curtains b:nth-child(12){left:82.3vw;width:32vw;-webkit-filter:blur(24px);filter:blur(24px);
+  background-image:repeating-linear-gradient(91deg,rgba(255,255,255,.12) 0 3px,rgba(255,255,255,0) 3px 31px),
+    linear-gradient(to bottom,transparent 5%,rgba(134, 138, 252, 0.4) 31%,rgba(150, 132, 250, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k12;animation-name:k12;-webkit-animation-duration:21s;animation-duration:21s;
+  -webkit-animation-delay:0s;animation-delay:0s}
+.curtains b:nth-child(13){left:96.0vw;width:24vw;-webkit-filter:blur(28px);filter:blur(28px);
+  background-image:repeating-linear-gradient(87deg,rgba(255,255,255,.10) 0 3px,rgba(255,255,255,0) 3px 15px),
+    linear-gradient(to bottom,transparent 5%,rgba(150, 132, 250, 0.4) 31%,rgba(164, 130, 248, 0.32) 66%,transparent 93%);
+  -webkit-animation-name:k13;animation-name:k13;-webkit-animation-duration:51s;animation-duration:51s;
+  -webkit-animation-delay:-32s;animation-delay:-32s}
+@keyframes k1{from{transform:translateX(-7vmax) rotate(-6deg) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(7vmax) rotate(5deg) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k2{from{transform:translateX(4vmax) rotate(6deg) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-4vmax) rotate(-5deg) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k3{from{transform:translateX(-9vmax) rotate(-6deg) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(9vmax) rotate(5deg) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k4{from{transform:translateX(5vmax) rotate(6deg) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-5vmax) rotate(-5deg) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k5{from{transform:translateX(-3vmax) rotate(-6deg) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(3vmax) rotate(5deg) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k6{from{transform:translateX(8vmax) rotate(6deg) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-8vmax) rotate(-5deg) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k7{from{transform:translateX(-4vmax) rotate(-6deg) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(4vmax) rotate(5deg) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k8{from{transform:translateX(10vmax) rotate(6deg) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-10vmax) rotate(-5deg) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k9{from{transform:translateX(-6vmax) rotate(-6deg) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(6vmax) rotate(5deg) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k10{from{transform:translateX(3vmax) rotate(6deg) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-3vmax) rotate(-5deg) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k11{from{transform:translateX(-7vmax) rotate(-6deg) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(7vmax) rotate(5deg) skewX(6deg) scaleY(1.16);opacity:1}}
+@keyframes k12{from{transform:translateX(5vmax) rotate(6deg) skewX(5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(-5vmax) rotate(-5deg) skewX(-6deg) scaleY(1.16);opacity:1}}
+@keyframes k13{from{transform:translateX(-9vmax) rotate(-6deg) skewX(-5deg) scaleY(.93);opacity:.45}
+  to{transform:translateX(9vmax) rotate(5deg) skewX(6deg) scaleY(1.16);opacity:1}}
 @media (prefers-reduced-motion:reduce){
   .curtains b{animation:none;opacity:.8}
   .curtains b:nth-child(odd){transform:rotate(-5deg) skewX(-3deg)}
@@ -126,7 +176,7 @@ footer{text-align:center;padding-bottom:40px;font-family:var(--mono);font-size:1
 </head>
 <body>
 <div class="aurora"><div class="sky"></div>
-  <div class="curtains"><b></b><b></b><b></b><b></b><b></b><b></b></div></div>
+  <div class="curtains"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div></div>
 <div class="grain"></div>
 <header><div class="wrap bar">
   <a class="logo" href="#"><span>/</span>awethon</a>
