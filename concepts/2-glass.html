@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>2 · Glass Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08090b; --ink:#f2f4f7; --dim:#9aa1ad; --faint:#666d79;
+  --glass:rgba(255,255,255,.045); --glass-2:rgba(255,255,255,.07);
+  --edge:rgba(255,255,255,.09); --edge-2:rgba(255,255,255,.16);
+  --sans:'Inter Tight',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;
+  min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:-20% -10% auto -10%;height:70vh;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(38% 55% at 22% 18%,rgba(125,160,255,.16),transparent 70%),
+    radial-gradient(34% 46% at 78% 8%,rgba(180,190,215,.13),transparent 70%),
+    radial-gradient(40% 40% at 55% 42%,rgba(90,110,160,.10),transparent 70%);
+  filter:blur(18px)}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(100% - 2.5rem,52rem);margin-inline:auto;position:relative;z-index:1}
+header{position:sticky;top:14px;z-index:20;margin-top:14px}
+.bar{display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 8px 0 16px;
+  background:var(--glass);border:1px solid var(--edge);border-radius:14px;
+  backdrop-filter:blur(20px) saturate(180%);
+  box-shadow:0 1px 0 rgba(255,255,255,.06) inset,0 8px 28px rgba(0,0,0,.42)}
+.logo{font-family:var(--mono);font-weight:500;font-size:13px}
+.logo span{color:#a5c4ff}
+nav{display:flex;gap:2px;align-items:center}
+nav a{font-size:13px;color:var(--dim);padding:6px 12px;border-radius:9px;transition:.18s}
+nav a:hover{color:var(--ink);background:var(--glass-2)}
+.dot{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;margin-left:4px;
+  border:1px solid transparent;transition:.2s}
+.dot:hover{background:var(--glass-2);border-color:var(--edge)}
+.dot i{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#fff 50%,transparent 50%);opacity:.75}
+.panel{margin:26px 0;padding:60px 44px 44px;text-align:center;
+  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.022));
+  border:1px solid var(--edge);border-radius:22px;backdrop-filter:blur(26px) saturate(170%);
+  box-shadow:0 1px 0 rgba(255,255,255,.09) inset,0 24px 60px rgba(0,0,0,.5)}
+.avatar{width:58px;height:58px;border-radius:50%;margin:0 auto 22px;display:grid;place-items:center;
+  font-family:var(--mono);font-size:15px;color:#cfe0ff;
+  background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.03));
+  border:1px solid var(--edge-2);box-shadow:0 1px 0 rgba(255,255,255,.18) inset}
+.panel h1{font-size:27px;font-weight:600;letter-spacing:-.025em;margin:0 0 10px}
+.panel p{color:var(--dim);margin:0 auto;max-width:34ch}
+.chips{display:flex;gap:8px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.chips a{font-size:12.5px;color:var(--dim);padding:6px 14px;border-radius:999px;
+  background:var(--glass);border:1px solid var(--edge);transition:.2s}
+.chips a:hover{color:var(--ink);background:var(--glass-2);border-color:var(--edge-2);transform:translateY(-1px)}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+  text-align:center;margin:40px 0 14px}
+.cards{display:grid;gap:10px;padding-bottom:70px}
+.card{display:grid;gap:5px;padding:18px 22px;border-radius:16px;
+  background:var(--glass);border:1px solid var(--edge);backdrop-filter:blur(16px);
+  transition:transform .22s cubic-bezier(.2,.8,.3,1),border-color .22s,background .22s}
+.card:hover{transform:translateY(-2px);background:var(--glass-2);border-color:var(--edge-2)}
+.card .meta{font-family:var(--mono);font-size:11.5px;color:var(--faint);display:flex;gap:8px}
+.card .t{font-size:17px;font-weight:500;letter-spacing:-.015em}
+footer{text-align:center;padding:0 0 34px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="bar">
+  <a class="logo" href="#"><span>/</span>awethon</a>
+  <nav><a href="#">Posts</a><a href="#">Tags</a><a href="#">RSS</a><div class="dot"><i></i></div></nav>
+</div></header>
+
+<section class="panel">
+  <div class="avatar">/a</div>
+  <h1>Aleksey Polovinkin</h1>
+  <p>Scala developer and functional programming enthusiast. Backend, JVM tooling, type systems.</p>
+  <div class="chips"><a href="#">GitHub</a><a href="#">LinkedIn</a><a href="#">Telegram</a><a href="#">Email</a></div>
+</section>
+
+<p class="label">Writing</p>
+<section class="cards">
+  <a class="card" href="#"><div class="meta"><span>31 Mar 2025</span><span>·</span><span>2 min</span></div><div class="t">My Attempt to Migrate to Mill</div></a>
+  <a class="card" href="#"><div class="meta"><span>20 Feb 2022</span><span>·</span><span>11 min</span><span>·</span><span>scala</span></div><div class="t">Different ways to implement wrappers in Scala</div></a>
+  <a class="card" href="#"><div class="meta"><span>19 Feb 2022</span><span>·</span><span>4 min</span></div><div class="t">Remote development is the future of big tech</div></a>
+</section>
+<footer>© 2026 · Concept 2 — Glass Panel</footer>
+</div>
+</body></html>

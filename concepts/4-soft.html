@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>4 · Soft Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f5f7; --card:#ffffff; --ink:#22252b; --dim:#666b76; --faint:#969ba6;
+  --line:#e4e6ea; --accent:#5b7a8c; --accent-soft:#eaf0f3;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  --r:18px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(100% - 2.5rem,46rem);margin-inline:auto}
+header{position:sticky;top:12px;z-index:20;padding-top:12px}
+.bar{display:flex;align-items:center;justify-content:space-between;height:50px;padding:0 8px 0 18px;
+  background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(16px) saturate(170%);
+  border:1px solid var(--line);border-radius:999px;box-shadow:0 2px 10px rgba(30,35,45,.05)}
+.logo{font-family:var(--mono);font-size:13px;font-weight:500}
+.logo span{color:var(--accent)}
+nav{display:flex;gap:2px;align-items:center}
+nav a{font-size:13.5px;font-weight:500;color:var(--dim);padding:7px 14px;border-radius:999px;transition:.18s}
+nav a:hover{color:var(--ink);background:var(--accent-soft)}
+.dot{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;transition:.2s;margin-left:2px}
+.dot:hover{background:var(--accent-soft)}
+.dot i{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--ink) 50%,transparent 50%)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:0 1px 2px rgba(30,35,45,.04),0 8px 24px -12px rgba(30,35,45,.12)}
+.hero{margin:26px 0 8px;padding:52px 36px 38px;text-align:center}
+.av{width:62px;height:62px;border-radius:20px;margin:0 auto 20px;display:grid;place-items:center;
+  font-family:var(--mono);font-size:16px;font-weight:500;color:var(--accent);
+  background:var(--accent-soft);border:1px solid var(--line);box-shadow:0 1px 0 #fff inset}
+.hero h1{font-size:25px;font-weight:700;letter-spacing:-.025em;margin:0 0 8px}
+.hero p{color:var(--dim);margin:0 auto;max-width:36ch;font-size:15px}
+.badges{display:flex;gap:7px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+.badges a{font-size:13px;font-weight:500;color:var(--dim);padding:7px 15px;border-radius:999px;
+  background:var(--bg);border:1px solid var(--line);transition:.2s}
+.badges a:hover{color:var(--accent);background:var(--accent-soft);border-color:#d6e0e6;transform:translateY(-1px)}
+.note{display:flex;gap:10px;align-items:flex-start;margin:14px 0 0;padding:13px 16px;border-radius:12px;
+  background:var(--accent-soft);border:1px solid #dde7ec;font-size:13.5px;color:#4a6373;text-align:left}
+.note b{font-weight:600}
+.sect{display:flex;align-items:center;justify-content:space-between;margin:34px 4px 12px}
+.sect h2{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0}
+.sect a{font-size:12.5px;color:var(--accent);font-weight:500}
+.list{display:grid;gap:9px;padding-bottom:64px}
+.item{display:grid;gap:6px;padding:18px 22px;transition:transform .2s cubic-bezier(.2,.8,.3,1),box-shadow .2s,border-color .2s}
+.item:hover{transform:translateY(-2px);border-color:#d6dbe2;box-shadow:0 2px 4px rgba(30,35,45,.05),0 14px 30px -14px rgba(30,35,45,.2)}
+.item .t{font-size:17px;font-weight:600;letter-spacing:-.015em}
+.item .m{display:flex;gap:8px;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+.pill{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-soft);
+  padding:2px 9px;border-radius:999px}
+footer{text-align:center;padding-bottom:36px;font-size:12px;color:var(--faint);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="bar">
+  <a class="logo" href="#"><span>/</span>awethon</a>
+  <nav><a href="#">Posts</a><a href="#">Tags</a><a href="#">RSS</a><div class="dot"><i></i></div></nav>
+</div></header>
+
+<section class="card hero">
+  <div class="av">/a</div>
+  <h1>Aleksey Polovinkin</h1>
+  <p>Scala developer and functional programming enthusiast.</p>
+  <div class="badges"><a href="#">GitHub</a><a href="#">LinkedIn</a><a href="#">Telegram</a><a href="#">Email</a></div>
+  <div class="note"><span>✦</span><span><b>Currently</b> — building scheduling infrastructure, and open to interesting conversations.</span></div>
+</section>
+
+<div class="sect"><h2>Writing</h2><a href="#">All posts →</a></div>
+<section class="list">
+  <a class="card item" href="#"><div class="m"><span>31 Mar 2025</span><span>·</span><span>2 min</span></div><div class="t">My Attempt to Migrate to Mill</div></a>
+  <a class="card item" href="#"><div class="m"><span>20 Feb 2022</span><span>·</span><span>11 min</span><span class="pill">scala</span></div><div class="t">Different ways to implement wrappers in Scala</div></a>
+  <a class="card item" href="#"><div class="m"><span>19 Feb 2022</span><span>·</span><span>4 min</span></div><div class="t">Remote development is the future of big tech</div></a>
+</section>
+<footer>© 2026 Aleksey Polovinkin · Concept 4 — Soft Desk</footer>
+</div>
+</body></html>
