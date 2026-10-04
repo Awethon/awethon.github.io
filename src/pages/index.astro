@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro'
+import PostCard from '../components/PostCard.astro'
+import StatusPill from '../components/StatusPill.astro'
+import { allPosts, postHref, readingMinutes } from '../lib/posts'
+
+const posts = (await allPosts()).slice(0, 5)
+const socials = [
+  { href: 'https://github.com/awethon/', label: 'GitHub' },
+  { href: 'https://linkedin.com/in/awethon/', label: 'LinkedIn' },
+  { href: 'https://telegram.me/awethon/', label: 'Telegram' },
+  { href: 'mailto:awethon@gmail.com', label: 'Email' },
+]
+---
+
+<Base>
+  <section class="hero wrap">
+    <StatusPill />
+    <h1>Scala developer and <em>functional programming</em> enthusiast.</h1>
+    <p class="lede">
+      I write about JVM tooling, type systems, and the ways teams trade clarity for cleverness.
+      Currently building scheduling infrastructure and wanting to be a principal engineer.
+    </p>
+    <ul class="socials">
+      {socials.map((social) => <li><a href={social.href}>{social.label}</a></li>)}
+    </ul>
+  </section>
+
+  <section class="wrap feed">
+    <h2 class="rubric">Writing</h2>
+    <div class="list">
+      {
+        posts.map((post) => (
+          <PostCard
+            href={postHref(post)}
+            title={post.data.title}
+            date={post.data.date}
+            tags={post.data.tags}
+            minutes={readingMinutes(post.body)}
+          />
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    text-align: center;
+    padding-block: clamp(4.5rem, 13vh, 7.5rem) clamp(3rem, 8vh, 4.5rem);
+  }
+
+  h1 {
+    font-size: var(--step-5);
+    max-inline-size: 18ch;
+    margin: 26px auto 14px;
+    background: linear-gradient(180deg, #fff, #a9b0c0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .lede {
+    color: var(--ink-muted);
+    margin: 0 auto;
+    max-inline-size: 46ch;
+  }
+
+  .socials {
+    display: flex;
+    gap: 26px;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 32px 0 0;
+    padding: 0;
+  }
+
+  .socials a {
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    text-decoration: none;
+    padding: 4px 2px;
+    transition: color 0.2s ease;
+  }
+
+  .socials a::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    scale: 0 1;
+    transition: scale 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .socials a:hover {
+    color: var(--ink);
+  }
+
+  .socials a:hover::after {
+    scale: 1 1;
+  }
+</style>
