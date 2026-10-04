@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from 'astro:transitions'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import Aurora from '../components/Aurora.astro'
@@ -39,10 +38,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
-    <ClientRouter />
   </head>
   <body class={dim ? 'dim' : undefined}>
-    <Aurora transition:persist="aurora" />
+    <Aurora />
     {progress && <div class="progress"></div>}
     <div class="shell">
       <Header />
