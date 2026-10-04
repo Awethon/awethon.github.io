@@ -1,0 +1,78 @@
+---
+const { pathname } = Astro.url
+const links = [
+  { href: '/posts/', label: 'Posts' },
+  { href: '/tags/', label: 'Tags' },
+]
+---
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/"><span class="mark">/</span>awethon</a>
+    <nav>
+      {
+        links.map((link) => (
+          <a href={link.href} aria-current={pathname.startsWith(link.href) ? 'page' : undefined}>
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 40;
+    background: linear-gradient(180deg, rgba(8, 9, 12, 0.85), rgba(8, 9, 12, 0.55));
+    -webkit-backdrop-filter: blur(16px) saturate(170%);
+    backdrop-filter: blur(16px) saturate(170%);
+    border-block-end: 1px solid var(--border);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    block-size: 56px;
+  }
+
+  .brand {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+
+  .mark {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  nav a {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    text-decoration: none;
+    padding: 7px 12px;
+    border-radius: 8px;
+    transition: color 0.18s ease, background-color 0.18s ease;
+  }
+
+  nav a:hover,
+  nav a[aria-current='page'] {
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.06);
+  }
+</style>

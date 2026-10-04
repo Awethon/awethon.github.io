@@ -1,0 +1,93 @@
+---
+interface Props {
+  href: string
+  title: string
+  date: Date
+  tags: string[]
+  minutes: number
+}
+
+const { href, title, date, tags, minutes } = Astro.props
+const stamp = date.toISOString().slice(0, 10)
+const label = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+const parts = [label, `${minutes} min`, ...tags]
+---
+
+<a class="item" href={href}>
+  <span class="t" style={`view-transition-name: post-${href.replace(/\W+/g, '-')}`}>{title}</span>
+  <span class="m">
+    <time datetime={stamp}>{label}</time>{
+      parts.slice(1).map((part) => (
+        <>
+          <span class="sep">&middot;</span>
+          {part}
+        </>
+      ))
+    }
+  </span>
+  <span class="go" aria-hidden="true">&rarr;</span>
+</a>
+
+<style>
+  .item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 16px;
+    align-items: center;
+    padding: 21px 24px;
+    text-decoration: none;
+    transition: background-color 0.22s ease;
+  }
+
+  .item + .item::before {
+    content: '';
+    position: absolute;
+    inset-inline: 24px;
+    inset-block-start: 0;
+    block-size: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1) 14%,
+      rgba(255, 255, 255, 0.1) 86%,
+      transparent
+    );
+  }
+
+  .item:hover {
+    background: rgba(255, 255, 255, 0.055);
+  }
+
+  .t {
+    grid-column: 1;
+    font-size: 16.5px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+
+  .m {
+    grid-column: 1;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--ink-faint);
+  }
+
+  .sep {
+    margin-inline: 0.45em;
+  }
+
+  .go {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    color: var(--ink-faint);
+    font-size: 16px;
+    transition: color 0.22s ease, translate 0.22s ease;
+  }
+
+  .item:hover .go {
+    color: var(--accent);
+    translate: 3px 0;
+  }
+</style>

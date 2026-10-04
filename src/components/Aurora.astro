@@ -1,0 +1,226 @@
+---
+---
+
+<div class="sky" aria-hidden="true"></div>
+<canvas id="aurora-gl" aria-hidden="true"></canvas>
+
+<style>
+  .sky,
+  canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .sky {
+    background:
+      radial-gradient(80% 50% at 50% -8%, rgba(46, 104, 138, 0.5), transparent 72%),
+      radial-gradient(34% 26% at 40% -4%, rgba(72, 232, 170, 0.16), transparent 76%),
+      radial-gradient(34% 26% at 64% -4%, rgba(142, 162, 255, 0.16), transparent 76%);
+  }
+
+  canvas {
+    inline-size: 100%;
+    block-size: 100%;
+    display: block;
+  }
+
+  :global(html.no-webgl) canvas {
+    display: none;
+  }
+
+  :global(body.dim) canvas,
+  :global(body.dim) .sky {
+    opacity: 0.2;
+  }
+</style>
+
+<script type="x-shader/x-vertex" id="aurora-vs" is:inline>
+  attribute vec2 a;
+  void main(){gl_Position=vec4(a,0.0,1.0);}
+</script>
+
+<script type="x-shader/x-fragment" id="aurora-fs" is:inline>
+  #ifdef GL_FRAGMENT_PRECISION_HIGH
+  precision highp float;
+  #else
+  precision mediump float;
+  #endif
+  uniform vec2 u_res;
+  uniform float u_time;
+
+  float hash(vec2 p){
+    p=fract(p*vec2(123.34,456.21));
+    p+=dot(p,p+45.32);
+    return fract(p.x*p.y);
+  }
+  float vnoise(vec2 p){
+    vec2 i=floor(p),f=fract(p);
+    vec2 u=f*f*(3.0-2.0*f);
+    float a=hash(i);
+    float b=hash(i+vec2(1.0,0.0));
+    float c=hash(i+vec2(0.0,1.0));
+    float d=hash(i+vec2(1.0,1.0));
+    return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);
+  }
+  float fbm(vec2 p){
+    float v=0.0,a=0.5;
+    for(int i=0;i<3;i++){
+      v+=a*vnoise(p);
+      p=p*2.03+vec2(1.7,9.2);
+      a*=0.5;
+    }
+    return v;
+  }
+  vec3 band(vec2 p,float t,float yb,float a1,float f1,float a2,float f2,
+            float drift,float sp2,float ext,float feather,vec3 ca,vec3 cb,float seed){
+    float xx=p.x+t*drift;
+    float bob=0.032*sin(t*0.11+seed);
+    float warp=(fbm(vec2(p.x*1.6+seed*3.0,t*0.05+seed))-0.5)*0.07;
+    float c=yb+bob+warp+a1*sin(xx*f1+seed)+a2*sin(xx*f2-t*sp2+seed*2.0);
+    float d=p.y-c;
+    float edge=smoothstep(feather,-feather*0.6,d);
+    float up=exp(-max(-d,0.0)/ext);
+    float hn=clamp((fbm(vec2(p.x*1.8+t*0.05+seed*5.0,yb*4.0+t*0.03))-0.30)/0.36,0.0,1.0);
+    return mix(ca,cb,hn)*edge*up;
+  }
+  void main(){
+    vec2 p=gl_FragCoord.xy/u_res;
+    p.y=1.0-p.y;
+    float ar=u_res.x/max(u_res.y,1.0);
+    vec2 q=vec2((p.x-0.5)*clamp(ar,0.8,2.2)+0.5,p.y);
+    float t=u_time;
+
+    vec3 base=vec3(0.0314,0.0353,0.0471);
+    vec3 sky=base
+      +vec3(0.026,0.062,0.098)*smoothstep(0.82,-0.06,p.y)
+      +vec3(0.010,0.030,0.038)*smoothstep(0.42,-0.12,p.y);
+
+    vec3 glow=vec3(0.0);
+    glow+=band(q,t,0.075,0.075,5.0,0.030, 9.0, 0.055,0.31,0.30,0.052,vec3(0.15,0.98,0.52),vec3(0.16,0.90,0.80),0.0)*0.34;
+    glow+=band(q,t,0.135,0.100,3.4,0.038, 6.3,-0.040,0.24,0.34,0.060,vec3(0.16,0.82,1.00),vec3(0.30,0.56,1.00),1.7)*0.30;
+    glow+=band(q,t,0.215,0.065,6.0,0.026,11.2, 0.080,0.43,0.26,0.044,vec3(0.34,0.54,1.00),vec3(0.62,0.38,1.00),3.1)*0.27;
+    glow+=band(q,t,0.295,0.140,2.0,0.050, 4.6,-0.028,0.19,0.38,0.068,vec3(0.66,0.36,1.00),vec3(0.96,0.36,0.80),4.6)*0.24;
+    glow+=band(q,t,0.385,0.100,3.4,0.030, 7.4, 0.065,0.36,0.24,0.050,vec3(0.18,0.94,0.74),vec3(0.20,0.78,0.98),6.2)*0.26;
+    glow*=smoothstep(0.80,0.02,p.y);
+    glow=vec3(1.0)-exp(-glow*1.15);
+    glow=max(mix(vec3(dot(glow,vec3(0.299,0.587,0.114))),glow,1.4),vec3(0.0));
+
+    float vig=smoothstep(1.40,0.34,length((p-vec2(0.5,0.16))*vec2(0.98,1.08)));
+    vec3 col=sky+glow*vig;
+
+    float st=hash(floor(gl_FragCoord.xy));
+    float star=smoothstep(0.9990,1.0,st)*smoothstep(0.62,0.02,p.y);
+    col+=vec3(0.72,0.80,1.0)*star*(0.45+0.55*sin(t*1.6+st*90.0))*0.8;
+
+    col+=(hash(gl_FragCoord.xy+fract(t)*13.0)-0.5)*0.0045;
+    gl_FragColor=vec4(col,1.0);
+  }
+</script>
+
+<script is:inline>
+  (function () {
+    var cv = document.getElementById('aurora-gl')
+    if (!cv || cv.dataset.bound) return
+    cv.dataset.bound = 'true'
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    var raf = 0
+    var gl = null
+
+    function fail() {
+      document.documentElement.classList.add('no-webgl')
+    }
+
+    var opts = { alpha: false, antialias: false, depth: false, stencil: false, powerPreference: 'low-power' }
+    try {
+      gl = cv.getContext('webgl', opts) || cv.getContext('experimental-webgl', opts)
+    } catch (e) {
+      gl = null
+    }
+    if (!gl) return fail()
+
+    function compile(type, src) {
+      var s = gl.createShader(type)
+      gl.shaderSource(s, src)
+      gl.compileShader(s)
+      return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null
+    }
+    var vs = compile(gl.VERTEX_SHADER, document.getElementById('aurora-vs').textContent)
+    var fs = compile(gl.FRAGMENT_SHADER, document.getElementById('aurora-fs').textContent)
+    if (!vs || !fs) return fail()
+    var prog = gl.createProgram()
+    gl.attachShader(prog, vs)
+    gl.attachShader(prog, fs)
+    gl.linkProgram(prog)
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return fail()
+    gl.useProgram(prog)
+
+    var buf = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
+    var loc = gl.getAttribLocation(prog, 'a')
+    gl.enableVertexAttribArray(loc)
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
+    var uRes = gl.getUniformLocation(prog, 'u_res')
+    var uTime = gl.getUniformLocation(prog, 'u_time')
+
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 1.25)
+      var w = Math.max(1, Math.round(cv.clientWidth * dpr))
+      var h = Math.max(1, Math.round(cv.clientHeight * dpr))
+      if (w > 1280) {
+        h = Math.max(1, Math.round((h * 1280) / w))
+        w = 1280
+      }
+      if (cv.width !== w || cv.height !== h) {
+        cv.width = w
+        cv.height = h
+        gl.viewport(0, 0, w, h)
+        gl.uniform2f(uRes, w, h)
+      }
+    }
+
+    function draw(t) {
+      gl.uniform1f(uTime, t)
+      gl.drawArrays(gl.TRIANGLES, 0, 3)
+    }
+
+    var t0 = 0
+    var last = -1e9
+    function frame(now) {
+      if (!t0) t0 = now
+      if (now - last >= 33) {
+        last = now
+        resize()
+        draw((now - t0) / 1000)
+      }
+      raf = requestAnimationFrame(frame)
+    }
+
+    function start() {
+      if (raf) cancelAnimationFrame(raf)
+      raf = 0
+      resize()
+      if (mq.matches) return draw(9)
+      t0 = 0
+      last = -1e9
+      raf = requestAnimationFrame(frame)
+    }
+
+    cv.addEventListener('webglcontextlost', function (e) {
+      e.preventDefault()
+      if (raf) cancelAnimationFrame(raf)
+      raf = 0
+      fail()
+    })
+    var rt = 0
+    window.addEventListener('resize', function () {
+      if (!mq.matches) return
+      clearTimeout(rt)
+      rt = setTimeout(start, 160)
+    })
+    if (mq.addEventListener) mq.addEventListener('change', start)
+    start()
+  })()
+</script>
