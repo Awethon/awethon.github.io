@@ -39,7 +39,7 @@ nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
 .dot{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;margin-left:4px;transition:.2s}
 .dot:hover{background:rgba(255,255,255,.06)}
 .dot i{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#fff 50%,transparent 50%);opacity:.8}
-.hero{text-align:center;padding:92px 0 72px}
+.hero{text-align:center;padding:76px 0 72px}
 .statuses{display:grid;gap:11px;justify-items:center;margin:0}
 .srow{position:relative;display:inline-flex;align-items:center}
 .skey{position:absolute;right:calc(100% + 16px);font-family:var(--mono);font-size:10px;
@@ -56,7 +56,10 @@ nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
 .v-a,.v-ac{color:#c9cfdb;background:rgba(8,9,12,.34);border-color:rgba(255,255,255,.10);
   -webkit-backdrop-filter:blur(22px) saturate(150%) brightness(.52);
   backdrop-filter:blur(22px) saturate(150%) brightness(.52)}
-.v-ac,.v-c{font-size:12px;font-weight:500;letter-spacing:.03em}
+.v-a2,.v-a2c{color:#c9cfdb;background:rgba(8,9,12,.10);border-color:rgba(255,255,255,.10);
+  -webkit-backdrop-filter:blur(26px) saturate(170%) brightness(.42);
+  backdrop-filter:blur(26px) saturate(170%) brightness(.42)}
+.v-ac,.v-c,.v-a2c{font-size:12px;font-weight:500;letter-spacing:.03em}
 .v-b{color:#d2d8e4;text-shadow:0 1px 10px rgba(6,7,10,.9)}
 .v-c{color:#b9bfcb}
 .hero h1{font-size:40px;font-weight:600;letter-spacing:-.035em;line-height:1.12;margin:26px auto 14px;max-width:16ch;
@@ -104,6 +107,8 @@ footer{text-align:center;padding-bottom:40px;font-family:var(--mono);font-size:1
       <div class="srow"><i class="skey">A</i><p class="status v-a"><b></b>Open to new opportunities</p></div>
       <div class="srow"><i class="skey">B</i><p class="status v-b"><b></b>Open to new opportunities</p></div>
       <div class="srow"><i class="skey">C</i><p class="status v-c"><b></b>Open to new opportunities</p></div>
+      <div class="srow"><i class="skey">A2</i><p class="status v-a2"><b></b>Open to new opportunities</p></div>
+      <div class="srow"><i class="skey">A2 + C</i><p class="status v-a2c"><b></b>Open to new opportunities</p></div>
     </div>
     <h1>Scala developer and functional programming enthusiast</h1>
     <p>Backend engineering, JVM tooling and type systems — written down so I stop re-deriving them.</p>
