@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro'
 import PostCard from '../components/PostCard.astro'
+import StatusPill from '../components/StatusPill.astro'
 import { allPosts, postHref, readingMinutes } from '../lib/posts'
 
 const posts = (await allPosts()).slice(0, 5)
@@ -14,10 +15,8 @@ const socials = [
 
 <Base>
   <section class="hero wrap">
-    <p class="kicker">Aleksey Polovinkin</p>
-    <h1>
-      Scala developer and <em>functional programming</em> enthusiast.
-    </h1>
+    <StatusPill />
+    <h1>Scala developer and <em>functional programming</em> enthusiast.</h1>
     <p class="lede">
       I write about JVM tooling, type systems, and the ways teams trade clarity for cleverness.
       Currently building scheduling infrastructure and wanting to be a principal engineer.
@@ -29,77 +28,88 @@ const socials = [
 
   <section class="wrap feed">
     <h2 class="rubric">Writing</h2>
-    {
-      posts.map((post) => (
-        <PostCard
-          href={postHref(post)}
-          title={post.data.title}
-          date={post.data.date}
-          tags={post.data.tags}
-          minutes={readingMinutes(post.body)}
-        />
-      ))
-    }
+    <div class="list">
+      {
+        posts.map((post) => (
+          <PostCard
+            href={postHref(post)}
+            title={post.data.title}
+            date={post.data.date}
+            tags={post.data.tags}
+            minutes={readingMinutes(post.body)}
+          />
+        ))
+      }
+    </div>
   </section>
 </Base>
 
 <style>
   .hero {
-    padding-block: clamp(3.5rem, 11vh, 7rem) clamp(2.5rem, 7vh, 4.5rem);
-  }
-
-  .kicker {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    color: var(--accent);
-    margin: 0 0 1rem;
-    letter-spacing: 0.02em;
+    text-align: center;
+    padding-block: clamp(4.5rem, 13vh, 7.5rem) clamp(3rem, 8vh, 4.5rem);
   }
 
   h1 {
     font-size: var(--step-5);
-    margin: 0;
-    max-inline-size: 19ch;
+    max-inline-size: 18ch;
+    margin: 26px auto 14px;
+    background: linear-gradient(180deg, #fff, #a9b0c0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   h1 em {
-    font-style: italic;
-    font-variation-settings: 'SOFT' 80, 'WONK' 1;
-    color: var(--accent);
+    font-style: normal;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .lede {
-    max-inline-size: 56ch;
-    margin-block: 1.6rem 0;
     color: var(--ink-muted);
-    font-size: var(--step-1);
-    line-height: 1.55;
+    margin: 0 auto;
+    max-inline-size: 46ch;
   }
 
   .socials {
     display: flex;
+    gap: 26px;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 0.5rem 1.4rem;
     list-style: none;
-    margin: 2.2rem 0 0;
+    margin: 32px 0 0;
     padding: 0;
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
   }
 
-  .rubric {
+  .socials a {
+    position: relative;
     font-family: var(--font-mono);
-    font-size: var(--step--1);
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: 12.5px;
     color: var(--ink-muted);
-    border-block-end: 1px solid var(--border);
-    padding-block-end: 0.8rem;
-    margin: 0;
+    text-decoration: none;
+    padding: 4px 2px;
+    transition: color 0.2s ease;
   }
 
-  .feed {
-    padding-block-end: 2rem;
+  .socials a::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    scale: 0 1;
+    transition: scale 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .socials a:hover {
+    color: var(--ink);
+  }
+
+  .socials a:hover::after {
+    scale: 1 1;
   }
 </style>

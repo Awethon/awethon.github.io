@@ -9,79 +9,85 @@ interface Props {
 
 const { href, title, date, tags, minutes } = Astro.props
 const stamp = date.toISOString().slice(0, 10)
-const label = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+const label = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+const parts = [label, `${minutes} min`, ...tags]
 ---
 
-<article>
-  <a class="hit" href={href} aria-label={title}></a>
-  <div class="meta">
-    <time datetime={stamp}>{label}</time>
-    <span class="dot">&middot;</span>
-    <span>{minutes} min</span>
-  </div>
-  <h2 style={`view-transition-name: post-${href.replace(/\W+/g, '-')}`}>{title}</h2>
-  <ul class="tags">
-    {tags.map((tag) => <li>{tag}</li>)}
-  </ul>
-</article>
+<a class="item" href={href}>
+  <span class="t" style={`view-transition-name: post-${href.replace(/\W+/g, '-')}`}>{title}</span>
+  <span class="m">
+    <time datetime={stamp}>{label}</time>{
+      parts.slice(1).map((part) => (
+        <>
+          <span class="sep">&middot;</span>
+          {part}
+        </>
+      ))
+    }
+  </span>
+  <span class="go" aria-hidden="true">&rarr;</span>
+</a>
 
 <style>
-  article {
+  .item {
     position: relative;
     display: grid;
-    gap: 0.5rem;
-    padding-block: 1.75rem;
-    border-block-end: 1px solid var(--border);
-    transition: border-color 0.2s ease;
+    grid-template-columns: 1fr auto;
+    gap: 4px 16px;
+    align-items: center;
+    padding: 21px 24px;
+    text-decoration: none;
+    transition: background-color 0.22s ease;
   }
 
-  article:hover {
-    border-color: color-mix(in oklch, var(--accent) 45%, var(--border));
-  }
-
-  .hit {
+  .item + .item::before {
+    content: '';
     position: absolute;
-    inset: -0.5rem -1rem;
-    border-radius: var(--radius);
-    z-index: 1;
+    inset-inline: 24px;
+    inset-block-start: 0;
+    block-size: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1) 14%,
+      rgba(255, 255, 255, 0.1) 86%,
+      transparent
+    );
   }
 
-  article:hover .hit {
-    background: color-mix(in oklch, var(--accent) 5%, transparent);
+  .item:hover {
+    background: rgba(255, 255, 255, 0.055);
   }
 
-  .meta {
-    display: flex;
-    gap: 0.5rem;
+  .t {
+    grid-column: 1;
+    font-size: 16.5px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+
+  .m {
+    grid-column: 1;
     font-family: var(--font-mono);
-    font-size: var(--step--1);
-    color: var(--ink-muted);
+    font-size: 11.5px;
+    color: var(--ink-faint);
   }
 
-  h2 {
-    font-size: var(--step-3);
-    transition: color 0.2s ease;
+  .sep {
+    margin-inline: 0.45em;
   }
 
-  article:hover h2 {
+  .go {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    color: var(--ink-faint);
+    font-size: 16px;
+    transition: color 0.22s ease, translate 0.22s ease;
+  }
+
+  .item:hover .go {
     color: var(--accent);
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin: 0.35rem 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .tags li {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--ink-muted);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 0.1rem 0.6rem;
+    translate: 3px 0;
   }
 </style>
