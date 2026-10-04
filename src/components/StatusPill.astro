@@ -1,15 +1,13 @@
 ---
-interface Props {
-  label?: string
-}
-
-const { label = 'Working at Chili Piper' } = Astro.props
 ---
 
-<p class="status"><b></b>{label}</p>
+<p class="status">
+  <b></b><span>Working at <a href="https://chilipiper.com" target="_blank" rel="noopener noreferrer">Chili Piper</a></span>
+</p>
 
 <style>
   .status {
+    --cp: #ff5721;
     display: inline-flex;
     align-items: center;
     gap: 9px;
@@ -32,14 +30,26 @@ const { label = 'Working at Chili Piper' } = Astro.props
       0 12px 28px -18px rgba(0, 0, 0, 0.72);
   }
 
+  .status a,
+  .status a:hover,
+  .status a:focus,
+  .status a:active,
+  .status a:visited {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.07em;
+    text-underline-offset: 0.22em;
+  }
+
   .status b {
     position: relative;
     inline-size: 6px;
     block-size: 6px;
     border-radius: 50%;
     flex: none;
-    background: var(--accent-2);
-    box-shadow: 0 0 8px var(--accent-2), 0 0 16px rgba(127, 214, 208, 0.45);
+    background: var(--cp);
+    box-shadow: 0 0 8px var(--cp), 0 0 16px rgba(255, 87, 33, 0.45);
     animation: beam-core 2s ease-in-out infinite;
   }
 
@@ -48,7 +58,7 @@ const { label = 'Working at Chili Piper' } = Astro.props
     position: absolute;
     inset: -5px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(127, 214, 208, 0.5), rgba(127, 214, 208, 0) 70%);
+    background: radial-gradient(circle, rgba(255, 87, 33, 0.5), rgba(255, 87, 33, 0) 70%);
     animation: beam-halo 2s ease-in-out infinite;
   }
 
