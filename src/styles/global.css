@@ -1,42 +1,36 @@
-@import '@fontsource-variable/fraunces';
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/space-grotesk';
 
 :root {
-  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-display: 'Inter Variable', system-ui, sans-serif;
   --font-body: 'Inter Variable', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --font-ui: 'Space Grotesk Variable', system-ui, sans-serif;
 
   --step--1: clamp(0.83rem, 0.81rem + 0.1vw, 0.89rem);
-  --step-0: clamp(1.02rem, 0.99rem + 0.17vw, 1.13rem);
-  --step-1: clamp(1.22rem, 1.16rem + 0.31vw, 1.42rem);
-  --step-2: clamp(1.47rem, 1.36rem + 0.53vw, 1.8rem);
-  --step-3: clamp(1.76rem, 1.59rem + 0.85vw, 2.27rem);
-  --step-4: clamp(2.11rem, 1.85rem + 1.3vw, 2.87rem);
-  --step-5: clamp(2.53rem, 2.14rem + 1.95vw, 3.63rem);
+  --step-0: clamp(0.94rem, 0.92rem + 0.12vw, 1rem);
+  --step-1: clamp(1.06rem, 1.02rem + 0.2vw, 1.19rem);
+  --step-2: clamp(1.25rem, 1.18rem + 0.34vw, 1.47rem);
+  --step-3: clamp(1.48rem, 1.36rem + 0.58vw, 1.85rem);
+  --step-4: clamp(1.75rem, 1.55rem + 0.98vw, 2.38rem);
+  --step-5: clamp(2.05rem, 1.74rem + 1.55vw, 3rem);
 
   --measure: 68ch;
-  --gutter: clamp(1.25rem, 5vw, 3rem);
-  --radius: 0.75rem;
+  --gutter: clamp(1.25rem, 5vw, 2.5rem);
+  --radius: 1.125rem;
 
-  --bg: oklch(98.5% 0.004 95);
-  --surface: oklch(96% 0.006 95);
-  --border: oklch(88% 0.008 95);
-  --ink: oklch(26% 0.015 265);
-  --ink-muted: oklch(52% 0.015 265);
-  --accent: oklch(54% 0.19 28);
-  --accent-ink: oklch(98% 0.01 28);
-  color-scheme: light;
-}
-
-:root[data-theme='dark'] {
-  --bg: oklch(17.5% 0.014 265);
-  --surface: oklch(21.5% 0.016 265);
-  --border: oklch(30% 0.018 265);
-  --ink: oklch(92% 0.012 95);
-  --ink-muted: oklch(68% 0.016 265);
-  --accent: oklch(72% 0.17 32);
-  --accent-ink: oklch(18% 0.03 32);
+  --bg: #08090c;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-sunk: rgba(8, 9, 12, 0.46);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --ink: #edeff3;
+  --ink-muted: #8f95a3;
+  --ink-faint: #5d6371;
+  --accent: #8ea2ff;
+  --accent-2: #7fd6d0;
+  --accent-ink: #08090c;
   color-scheme: dark;
 }
 
@@ -57,10 +51,11 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--step-0);
-  line-height: 1.7;
+  line-height: 1.65;
   font-synthesis-weight: none;
   text-rendering: optimizeLegibility;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  overflow-x: hidden;
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
 }
 
 h1,
@@ -68,10 +63,9 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 0, 'WONK' 1;
   font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.018em;
+  line-height: 1.14;
+  letter-spacing: -0.03em;
   text-wrap: balance;
   margin: 0;
 }
@@ -94,6 +88,11 @@ a:hover {
   text-decoration-color: var(--accent);
 }
 
+.shell {
+  position: relative;
+  z-index: 1;
+}
+
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -107,7 +106,7 @@ a:hover {
 }
 
 .wrap {
-  width: min(100% - var(--gutter) * 2, 74rem);
+  width: min(100% - var(--gutter) * 2, 50rem);
   margin-inline: auto;
 }
 
@@ -165,7 +164,7 @@ code {
 }
 
 :not(pre) > code {
-  background: color-mix(in oklch, var(--accent) 12%, var(--surface));
+  background: rgba(255, 255, 255, 0.07);
   padding: 0.15em 0.38em;
   border-radius: 0.35em;
   white-space: nowrap;
@@ -173,6 +172,9 @@ code {
 
 pre.astro-code {
   margin-block: 1.5em;
+  background: var(--surface-sunk) !important;
+  -webkit-backdrop-filter: blur(26px) saturate(170%);
+  backdrop-filter: blur(26px) saturate(170%);
   padding: 1.15rem 1.3rem;
   border-radius: var(--radius);
   border: 1px solid var(--border);
@@ -182,10 +184,9 @@ pre.astro-code {
   tab-size: 2;
 }
 
-:root[data-theme='dark'] .astro-code,
-:root[data-theme='dark'] .astro-code span {
+:root .astro-code span,
+:root .astro-code {
   color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
   font-style: var(--shiki-dark-font-style) !important;
   font-weight: var(--shiki-dark-font-weight) !important;
 }
@@ -197,7 +198,31 @@ hr {
 }
 
 ::selection {
-  background: color-mix(in oklch, var(--accent) 28%, transparent);
+  background: rgba(142, 162, 255, 0.28);
+}
+
+.list {
+  display: grid;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface-sunk);
+  -webkit-backdrop-filter: blur(26px) saturate(170%);
+  backdrop-filter: blur(26px) saturate(170%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 26px 60px -30px rgba(0, 0, 0, 0.72);
+}
+
+.rubric {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-align: center;
+  margin: 0 0 18px;
 }
 
 .progress {

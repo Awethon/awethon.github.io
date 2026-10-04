@@ -9,24 +9,26 @@ const posts = await allPosts()
 <Base title="Posts">
   <section class="wrap">
     <h1>Posts</h1>
-    {
-      posts.map((post) => (
-        <PostCard
-          href={postHref(post)}
-          title={post.data.title}
-          date={post.data.date}
-          tags={post.data.tags}
-          minutes={readingMinutes(post.body)}
-        />
-      ))
-    }
+    <div class="list">
+      {
+        posts.map((post) => (
+          <PostCard
+            href={postHref(post)}
+            title={post.data.title}
+            date={post.data.date}
+            tags={post.data.tags}
+            minutes={readingMinutes(post.body)}
+          />
+        ))
+      }
+    </div>
   </section>
 </Base>
 
 <style>
   h1 {
     font-size: var(--step-4);
-    padding-block: clamp(2.5rem, 8vh, 4rem) 1rem;
-    border-block-end: 1px solid var(--border);
+    text-align: center;
+    padding-block: clamp(2.5rem, 8vh, 4rem) 1.75rem;
   }
 </style>

@@ -25,7 +25,7 @@ const toc = headings.filter((heading) => heading.depth === 2 || heading.depth ==
 const transitionName = `post-${postHref(post).replace(/\W+/g, '-')}`
 ---
 
-<Base title={post.data.title} description={post.data.summary} progress>
+<Base title={post.data.title} description={post.data.summary} progress dim>
   <article class="prose">
     <header>
       <p class="meta">
