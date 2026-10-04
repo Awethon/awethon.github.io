@@ -1,29 +1,229 @@
-<!doctype html><html lang=en dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>My Attempt to Migrate to Mill | Awethon's Page</title><meta name=keywords content><meta name=description content="In the year of 2025 I have attended Scalar Conference in Warsaw that had Li Haoyi as one of the speakers.
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="qgixNnkm2LoCsgWFtvfJRVqnkpqtr1Xzc5YTPoCL2zc"><meta name="yandex-verification" content="c25e903254c44b74"><title>My Attempt to Migrate to Mill — Awethon</title><meta name="description" content="Scala developer and functional programming enthusiast. Notes on JVM tooling, type systems and remote work."><link rel="canonical" href="https://awethon.github.io/posts/my-attempt-to-migrate-to-mill/"><link rel="icon" href="/favicon.ico" sizes="any"><meta property="og:type" content="website"><meta property="og:title" content="My Attempt to Migrate to Mill — Awethon"><meta property="og:description" content="Scala developer and functional programming enthusiast. Notes on JVM tooling, type systems and remote work."><meta property="og:url" content="https://awethon.github.io/posts/my-attempt-to-migrate-to-mill/"><meta name="twitter:card" content="summary_large_image"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CYDbzu1r.js"></script><link rel="stylesheet" href="/_astro/Base.lHceFymL.css"><style>header[data-astro-cid-vt34qafq]{padding-block:clamp(2.5rem,8vh,4.5rem) 1.5rem}h1[data-astro-cid-vt34qafq]{font-size:var(--step-4)}.meta[data-astro-cid-vt34qafq]{font-family:var(--font-mono);font-size:var(--step--1);color:var(--ink-muted);flex-wrap:wrap;gap:.45rem;margin:0 0 .9rem;display:flex}.tags[data-astro-cid-vt34qafq]{flex-wrap:wrap;gap:.4rem;margin:1.2rem 0 0;padding:0;list-style:none;display:flex}.tags[data-astro-cid-vt34qafq] a[data-astro-cid-vt34qafq]{font-family:var(--font-mono);color:var(--ink-muted);border:1px solid var(--border);border-radius:999px;padding:.12rem .62rem;font-size:.75rem;text-decoration:none}.tags[data-astro-cid-vt34qafq] a[data-astro-cid-vt34qafq]:hover{color:var(--accent);border-color:var(--accent)}.toc[data-astro-cid-vt34qafq]{border-inline-start:2px solid var(--border);background:color-mix(in oklch, var(--surface) 55%, transparent);border-radius:0 var(--radius) var(--radius) 0;margin-block:1rem 2.5rem;padding:1rem 1.2rem}.toc-title[data-astro-cid-vt34qafq]{font-family:var(--font-mono);font-size:var(--step--1);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin:0 0 .6rem}.toc[data-astro-cid-vt34qafq] ol[data-astro-cid-vt34qafq]{font-size:var(--step--1);gap:.3rem;margin:0;padding:0;list-style:none;display:grid}.toc[data-astro-cid-vt34qafq] li[data-astro-cid-vt34qafq][data-depth="3"]{padding-inline-start:1.1rem}.toc[data-astro-cid-vt34qafq] a[data-astro-cid-vt34qafq]{color:var(--ink-muted);text-decoration:none}.toc[data-astro-cid-vt34qafq] a[data-astro-cid-vt34qafq]:hover{color:var(--accent)}footer[data-astro-cid-vt34qafq]{border-block-start:1px solid var(--border);font-family:var(--font-mono);font-size:var(--step--1);justify-content:space-between;gap:1rem;margin-block-start:4rem;padding-block-start:1.5rem;display:flex}footer[data-astro-cid-vt34qafq] a[data-astro-cid-vt34qafq]{color:var(--ink-muted);text-decoration:none}footer[data-astro-cid-vt34qafq] a[data-astro-cid-vt34qafq]:hover{color:var(--accent)}
+</style></head><body class="dim"><div class="sky" aria-hidden="true" data-astro-cid-va2ckxt3></div><canvas id="aurora-gl" aria-hidden="true" data-astro-cid-va2ckxt3></canvas><script type="x-shader/x-vertex" id="aurora-vs">
+  attribute vec2 a;
+  void main(){gl_Position=vec4(a,0.0,1.0);}
+</script><script type="x-shader/x-fragment" id="aurora-fs">
+  #ifdef GL_FRAGMENT_PRECISION_HIGH
+  precision highp float;
+  #else
+  precision mediump float;
+  #endif
+  uniform vec2 u_res;
+  uniform float u_time;
+
+  float hash(vec2 p){
+    p=fract(p*vec2(123.34,456.21));
+    p+=dot(p,p+45.32);
+    return fract(p.x*p.y);
+  }
+  float vnoise(vec2 p){
+    vec2 i=floor(p),f=fract(p);
+    vec2 u=f*f*(3.0-2.0*f);
+    float a=hash(i);
+    float b=hash(i+vec2(1.0,0.0));
+    float c=hash(i+vec2(0.0,1.0));
+    float d=hash(i+vec2(1.0,1.0));
+    return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);
+  }
+  float fbm(vec2 p){
+    float v=0.0,a=0.5;
+    for(int i=0;i<3;i++){
+      v+=a*vnoise(p);
+      p=p*2.03+vec2(1.7,9.2);
+      a*=0.5;
+    }
+    return v;
+  }
+  vec3 band(vec2 p,float t,float yb,float a1,float f1,float a2,float f2,
+            float drift,float sp2,float ext,float feather,vec3 ca,vec3 cb,float seed){
+    float xx=p.x+t*drift;
+    float bob=0.032*sin(t*0.11+seed);
+    float warp=(fbm(vec2(p.x*1.6+seed*3.0,t*0.05+seed))-0.5)*0.07;
+    float c=yb+bob+warp+a1*sin(xx*f1+seed)+a2*sin(xx*f2-t*sp2+seed*2.0);
+    float d=p.y-c;
+    float edge=smoothstep(feather,-feather*0.6,d);
+    float up=exp(-max(-d,0.0)/ext);
+    float hn=clamp((fbm(vec2(p.x*1.8+t*0.05+seed*5.0,yb*4.0+t*0.03))-0.30)/0.36,0.0,1.0);
+    return mix(ca,cb,hn)*edge*up;
+  }
+  void main(){
+    vec2 p=gl_FragCoord.xy/u_res;
+    p.y=1.0-p.y;
+    float ar=u_res.x/max(u_res.y,1.0);
+    vec2 q=vec2((p.x-0.5)*clamp(ar,0.8,2.2)+0.5,p.y);
+    float t=u_time;
+
+    vec3 base=vec3(0.0314,0.0353,0.0471);
+    vec3 sky=base
+      +vec3(0.026,0.062,0.098)*smoothstep(0.82,-0.06,p.y)
+      +vec3(0.010,0.030,0.038)*smoothstep(0.42,-0.12,p.y);
+
+    vec3 glow=vec3(0.0);
+    glow+=band(q,t,0.075,0.075,5.0,0.030, 9.0, 0.055,0.31,0.30,0.052,vec3(0.15,0.98,0.52),vec3(0.16,0.90,0.80),0.0)*0.34;
+    glow+=band(q,t,0.135,0.100,3.4,0.038, 6.3,-0.040,0.24,0.34,0.060,vec3(0.16,0.82,1.00),vec3(0.30,0.56,1.00),1.7)*0.30;
+    glow+=band(q,t,0.215,0.065,6.0,0.026,11.2, 0.080,0.43,0.26,0.044,vec3(0.34,0.54,1.00),vec3(0.62,0.38,1.00),3.1)*0.27;
+    glow+=band(q,t,0.295,0.140,2.0,0.050, 4.6,-0.028,0.19,0.38,0.068,vec3(0.66,0.36,1.00),vec3(0.96,0.36,0.80),4.6)*0.24;
+    glow+=band(q,t,0.385,0.100,3.4,0.030, 7.4, 0.065,0.36,0.24,0.050,vec3(0.18,0.94,0.74),vec3(0.20,0.78,0.98),6.2)*0.26;
+    glow*=smoothstep(0.80,0.02,p.y);
+    glow=vec3(1.0)-exp(-glow*1.15);
+    glow=max(mix(vec3(dot(glow,vec3(0.299,0.587,0.114))),glow,1.4),vec3(0.0));
+
+    float vig=smoothstep(1.40,0.34,length((p-vec2(0.5,0.16))*vec2(0.98,1.08)));
+    vec3 col=sky+glow*vig;
+
+    float st=hash(floor(gl_FragCoord.xy));
+    float star=smoothstep(0.9990,1.0,st)*smoothstep(0.62,0.02,p.y);
+    col+=vec3(0.72,0.80,1.0)*star*(0.45+0.55*sin(t*1.6+st*90.0))*0.8;
+
+    col+=(hash(gl_FragCoord.xy+fract(t)*13.0)-0.5)*0.0045;
+    gl_FragColor=vec4(col,1.0);
+  }
+</script><script>
+  (function () {
+    var cv = document.getElementById('aurora-gl')
+    if (!cv || cv.dataset.bound) return
+    cv.dataset.bound = 'true'
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    var raf = 0
+    var gl = null
+
+    function fail() {
+      document.documentElement.classList.add('no-webgl')
+    }
+
+    var opts = { alpha: false, antialias: false, depth: false, stencil: false, powerPreference: 'low-power' }
+    try {
+      gl = cv.getContext('webgl', opts) || cv.getContext('experimental-webgl', opts)
+    } catch (e) {
+      gl = null
+    }
+    if (!gl) return fail()
+
+    function compile(type, src) {
+      var s = gl.createShader(type)
+      gl.shaderSource(s, src)
+      gl.compileShader(s)
+      return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null
+    }
+    var vs = compile(gl.VERTEX_SHADER, document.getElementById('aurora-vs').textContent)
+    var fs = compile(gl.FRAGMENT_SHADER, document.getElementById('aurora-fs').textContent)
+    if (!vs || !fs) return fail()
+    var prog = gl.createProgram()
+    gl.attachShader(prog, vs)
+    gl.attachShader(prog, fs)
+    gl.linkProgram(prog)
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return fail()
+    gl.useProgram(prog)
+
+    var buf = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
+    var loc = gl.getAttribLocation(prog, 'a')
+    gl.enableVertexAttribArray(loc)
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
+    var uRes = gl.getUniformLocation(prog, 'u_res')
+    var uTime = gl.getUniformLocation(prog, 'u_time')
+
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 1.25)
+      var w = Math.max(1, Math.round(cv.clientWidth * dpr))
+      var h = Math.max(1, Math.round(cv.clientHeight * dpr))
+      if (w > 1280) {
+        h = Math.max(1, Math.round((h * 1280) / w))
+        w = 1280
+      }
+      if (cv.width !== w || cv.height !== h) {
+        cv.width = w
+        cv.height = h
+        gl.viewport(0, 0, w, h)
+        gl.uniform2f(uRes, w, h)
+      }
+    }
+
+    function draw(t) {
+      gl.uniform1f(uTime, t)
+      gl.drawArrays(gl.TRIANGLES, 0, 3)
+    }
+
+    var t0 = 0
+    var last = -1e9
+    function frame(now) {
+      if (!t0) t0 = now
+      if (now - last >= 33) {
+        last = now
+        resize()
+        draw((now - t0) / 1000)
+      }
+      raf = requestAnimationFrame(frame)
+    }
+
+    function start() {
+      if (raf) cancelAnimationFrame(raf)
+      raf = 0
+      resize()
+      if (mq.matches) return draw(9)
+      t0 = 0
+      last = -1e9
+      raf = requestAnimationFrame(frame)
+    }
+
+    cv.addEventListener('webglcontextlost', function (e) {
+      e.preventDefault()
+      if (raf) cancelAnimationFrame(raf)
+      raf = 0
+      fail()
+    })
+    var rt = 0
+    window.addEventListener('resize', function () {
+      if (!mq.matches) return
+      clearTimeout(rt)
+      rt = setTimeout(start, 160)
+    })
+    if (mq.addEventListener) mq.addEventListener('change', start)
+    start()
+  })()
+</script><div class="progress"></div><div class="shell"><header data-astro-cid-nen7h5rs><div class="wrap bar" data-astro-cid-nen7h5rs><a class="brand" href="/" data-astro-cid-nen7h5rs><span class="mark" data-astro-cid-nen7h5rs>/</span>awethon</a><nav data-astro-cid-nen7h5rs><a href="/posts/" aria-current="page" data-astro-cid-nen7h5rs>Posts</a><a href="/tags/" data-astro-cid-nen7h5rs>Tags</a></nav></div></header><main><article class="prose" data-astro-cid-vt34qafq><header data-astro-cid-vt34qafq><p class="meta" data-astro-cid-vt34qafq><time datetime="2025-03-31" data-astro-cid-vt34qafq>31 March 2025</time><span data-astro-cid-vt34qafq>&middot;</span><span data-astro-cid-vt34qafq>2 min read</span></p><h1 style="view-transition-name: post--posts-my-attempt-to-migrate-to-mill-" data-astro-cid-vt34qafq>My Attempt to Migrate to Mill</h1></header><p>In the year of 2025 I have attended Scalar Conference in Warsaw that had Li Haoyi as one of the speakers.
 He was talking about Mill and how it is better than SBT.
-I have decided to give it a try and migrate one of my projects to Mill.
-Unfortunately, I have failed. Mill is marketed as a replacement for any other build tool but it is not the case at least for Scala 2.13.
-Below I will state the reasons why Mill is not a drop-in replacement for SBT for my case."><meta name=author content><link rel=canonical href=https://awethon.github.io/posts/my-attempt-to-migrate-to-mill/><link crossorigin=anonymous href=/assets/css/stylesheet.be73c3a58b2afd610ce3a4f72a106c76404b10c9bccab2c11f4b27203cc14fe4.css integrity="sha256-vnPDpYsq/WEM46T3KhBsdkBLEMm8yrLBH0snIDzBT+Q=" rel="preload stylesheet" as=style><link rel=icon href=https://awethon.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://awethon.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://awethon.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://awethon.github.io/apple-touch-icon.png><link rel=mask-icon href=https://awethon.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://awethon.github.io/posts/my-attempt-to-migrate-to-mill/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><meta name=google-site-verification content="qgixNnkm2LoCsgWFtvfJRVqnkpqtr1Xzc5YTPoCL2zc"><meta name=yandex-verification content="c25e903254c44b74"><meta property="og:url" content="https://awethon.github.io/posts/my-attempt-to-migrate-to-mill/"><meta property="og:site_name" content="Awethon's Page"><meta property="og:title" content="My Attempt to Migrate to Mill"><meta property="og:description" content="In the year of 2025 I have attended Scalar Conference in Warsaw that had Li Haoyi as one of the speakers. He was talking about Mill and how it is better than SBT. I have decided to give it a try and migrate one of my projects to Mill.
-Unfortunately, I have failed. Mill is marketed as a replacement for any other build tool but it is not the case at least for Scala 2.13. Below I will state the reasons why Mill is not a drop-in replacement for SBT for my case."><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-03-31T03:10:43+02:00"><meta property="article:modified_time" content="2025-03-31T03:10:43+02:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="My Attempt to Migrate to Mill"><meta name=twitter:description content="In the year of 2025 I have attended Scalar Conference in Warsaw that had Li Haoyi as one of the speakers. He was talking about Mill and how it is better than SBT. I have decided to give it a try and migrate one of my projects to Mill.
-Unfortunately, I have failed. Mill is marketed as a replacement for any other build tool but it is not the case at least for Scala 2.13. Below I will state the reasons why Mill is not a drop-in replacement for SBT for my case."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://awethon.github.io/posts/"},{"@type":"ListItem","position":2,"name":"My Attempt to Migrate to Mill","item":"https://awethon.github.io/posts/my-attempt-to-migrate-to-mill/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"My Attempt to Migrate to Mill","name":"My Attempt to Migrate to Mill","description":"In the year of 2025 I have attended Scalar Conference in Warsaw that had Li Haoyi as one of the speakers. He was talking about Mill and how it is better than SBT. I have decided to give it a try and migrate one of my projects to Mill.\nUnfortunately, I have failed. Mill is marketed as a replacement for any other build tool but it is not the case at least for Scala 2.13. Below I will state the reasons why Mill is not a drop-in replacement for SBT for my case.\n","keywords":[],"articleBody":"In the year of 2025 I have attended Scalar Conference in Warsaw that had Li Haoyi as one of the speakers. He was talking about Mill and how it is better than SBT. I have decided to give it a try and migrate one of my projects to Mill.\nUnfortunately, I have failed. Mill is marketed as a replacement for any other build tool but it is not the case at least for Scala 2.13. Below I will state the reasons why Mill is not a drop-in replacement for SBT for my case.\nIDE Support In Mill docs there’s a page Case Study: Mill vs SBT.\nA quote from the page:\nOne area that Mill does significantly better than SBT is in the IDE support.\nAnother quote:\nIn general, although your IDE can make sure the name of the task exists, and the type is correct, it is unable to pull up any further information about the task: its documentation, its implementation, usages, any upstream overridden implementations, etc.\nThis is literally not the case. Actually, it is the opposite.\nBy just enabling one checkbox in IntelliJ IDEA, I have access to the sources of sbt: And to the sources of the plugin from a library I use: I haven’t managed to make IDEA to pick up the sources of Mill, even after following the instructions from the official docs: According to the docs it’s only possible to use Mill in IntelliJ IDEA in BSP mode. I have tried to migrate my SBT project to Mill and use BSP mode in IDEA but Mill sources were not picked up.\nThe performance of Mill in comparison to SBT I think the gains that Mill gives are highly exaggerated. I have tried to build (clean compile) one of my projects with 16 modules with Mill and SBT. And it was 8 seconds vs 9 seconds on M4 Max. Definitely not worth the effort.\nNo better-monadic-for plugin support for Mill While this plugin is not needed for Scala 3, it is still needed for Scala 2.13. And Mill not having it means it can’t be an easy replacement for SBT for Scala 2.13 projects.\nMill’s BuildInfo plugin is not a 1:1 replacement for sbt-buildinfo Besides the basic functionality of generating a file with build information, sbt-buildinfo has a lot of features that Mill’s BuildInfo plugin doesn’t have. These are the options that are used in our projects and none of them are present in Mill’s BuildInfo plugin: BuildInfoOption.ToJson, BuildInfoOption.BuildTime, BuildInfoOption.Traits(\"com.organization.common.BuildInfoT\"), BuildInfoOption.PackagePrivate,\nHaving a trait for BuildInfo is important for us as we have internal libraries that accept it as a parameter.\nConclusion Besides the fact that Mill is easier to understand and write than SBT, it is not a drop-in replacement for SBT for Scala 2.13 projects. And even for Scala 3 projects, the benefits of using Mill are not that great to justify the migration effort.\nWhat I have not tested though is the parallel test execution of Mill vs SBT, where Mill can easily be better than SBT.\nAlso, it’s worth to mention how great ./mill init migration tool is. I was able to quickly migrate most of my SBT project to Mill to test it out.\n","wordCount":"535","inLanguage":"en","datePublished":"2025-03-31T03:10:43+02:00","dateModified":"2025-03-31T03:10:43+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://awethon.github.io/posts/my-attempt-to-migrate-to-mill/"},"publisher":{"@type":"Organization","name":"Awethon's Page","logo":{"@type":"ImageObject","url":"https://awethon.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://awethon.github.io/ accesskey=h title="Awethon's Page (Alt + H)">Awethon's Page</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
-<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://awethon.github.io/posts/ title=Posts><span>Posts</span></a></li><li><a href=https://awethon.github.io/tags/ title=Tags><span>Tags</span></a></li><li><a href=https://awethon.github.io/search/ title="Search (Alt + /)" accesskey=/><span>Search</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">My Attempt to Migrate to Mill</h1><div class=post-meta><span title='2025-03-31 03:10:43 +0200 +0200'>March 31, 2025</span>&nbsp;|&nbsp;<span>
-<a href=https://github.com/Awethon/awethon.github.io/blob/master/content/posts/my-attempt-to-migrate-to-mill.md rel="noopener noreferrer edit" target=_blank>Suggest Changes</a></span></div></header><div class="post-content md-content"><p>In the year of 2025 I have attended Scalar Conference in Warsaw that had Li Haoyi as one of the speakers.
-He was talking about Mill and how it is better than SBT.
-I have decided to give it a try and migrate one of my projects to Mill.</p><p>Unfortunately, I have failed. Mill is marketed as a replacement for any other build tool but it is not the case at least for Scala 2.13.
-Below I will state the reasons why Mill is not a drop-in replacement for SBT for my case.</p><h1 id=ide-support>IDE Support<a hidden class=anchor aria-hidden=true href=#ide-support>#</a></h1><p>In Mill docs there&rsquo;s a page <a href=https://mill-build.org/mill/comparisons/sbt.html>Case Study: Mill vs SBT</a>.</p><p>A quote from the page:</p><blockquote><p>One area that Mill does significantly better than SBT is in the IDE support.</p></blockquote><p>Another quote:</p><blockquote><p>In general, although your IDE can make sure the name of the task exists, and the type is correct, it is unable to pull up any further information about the task: its documentation, its implementation, usages, any upstream overridden implementations, etc.</p></blockquote><p>This is literally not the case. Actually, it is the opposite.</p><p>By just enabling one checkbox in IntelliJ IDEA, I have access to the sources of sbt:
-<img alt=Image loading=lazy src=/sbt-sources.png></p><p>And to the sources of the plugin from a library I use:
-<img alt=Image loading=lazy src=/sbt-plugin-sources.png></p><p>I haven&rsquo;t managed to make IDEA to pick up the sources of Mill, even after following the instructions from the official docs:
-<img alt=Image loading=lazy src=/mill-sources.png></p><p>According to <a href=https://mill-build.org/mill/cli/installation-ide.html>the docs</a> it&rsquo;s only possible to use Mill in IntelliJ IDEA in BSP mode.
-I have tried to migrate my SBT project to Mill and use BSP mode in IDEA but Mill sources were not picked up.</p><h1 id=the-performance-of-mill-in-comparison-to-sbt>The performance of Mill in comparison to SBT<a hidden class=anchor aria-hidden=true href=#the-performance-of-mill-in-comparison-to-sbt>#</a></h1><p>I think the gains that Mill gives are highly exaggerated.
+I have decided to give it a try and migrate one of my projects to Mill.</p>
+<p>Unfortunately, I have failed. Mill is marketed as a replacement for any other build tool but it is not the case at least for Scala 2.13.
+Below I will state the reasons why Mill is not a drop-in replacement for SBT for my case.</p>
+<h1 id="ide-support">IDE Support</h1>
+<p>In Mill docs there’s a page <a href="https://mill-build.org/mill/comparisons/sbt.html">Case Study: Mill vs SBT</a>.</p>
+<p>A quote from the page:</p>
+<blockquote>
+<p>One area that Mill does significantly better than SBT is in the IDE support.</p>
+</blockquote>
+<p>Another quote:</p>
+<blockquote>
+<p>In general, although your IDE can make sure the name of the task exists, and the type is correct, it is unable to pull up any further information about the task: its documentation, its implementation, usages, any upstream overridden implementations, etc.</p>
+</blockquote>
+<p>This is literally not the case. Actually, it is the opposite.</p>
+<p>By just enabling one checkbox in IntelliJ IDEA, I have access to the sources of sbt:
+<img src="/sbt-sources.png" alt="Image"></p>
+<p>And to the sources of the plugin from a library I use:
+<img src="/sbt-plugin-sources.png" alt="Image"></p>
+<p>I haven’t managed to make IDEA to pick up the sources of Mill, even after following the instructions from the official docs:
+<img src="/mill-sources.png" alt="Image"></p>
+<p>According to <a href="https://mill-build.org/mill/cli/installation-ide.html">the docs</a> it’s only possible to use Mill in IntelliJ IDEA in BSP mode.
+I have tried to migrate my SBT project to Mill and use BSP mode in IDEA but Mill sources were not picked up.</p>
+<h1 id="the-performance-of-mill-in-comparison-to-sbt">The performance of Mill in comparison to SBT</h1>
+<p>I think the gains that Mill gives are highly exaggerated.
 I have tried to build (clean compile) one of my projects with 16 modules with Mill and SBT.
-And it was 8 seconds vs 9 seconds on M4 Max. Definitely not worth the effort.</p><h1 id=no-better-monadic-for-plugin-support-for-mill>No better-monadic-for plugin support for Mill<a hidden class=anchor aria-hidden=true href=#no-better-monadic-for-plugin-support-for-mill>#</a></h1><p>While this plugin is not needed for Scala 3, it is still needed for Scala 2.13.
-And Mill not having it means it can&rsquo;t be an easy replacement for SBT for Scala 2.13 projects.</p><h1 id=mills-buildinfo-plugin-is-not-a-11-replacement-for-sbt-buildinfo>Mill&rsquo;s BuildInfo plugin is not a 1:1 replacement for sbt-buildinfo<a hidden class=anchor aria-hidden=true href=#mills-buildinfo-plugin-is-not-a-11-replacement-for-sbt-buildinfo>#</a></h1><p>Besides the basic functionality of generating a file with build information, sbt-buildinfo has a lot of features that Mill&rsquo;s BuildInfo plugin doesn&rsquo;t have.
-These are the options that are used in our projects and none of them are present in Mill&rsquo;s BuildInfo plugin:<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#a6e22e>BuildInfoOption</span><span style=color:#f92672>.</span><span style=color:#a6e22e>ToJson</span><span style=color:#f92672>,</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>BuildInfoOption</span><span style=color:#f92672>.</span><span style=color:#a6e22e>BuildTime</span><span style=color:#f92672>,</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>BuildInfoOption</span><span style=color:#f92672>.</span><span style=color:#a6e22e>Traits</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;com.organization.common.BuildInfoT&#34;</span><span style=color:#f92672>),</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>BuildInfoOption</span><span style=color:#f92672>.</span><span style=color:#a6e22e>PackagePrivate</span><span style=color:#f92672>,</span></span></span></code></pre></div></p><p>Having a trait for BuildInfo is important for us as we have internal libraries that accept it as a parameter.</p><h1 id=conclusion>Conclusion<a hidden class=anchor aria-hidden=true href=#conclusion>#</a></h1><p>Besides the fact that Mill is easier to understand and write than SBT, it is not a drop-in replacement for SBT for Scala 2.13 projects.
-And even for Scala 3 projects, the benefits of using Mill are not that great to justify the migration effort.</p><p>What I have not tested though is the parallel test execution of Mill vs SBT, where Mill can easily be better than SBT.</p><p>Also, it&rsquo;s worth to mention how great <code>./mill init</code> migration tool is. I was able to quickly migrate most of my SBT project to Mill to test it out.</p></div><footer class=post-footer><ul class=post-tags></ul><ul class=share-buttons><li><a target=_blank rel="noopener noreferrer" aria-label="share My Attempt to Migrate to Mill on x" href="https://x.com/intent/tweet/?text=My%20Attempt%20to%20Migrate%20to%20Mill&amp;url=https%3a%2f%2fawethon.github.io%2fposts%2fmy-attempt-to-migrate-to-mill%2f&amp;hashtags="><svg viewBox="0 0 512 512" height="30" width="30" fill="currentColor"><path d="M512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446C483.971.0 512 28.03 512 62.554zM269.951 190.75 182.567 75.216H56L207.216 272.95 63.9 436.783h61.366L235.9 310.383l96.667 126.4H456L298.367 228.367l134-153.151H371.033zM127.633 110h36.468l219.38 290.065H349.5z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share My Attempt to Migrate to Mill on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fawethon.github.io%2fposts%2fmy-attempt-to-migrate-to-mill%2f&amp;title=My%20Attempt%20to%20Migrate%20to%20Mill&amp;summary=My%20Attempt%20to%20Migrate%20to%20Mill&amp;source=https%3a%2f%2fawethon.github.io%2fposts%2fmy-attempt-to-migrate-to-mill%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentColor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share My Attempt to Migrate to Mill on reddit" href="https://reddit.com/submit?url=https%3a%2f%2fawethon.github.io%2fposts%2fmy-attempt-to-migrate-to-mill%2f&title=My%20Attempt%20to%20Migrate%20to%20Mill"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentColor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share My Attempt to Migrate to Mill on facebook" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fawethon.github.io%2fposts%2fmy-attempt-to-migrate-to-mill%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentColor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H342.978V319.085h66.6l12.672-82.621h-79.272v-53.617c0-22.603 11.073-44.636 46.58-44.636H425.6v-70.34s-32.71-5.582-63.982-5.582c-65.288.0-107.96 39.569-107.96 111.204v62.971h-72.573v82.621h72.573V512h-191.104c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share My Attempt to Migrate to Mill on whatsapp" href="https://api.whatsapp.com/send?text=My%20Attempt%20to%20Migrate%20to%20Mill%20-%20https%3a%2f%2fawethon.github.io%2fposts%2fmy-attempt-to-migrate-to-mill%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentColor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zm-58.673 127.703c-33.842-33.881-78.847-52.548-126.798-52.568-98.799.0-179.21 80.405-179.249 179.234-.013 31.593 8.241 62.428 23.927 89.612l-25.429 92.884 95.021-24.925c26.181 14.28 55.659 21.807 85.658 21.816h.074c98.789.0 179.206-80.413 179.247-179.243.018-47.895-18.61-92.93-52.451-126.81zM263.976 403.485h-.06c-26.734-.01-52.954-7.193-75.828-20.767l-5.441-3.229-56.386 14.792 15.05-54.977-3.542-5.637c-14.913-23.72-22.791-51.136-22.779-79.287.033-82.142 66.867-148.971 149.046-148.971 39.793.014 77.199 15.531 105.329 43.692 28.128 28.16 43.609 65.592 43.594 105.4-.034 82.149-66.866 148.983-148.983 148.984zm81.721-111.581c-4.479-2.242-26.499-13.075-30.604-14.571-4.105-1.495-7.091-2.241-10.077 2.241-2.986 4.483-11.569 14.572-14.182 17.562-2.612 2.988-5.225 3.364-9.703 1.12-4.479-2.241-18.91-6.97-36.017-22.23C231.8 264.15 222.81 249.484 220.198 245s-.279-6.908 1.963-9.14c2.016-2.007 4.48-5.232 6.719-7.847 2.24-2.615 2.986-4.484 4.479-7.472 1.493-2.99.747-5.604-.374-7.846-1.119-2.241-10.077-24.288-13.809-33.256-3.635-8.733-7.327-7.55-10.077-7.688-2.609-.13-5.598-.158-8.583-.158-2.986.0-7.839 1.121-11.944 5.604-4.105 4.484-15.675 15.32-15.675 37.364.0 22.046 16.048 43.342 18.287 46.332 2.24 2.99 31.582 48.227 76.511 67.627 10.685 4.615 19.028 7.371 25.533 9.434 10.728 3.41 20.492 2.929 28.209 1.775 8.605-1.285 26.499-10.833 30.231-21.295 3.732-10.464 3.732-19.431 2.612-21.298-1.119-1.869-4.105-2.99-8.583-5.232z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share My Attempt to Migrate to Mill on telegram" href="https://telegram.me/share/url?text=My%20Attempt%20to%20Migrate%20to%20Mill&amp;url=https%3a%2f%2fawethon.github.io%2fposts%2fmy-attempt-to-migrate-to-mill%2f"><svg viewBox="2 2 28 28" height="30" width="30" fill="currentColor"><path d="M26.49 29.86H5.5a3.37 3.37.0 01-2.47-1 3.35 3.35.0 01-1-2.47V5.48A3.36 3.36.0 013 3 3.37 3.37.0 015.5 2h21A3.38 3.38.0 0129 3a3.36 3.36.0 011 2.46V26.37a3.35 3.35.0 01-1 2.47 3.38 3.38.0 01-2.51 1.02zm-5.38-6.71a.79.79.0 00.85-.66L24.73 9.24a.55.55.0 00-.18-.46.62.62.0 00-.41-.17q-.08.0-16.53 6.11a.59.59.0 00-.41.59.57.57.0 00.43.52l4 1.24 1.61 4.83a.62.62.0 00.63.43.56.56.0 00.4-.17L16.54 20l4.09 3A.9.9.0 0021.11 23.15zM13.8 20.71l-1.21-4q8.72-5.55 8.78-5.55c.15.0.23.0.23.16a.18.18.0 010 .06s-2.51 2.3-7.52 6.8z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share My Attempt to Migrate to Mill on ycombinator" href="https://news.ycombinator.com/submitlink?t=My%20Attempt%20to%20Migrate%20to%20Mill&u=https%3a%2f%2fawethon.github.io%2fposts%2fmy-attempt-to-migrate-to-mill%2f"><svg width="30" height="30" viewBox="0 0 512 512" fill="currentColor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446zM183.8767 87.9921h-62.034L230.6673 292.4508V424.0079h50.6655V292.4508L390.1575 87.9921H328.1233L256 238.2489z"/></svg></a></li></ul></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://awethon.github.io/>Awethon's Page</a></span> ·
-<span>Powered by
-<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
-<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
-</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10)),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var toplink=document.getElementById("top-link");window.onscroll=function(){const e=window.innerHeight;document.body.scrollTop>e||document.documentElement.scrollTop>e?toplink.classList.remove("hidden"):toplink.classList.add("hidden")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script></body></html>
+And it was 8 seconds vs 9 seconds on M4 Max. Definitely not worth the effort.</p>
+<h1 id="no-better-monadic-for-plugin-support-for-mill">No better-monadic-for plugin support for Mill</h1>
+<p>While this plugin is not needed for Scala 3, it is still needed for Scala 2.13.
+And Mill not having it means it can’t be an easy replacement for SBT for Scala 2.13 projects.</p>
+<h1 id="mills-buildinfo-plugin-is-not-a-11-replacement-for-sbt-buildinfo">Mill’s BuildInfo plugin is not a 1:1 replacement for sbt-buildinfo</h1>
+<p>Besides the basic functionality of generating a file with build information, sbt-buildinfo has a lot of features that Mill’s BuildInfo plugin doesn’t have.
+These are the options that are used in our projects and none of them are present in Mill’s BuildInfo plugin:</p>
+<pre class="astro-code astro-code-themes github-light aurora-x" style="background-color:#fff;--shiki-dark-bg:#07090F;color:#24292e;--shiki-dark:#bbbbbb; overflow-x: auto;" tabindex="0" data-language="scala"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFCB6B">BuildInfoOption</span><span style="color:#24292E;--shiki-dark:#BBBBBB">.</span><span style="color:#6F42C1;--shiki-dark:#FFCB6B">ToJson</span><span style="color:#24292E;--shiki-dark:#BBBBBB">,</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFCB6B">BuildInfoOption</span><span style="color:#24292E;--shiki-dark:#BBBBBB">.</span><span style="color:#6F42C1;--shiki-dark:#FFCB6B">BuildTime</span><span style="color:#24292E;--shiki-dark:#BBBBBB">,</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFCB6B">BuildInfoOption</span><span style="color:#24292E;--shiki-dark:#BBBBBB">.</span><span style="color:#6F42C1;--shiki-dark:#FFCB6B">Traits</span><span style="color:#24292E;--shiki-dark:#BBBBBB">(</span><span style="color:#032F62;--shiki-dark:#89DDFF">"</span><span style="color:#032F62;--shiki-dark:#C3E88D">com.organization.common.BuildInfoT</span><span style="color:#032F62;--shiki-dark:#89DDFF">"</span><span style="color:#24292E;--shiki-dark:#BBBBBB">),</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFCB6B">BuildInfoOption</span><span style="color:#24292E;--shiki-dark:#BBBBBB">.</span><span style="color:#6F42C1;--shiki-dark:#FFCB6B">PackagePrivate</span><span style="color:#24292E;--shiki-dark:#BBBBBB">,</span></span></code></pre>
+<p>Having a trait for BuildInfo is important for us as we have internal libraries that accept it as a parameter.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Besides the fact that Mill is easier to understand and write than SBT, it is not a drop-in replacement for SBT for Scala 2.13 projects.
+And even for Scala 3 projects, the benefits of using Mill are not that great to justify the migration effort.</p>
+<p>What I have not tested though is the parallel test execution of Mill vs SBT, where Mill can easily be better than SBT.</p>
+<p>Also, it’s worth to mention how great <code>./mill init</code> migration tool is. I was able to quickly migrate most of my SBT project to Mill to test it out.</p>
+<footer data-astro-cid-vt34qafq><a class="back" href="/posts/" data-astro-cid-vt34qafq>&larr; All posts</a><a class="edit" href="https://github.com/Awethon/awethon.github.io/blob/master/src/content/posts/my-attempt-to-migrate-to-mill" data-astro-cid-vt34qafq>Suggest changes</a></footer></article></main><footer data-astro-cid-jo6i4kqk><div class="wrap inner" data-astro-cid-jo6i4kqk>&copy; 2026 Aleksey Polovinkin</div></footer></div></body></html>
