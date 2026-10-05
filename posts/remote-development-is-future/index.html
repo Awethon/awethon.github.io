@@ -78,7 +78,7 @@
     vec3 col=sky+glow*vig;
 
     vec2 cell=floor(gl_FragCoord.xy/(u_scale*2.0));
-    float star=smoothstep(0.9975,1.0,hash12(cell))*smoothstep(0.62,0.02,p.y);
+    float star=smoothstep(0.9992,1.0,hash12(cell))*smoothstep(0.62,0.02,p.y);
     float tw=0.55+0.45*sin(t*(0.6+1.4*hash12(cell+17.0))+6.283*hash12(cell+41.0));
     col+=vec3(0.72,0.80,1.0)*star*tw*0.8;
 
