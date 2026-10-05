@@ -1,14 +1,14 @@
 ---
 import { render } from 'astro:content'
-import Base from '../../layouts/Base.astro'
-import { allPosts, postHref, readingMinutes } from '../../lib/posts'
+import Base from './Base.astro'
+import { postHref, readingMinutes, type Post } from '../lib/posts'
 
-export async function getStaticPaths() {
-  const posts = await allPosts()
-  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }))
+interface Props {
+  post: Post
 }
 
 const { post } = Astro.props
+const isLife = post.collection === 'life'
 const { Content, headings } = await render(post)
 const minutes = readingMinutes(post.body)
 const published = post.data.date.toLocaleDateString('en-GB', {
@@ -36,7 +36,7 @@ const transitionName = `post-${postHref(post).replace(/\W+/g, '-')}`
       </p>
       <h1 style={`view-transition-name: ${transitionName}`}>{post.data.title}</h1>
       {
-        post.data.tags.length > 0 && (
+        !isLife && post.data.tags.length > 0 && (
           <ul class="tags">
             {post.data.tags.map((tag) => (
               <li>
@@ -66,10 +66,10 @@ const transitionName = `post-${postHref(post).replace(/\W+/g, '-')}`
     <Content />
 
     <footer>
-      <a class="back" href="/posts/">&larr; All posts</a>
+      <a class="back" href={`/${post.collection}/`}>&larr; {isLife ? 'All life writing' : 'All posts'}</a>
       <a
         class="edit"
-        href={`https://github.com/Awethon/awethon.github.io/blob/master/src/content/posts/${post.id}`}
+        href={`https://github.com/Awethon/awethon.github.io/blob/master/${post.filePath}`}
         >Suggest changes</a
       >
     </footer>

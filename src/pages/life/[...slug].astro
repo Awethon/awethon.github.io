@@ -1,0 +1,11 @@
+---
+import Post from '../../layouts/Post.astro'
+import { allPosts } from '../../lib/posts'
+
+export async function getStaticPaths() {
+  const posts = await allPosts('life')
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }))
+}
+---
+
+<Post post={Astro.props.post} />

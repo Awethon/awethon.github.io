@@ -1,14 +1,15 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
 
-export type Post = CollectionEntry<'posts'>
+export type Section = 'posts' | 'life'
+export type Post = CollectionEntry<Section>
 
 export const readingMinutes = (body: string | undefined) =>
   Math.max(1, Math.round((body ?? '').trim().split(/\s+/).length / 220))
 
-export const postHref = (post: Post) => `/posts/${post.id}/`
+export const postHref = (post: Post) => `/${post.collection}/${post.id}/`
 
-export const allPosts = async () => {
-  const posts = await getCollection('posts', ({ data }) => !data.draft)
+export const allPosts = async (section: Section = 'posts') => {
+  const posts: Post[] = await getCollection(section, ({ data }) => !data.draft)
   return posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
 }
 
