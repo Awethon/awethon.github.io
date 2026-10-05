@@ -4,7 +4,10 @@ import sitemap from '@astrojs/sitemap'
 
 export default defineConfig({
   site: 'https://awethon.github.io',
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap({ filter: (page) => !page.includes('/moe') })],
+  redirects: {
+    '/moe': { status: 301, destination: 'https://listen.moe' },
+  },
   markdown: {
     shikiConfig: {
       themes: { light: 'github-light', dark: 'aurora-x' },
