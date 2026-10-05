@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro'
+import PostCard from '../../components/PostCard.astro'
+import { allPosts, postHref, readingMinutes } from '../../lib/posts'
+
+const posts = await allPosts('life')
+---
+
+<Base title="Life">
+  <section class="wrap">
+    <h1>Life</h1>
+    {posts.length === 0 && <p class="empty">Nothing here yet.</p>}
+    <div class="list" hidden={posts.length === 0}>
+      {
+        posts.map((post) => (
+          <PostCard
+            href={postHref(post)}
+            title={post.data.title}
+            date={post.data.date}
+            tags={[]}
+            minutes={readingMinutes(post.body)}
+          />
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  h1 {
+    font-size: var(--step-4);
+    text-align: center;
+    padding-block: clamp(2.5rem, 8vh, 4rem) 1.75rem;
+  }
+
+  .empty {
+    text-align: center;
+    color: var(--ink-muted);
+  }
+</style>

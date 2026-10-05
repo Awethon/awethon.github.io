@@ -1,7 +1,11 @@
 ---
+import { allPosts } from '../lib/posts'
+
 const { pathname } = Astro.url
+const hasLife = (await allPosts('life')).length > 0
 const links = [
   { href: '/posts/', label: 'Posts' },
+  ...(hasLife ? [{ href: '/life/', label: 'Life' }] : []),
   { href: '/tags/', label: 'Tags' },
 ]
 ---
