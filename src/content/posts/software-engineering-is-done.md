@@ -1,5 +1,6 @@
 ---
 title: "AI and Its Meat Proxies"
+subtitle: "Software Engineering Is Done, or Software Development in Proto-Post-Humanism Times"
 date: 2026-10-13T12:00:00+02:00
 draft: false
 tags: ["AI", "Claude Code", "Software Engineering"]
