@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="qgixNnkm2LoCsgWFtvfJRVqnkpqtr1Xzc5YTPoCL2zc"><meta name="yandex-verification" content="c25e903254c44b74"><title>AI and Its Meat Proxies — Awethon</title><meta name="description" content="Scala developer and Functional Programming enthusiast. Wanna be Principal Software Engineer."><link rel="canonical" href="https://awethon.com/posts/software-engineering-is-done/"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta property="og:type" content="website"><meta property="og:title" content="AI and Its Meat Proxies — Awethon"><meta property="og:description" content="Scala developer and Functional Programming enthusiast. Wanna be Principal Software Engineer."><meta property="og:url" content="https://awethon.com/posts/software-engineering-is-done/"><meta name="twitter:card" content="summary_large_image"><style>header[data-astro-cid-g5songws]{padding-block:clamp(2.5rem,8vh,4.5rem) 1.5rem}h1[data-astro-cid-g5songws]{font-size:var(--step-4)}.meta[data-astro-cid-g5songws]{font-family:var(--font-mono);font-size:var(--step--1);color:var(--ink-muted);flex-wrap:wrap;gap:.45rem;margin:0 0 .9rem;display:flex}.tags[data-astro-cid-g5songws]{flex-wrap:wrap;gap:.4rem;margin:1.2rem 0 0;padding:0;list-style:none;display:flex}.tags[data-astro-cid-g5songws] a[data-astro-cid-g5songws]{font-family:var(--font-mono);color:var(--ink-muted);border:1px solid var(--border);border-radius:999px;padding:.12rem .62rem;font-size:.75rem;text-decoration:none}.tags[data-astro-cid-g5songws] a[data-astro-cid-g5songws]:hover{color:var(--accent);border-color:var(--accent)}.toc[data-astro-cid-g5songws]{border-inline-start:2px solid var(--border);background:color-mix(in oklch, var(--surface) 55%, transparent);border-radius:0 var(--radius) var(--radius) 0;margin-block:1rem 2.5rem;padding:1rem 1.2rem}.toc-title[data-astro-cid-g5songws]{font-family:var(--font-mono);font-size:var(--step--1);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin:0 0 .6rem}.toc[data-astro-cid-g5songws] ol[data-astro-cid-g5songws]{font-size:var(--step--1);gap:.3rem;margin:0;padding:0;list-style:none;display:grid}.toc[data-astro-cid-g5songws] li[data-astro-cid-g5songws][data-depth="3"]{padding-inline-start:1.1rem}.toc[data-astro-cid-g5songws] a[data-astro-cid-g5songws]{color:var(--ink-muted);text-decoration:none}.toc[data-astro-cid-g5songws] a[data-astro-cid-g5songws]:hover{color:var(--accent)}footer[data-astro-cid-g5songws]{border-block-start:1px solid var(--border);font-family:var(--font-mono);font-size:var(--step--1);justify-content:space-between;gap:1rem;margin-block-start:4rem;padding-block-start:1.5rem;display:flex}footer[data-astro-cid-g5songws] a[data-astro-cid-g5songws]{color:var(--ink-muted);text-decoration:none}footer[data-astro-cid-g5songws] a[data-astro-cid-g5songws]:hover{color:var(--accent)}
+</style><link rel="stylesheet" href="/_astro/Base.DNzV2YTH.css"></head><body class="dim"><div class="sky" aria-hidden="true" data-astro-cid-va2ckxt3></div><canvas id="aurora-gl" aria-hidden="true" data-astro-cid-va2ckxt3></canvas><script type="x-shader/x-vertex" id="aurora-vs">
+  attribute vec2 a;
+  void main(){gl_Position=vec4(a,0.0,1.0);}
+</script><script type="x-shader/x-fragment" id="aurora-fs">
+  #ifdef GL_FRAGMENT_PRECISION_HIGH
+  precision highp float;
+  #else
+  precision mediump float;
+  #endif
+  uniform vec2 u_res;
+  uniform float u_time;
+  uniform float u_scale;
+
+  float hash(vec2 p){
+    p=fract(p*vec2(123.34,456.21));
+    p+=dot(p,p+45.32);
+    return fract(p.x*p.y);
+  }
+  float hash12(vec2 p){
+    vec3 q=fract(p.xyx*0.1031);
+    q+=dot(q,q.yzx+33.33);
+    return fract((q.x+q.y)*q.z);
+  }
+  float vnoise(vec2 p){
+    vec2 i=floor(p),f=fract(p);
+    vec2 u=f*f*(3.0-2.0*f);
+    float a=hash(i);
+    float b=hash(i+vec2(1.0,0.0));
+    float c=hash(i+vec2(0.0,1.0));
+    float d=hash(i+vec2(1.0,1.0));
+    return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);
+  }
+  float fbm(vec2 p){
+    float v=0.0,a=0.5;
+    for(int i=0;i<3;i++){
+      v+=a*vnoise(p);
+      p=p*2.03+vec2(1.7,9.2);
+      a*=0.5;
+    }
+    return v;
+  }
+  vec3 band(vec2 p,float t,float yb,float a1,float f1,float a2,float f2,
+            float drift,float sp2,float ext,float feather,vec3 ca,vec3 cb,float seed){
+    float xx=p.x+t*drift;
+    float bob=0.032*sin(t*0.11+seed);
+    float warp=(fbm(vec2(p.x*1.6+seed*3.0,t*0.05+seed))-0.5)*0.07;
+    float c=yb+bob+warp+a1*sin(xx*f1+seed)+a2*sin(xx*f2-t*sp2+seed*2.0);
+    float d=p.y-c;
+    float edge=smoothstep(feather,-feather*0.6,d);
+    float up=exp(-max(-d,0.0)/ext);
+    float hn=clamp((fbm(vec2(p.x*1.8+t*0.05+seed*5.0,yb*4.0+t*0.03))-0.30)/0.36,0.0,1.0);
+    return mix(ca,cb,hn)*edge*up;
+  }
+  void main(){
+    vec2 p=gl_FragCoord.xy/u_res;
+    p.y=1.0-p.y;
+    float ar=u_res.x/max(u_res.y,1.0);
+    vec2 q=vec2((p.x-0.5)*clamp(ar,0.8,2.2)+0.5,p.y);
+    float t=u_time;
+
+    vec3 base=vec3(0.0314,0.0353,0.0471);
+    vec3 sky=base
+      +vec3(0.026,0.062,0.098)*smoothstep(0.82,-0.06,p.y)
+      +vec3(0.010,0.030,0.038)*smoothstep(0.42,-0.12,p.y);
+
+    vec3 glow=vec3(0.0);
+    glow+=band(q,t,0.075,0.075,5.0,0.030, 9.0, 0.055,0.31,0.30,0.052,vec3(0.15,0.98,0.52),vec3(0.16,0.90,0.80),0.0)*0.34;
+    glow+=band(q,t,0.135,0.100,3.4,0.038, 6.3,-0.040,0.24,0.34,0.060,vec3(0.16,0.82,1.00),vec3(0.30,0.56,1.00),1.7)*0.30;
+    glow+=band(q,t,0.215,0.065,6.0,0.026,11.2, 0.080,0.43,0.26,0.044,vec3(0.34,0.54,1.00),vec3(0.62,0.38,1.00),3.1)*0.27;
+    glow+=band(q,t,0.295,0.140,2.0,0.050, 4.6,-0.028,0.19,0.38,0.068,vec3(0.66,0.36,1.00),vec3(0.96,0.36,0.80),4.6)*0.24;
+    glow+=band(q,t,0.385,0.100,3.4,0.030, 7.4, 0.065,0.36,0.24,0.050,vec3(0.18,0.94,0.74),vec3(0.20,0.78,0.98),6.2)*0.26;
+    glow*=smoothstep(0.80,0.02,p.y);
+    glow=vec3(1.0)-exp(-glow*1.15);
+    glow=max(mix(vec3(dot(glow,vec3(0.299,0.587,0.114))),glow,1.4),vec3(0.0));
+
+    float vig=smoothstep(1.40,0.34,length((p-vec2(0.5,0.16))*vec2(0.98,1.08)));
+    vec3 col=sky+glow*vig;
+
+    vec2 cell=floor(gl_FragCoord.xy/(u_scale*2.0));
+    float star=smoothstep(0.9992,1.0,hash12(cell))*smoothstep(0.62,0.02,p.y);
+    float tw=0.55+0.45*sin(t*(0.6+1.4*hash12(cell+17.0))+6.283*hash12(cell+41.0));
+    col+=vec3(0.72,0.80,1.0)*star*tw*0.8;
+
+    col+=(hash(gl_FragCoord.xy+fract(t)*13.0)-0.5)*0.0045;
+    gl_FragColor=vec4(col,1.0);
+  }
+</script><script>
+  (function () {
+    var cv = document.getElementById('aurora-gl')
+    if (!cv || cv.dataset.bound) return
+    cv.dataset.bound = 'true'
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    var raf = 0
+    var gl = null
+
+    function fail() {
+      document.documentElement.classList.add('no-webgl')
+    }
+
+    var opts = { alpha: false, antialias: false, depth: false, stencil: false, powerPreference: 'low-power' }
+    try {
+      gl = cv.getContext('webgl', opts) || cv.getContext('experimental-webgl', opts)
+    } catch (e) {
+      gl = null
+    }
+    if (!gl) return fail()
+
+    function compile(type, src) {
+      var s = gl.createShader(type)
+      gl.shaderSource(s, src)
+      gl.compileShader(s)
+      return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null
+    }
+    var vs = compile(gl.VERTEX_SHADER, document.getElementById('aurora-vs').textContent)
+    var fs = compile(gl.FRAGMENT_SHADER, document.getElementById('aurora-fs').textContent)
+    if (!vs || !fs) return fail()
+    var prog = gl.createProgram()
+    gl.attachShader(prog, vs)
+    gl.attachShader(prog, fs)
+    gl.linkProgram(prog)
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return fail()
+    gl.useProgram(prog)
+
+    var buf = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
+    var loc = gl.getAttribLocation(prog, 'a')
+    gl.enableVertexAttribArray(loc)
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
+    var uRes = gl.getUniformLocation(prog, 'u_res')
+    var uTime = gl.getUniformLocation(prog, 'u_time')
+    var uScale = gl.getUniformLocation(prog, 'u_scale')
+
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 1.25)
+      var w = Math.max(1, Math.round(cv.clientWidth * dpr))
+      var h = Math.max(1, Math.round(cv.clientHeight * dpr))
+      if (w > 1280) {
+        h = Math.max(1, Math.round((h * 1280) / w))
+        w = 1280
+      }
+      if (cv.width !== w || cv.height !== h) {
+        cv.width = w
+        cv.height = h
+        gl.viewport(0, 0, w, h)
+        gl.uniform2f(uRes, w, h)
+        gl.uniform1f(uScale, w / Math.max(1, cv.clientWidth))
+      }
+    }
+
+    function draw(t) {
+      gl.uniform1f(uTime, t)
+      gl.drawArrays(gl.TRIANGLES, 0, 3)
+    }
+
+    var t0 = 0
+    var last = -1e9
+    function frame(now) {
+      if (!t0) t0 = now
+      if (now - last >= 33) {
+        last = now
+        resize()
+        draw((now - t0) / 1000)
+      }
+      raf = requestAnimationFrame(frame)
+    }
+
+    function start() {
+      if (raf) cancelAnimationFrame(raf)
+      raf = 0
+      resize()
+      if (mq.matches) return draw(9)
+      t0 = 0
+      last = -1e9
+      raf = requestAnimationFrame(frame)
+    }
+
+    cv.addEventListener('webglcontextlost', function (e) {
+      e.preventDefault()
+      if (raf) cancelAnimationFrame(raf)
+      raf = 0
+      fail()
+    })
+    var rt = 0
+    window.addEventListener('resize', function () {
+      if (!mq.matches) return
+      clearTimeout(rt)
+      rt = setTimeout(start, 160)
+    })
+    if (mq.addEventListener) mq.addEventListener('change', start)
+    start()
+  })()
+</script><div class="progress"></div><div class="shell"><header data-astro-cid-nen7h5rs><div class="wrap bar" data-astro-cid-nen7h5rs><a class="brand" href="/" data-astro-cid-nen7h5rs><span class="mark" data-astro-cid-nen7h5rs>/</span>awethon</a><nav data-astro-cid-nen7h5rs><a href="/posts/" aria-current="page" data-astro-cid-nen7h5rs>Posts</a><a href="/tags/" data-astro-cid-nen7h5rs>Tags</a></nav></div></header><main><article class="prose" data-astro-cid-g5songws><header data-astro-cid-g5songws><p class="meta" data-astro-cid-g5songws><time datetime="2026-10-13" data-astro-cid-g5songws>13 October 2026</time><span data-astro-cid-g5songws>&middot;</span><span data-astro-cid-g5songws>22 min read</span></p><h1 style="view-transition-name: post--posts-software-engineering-is-done-" data-astro-cid-g5songws>AI and Its Meat Proxies</h1><ul class="tags" data-astro-cid-g5songws><li data-astro-cid-g5songws><a href="/tags/ai/" data-astro-cid-g5songws>AI</a></li><li data-astro-cid-g5songws><a href="/tags/claude-code/" data-astro-cid-g5songws>Claude Code</a></li><li data-astro-cid-g5songws><a href="/tags/software-engineering/" data-astro-cid-g5songws>Software Engineering</a></li></ul></header><nav class="toc" aria-label="Table of contents" data-astro-cid-g5songws><p class="toc-title" data-astro-cid-g5songws>Contents</p><ol data-astro-cid-g5songws><li data-depth="2" data-astro-cid-g5songws><a href="#the-sticky-label" data-astro-cid-g5songws>The sticky label</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#where-we-are-now" data-astro-cid-g5songws>Where we are now</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#the-bottleneck" data-astro-cid-g5songws>The bottleneck</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#meat-proxies" data-astro-cid-g5songws>Meat proxies</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#the-case-for-humans-and-why-its-shrinking" data-astro-cid-g5songws>The case for humans, and why it’s shrinking</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#what-to-build" data-astro-cid-g5songws>What to build</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#whats-left-for-humans" data-astro-cid-g5songws>What’s left for humans</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#when-code-is-cheap" data-astro-cid-g5songws>When code is cheap</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#where-that-leaves-us" data-astro-cid-g5songws>Where that leaves us</a></li></ol></nav><p>On November 24, 2025, Adam Wolff, who works on Claude Code at Anthropic, posted this:</p>
+<p><img src="/wolff-tweet-software-engineering-is-done.png" alt="Adam Wolff on X, Nov 24, 2025: “I believe this new model in Claude Code is a glimpse of the future we’re hurtling towards, maybe as soon as the first half of next year: software engineering is done. Soon, we won’t bother to check generated code, for the same reasons we don’t check compiler output.”"></p>
+<p>The engineering community did not take it well. Software engineering is done? The same AI that hallucinates APIs, confidently deletes your tests to make them pass, and apologizes for a mistake and then makes another one right after?</p>
+<p>Well, the first half of 2026 has come and gone. It’s October now, and I’m writing this in between reviewing pull requests that were written and opened without any human involvement. I still check every one of them, so by the tweet’s own standard, the prediction failed. And yet, if the people hating on that tweet last November could have seen my current workday, and how many autonomous AI agents we run for our internal needs, I’m not sure they’d have believed it.</p>
+<p>So was he wrong? Well, he was wrong about the date, and right about almost everything else. That’s not a comfortable conclusion for people like me, who’ve made software engineering a big part of their lives and their only source of income.</p>
+<h2 id="the-sticky-label">The sticky label</h2>
+<p>When GitHub Copilot came out in 2021, it felt like magic for about a week. It could finish a line, then a whole function, and if you wrote a comment describing a method, there was a decent chance it would write that method correctly on the first try. Boilerplate stopped being something you typed. But it made plenty of mistakes, and it could only see the files you had open. It knew nothing about the rest of your project, let alone your logs or your tickets. So it got labeled as a dumb helper, like a junior who needs constant supervision. Anyone who said it would replace us got laughed at, and honestly, at the time, that was fair.</p>
+<p>Then the limitations started disappearing, one by one. Context windows grew. Tools learned to look beyond a single file. By the time Claude Code arrived in early 2025, AI could explore a whole repository, find the relevant files on its own, and work on much harder problems without hand-holding. The consensus moved, but only a little: it’s great at “do what I did there for X, but for Y,” but ask it to design something on its own and it hallucinates, takes shortcuts, and has no taste.</p>
+<p>That was also mostly fair. But notice what happened: the capabilities had changed completely, and the label had barely changed at all. “Dumb helper” became “slightly less dumb helper,” and it has stayed there through every release since.</p>
+<p>I think there are a few reasons for that, and none of them are about the models.</p>
+<p>The first is anchoring. Most of us formed our opinion of AI coding in the Copilot era, and every new model gets judged against that first impression rather than against what it actually does today.</p>
+<p>The second is confirmation bias. Once you believe AI is a helper that makes mistakes, every mistake confirms it and every success looks like luck. And if you look for mistakes, you will always find one. No codebase written by anyone has zero.</p>
+<p>The third is moving goalposts. “It can’t write code” became “it can’t write good code,” which became “it can’t design systems,” which became “it can’t understand requirements.” Ask a skeptic what AI would have to do to convince them it can be an autonomous engineer. Most people can’t give a concrete answer, or the answer is something it can already do with the right tools. If no result could change your opinion, your opinion isn’t coming from the results.</p>
+<p>I’m not above this either. When a PR goes wrong, I blame the model. When it goes right, I praise my prompt and, most importantly, myself.</p>
+<p>Some skepticism is worth taking seriously. Maybe transformers have a ceiling, and we’ll hit it before AI can be trusted alone. Maybe we’ll never trust code no human has read the way Wolff predicted we would, the way we trust a compiler. But nothing about the past year looks like a ceiling to me. And when people say AI can’t do architecture or figure out what to build, I don’t hear a limit. I hear the next goalpost.</p>
+<h2 id="where-we-are-now">Where we are now</h2>
+<p>So what does a workday actually look like now?</p>
+<p>A typical task starts with a ticket. Before writing a single line, the agent goes and gets what it needs: it reads the Jira ticket and the Slack thread where the problem was discussed, checks the logs, queries the database, and calls the endpoint to see what actually comes back. A year ago, gathering all of that was my job. I’d paste it into the prompt piece by piece and hope I didn’t forget anything. Now it happens without anyone asking.</p>
+<p>Then it works. The task gets split into smaller pieces, subagents pick them up, and a PR appears. It doesn’t stop there either: it watches CI, waits for the merge, waits for the deployment, and tests the change on staging by itself. When it’s done, the prompt field already suggests what to ask next, and more often than not, the suggestion is the right one.</p>
+<p>Sessions no longer wait for each other either. Claude Code now creates a separate git worktree for each session, so several agents can work on the same repository at the same time, each on its own branch, without stepping on each other’s changes.</p>
+<p>What surprised me more than the speed was the quality. I write Scala with cats-effect and tagless final, a style that’s easy to get subtly wrong. A year ago, Claude wrote Scala like a Java developer on their first day, and no amount of CLAUDE.md could fix it. Now it writes the way a senior engineer on my team would, with no special instructions. The only trick I still use is asking for “neat, tidy, and self-documented code.” It makes the model choose better names instead of leaving comments, and keeps it from producing 3,000-line PRs that solve the problem with machinery nobody wants to maintain.</p>
+<p>The way it handles bugs is something I don’t think humans can match. It fetches and analyzes thousands of log lines, aggregates them if needed, and builds a theory of why the bug happens based on the code. If the theory can’t be confirmed with tests, it calls the real API on staging, sets up the conditions for the bug, and reproduces it. Humans can do all of this too, just much slower: an investigation that would take an engineer three days takes AI under fifteen minutes. And an engineer can fail at every step along the way: miss the pattern in the logs, fail to come up with a theory, fail to build a reproduction. Now these investigations are fast and, in my experience, reliable.</p>
+<p>It doesn’t stop at our own code either. When engineers realized a bug was actually in an open-source library, most of us opened an issue and switched to another library. AI doesn’t care whose code it’s reading. It localizes the bug in the library and opens a PR there, all within the same fifteen minutes.</p>
+<p>I’m speechless. Good thing this is a post and not a talk.</p>
+<p>It still makes mistakes, but they’ve changed. Most of the issues I see now come from missing context: a convention that lives only in someone’s head, a decision made in a meeting nobody wrote down. That’s not a model failing to think. It’s a model that wasn’t told.</p>
+<p>And all of this got better without getting more expensive. My subscription costs the same $200 a month it did a year ago, and I can’t hit its weekly limit no matter how hard I try. The newest Opus matches Fable, the model I used to switch to when I needed a real leap in quality, at less than half the price per token.</p>
+<p>So my job is now mostly this: AI investigates, writes, tests, and ships, and I read what it produced and decide whether it’s right. That last part is where things are starting to break.</p>
+<h2 id="the-bottleneck">The bottleneck</h2>
+<p>I’ve become the bottleneck.</p>
+<p>Not in the sense that I feel useless, but in the sense that I’m too slow. Every PR still needs a human approval, and to approve it, I have to understand both the problem and the solution. That takes time, and in the time it takes me to understand one solution, AI could have produced three more.</p>
+<p>I’ve adapted, of course. I don’t start by reading a PR anymore. I ask AI to explain it to me first: what the problem was, what changed, and why. It helps me understand the diff much faster. Then I try to poke holes in it, again with AI’s help. Will this work for this case? Do you find this readable? Do you like the naming? The last two questions are less about the code and more about me. If something confuses me, I want to know whether the code is actually unclear or whether it’s just me. I don’t want to block someone’s merge over a problem that’s actually mine.</p>
+<p>And honestly, I trust it more than I used to. AI now tests its own changes and checks them against real data on staging before I ever see them. I don’t feel the need to read its PRs more thoroughly than I would have read a colleague’s before AI.</p>
+<p>So by the tweet’s standard, the trend points Wolff’s way: I check generated code less carefully every month. But I haven’t stopped, and the strange part is that reviewing getting easier hasn’t made me feel any less overwhelmed. There’s just so much more of it. Far more information flows through me than ever before: more PRs, more investigations, more decisions waiting for a “yes.” We now have to work at the pace of AI while remaining human, and humans don’t scale.</p>
+<p>Look at what my review actually is now, though. Before I even open a PR, a Claude agent in our CI has already reviewed it and left its comments on GitHub. Then AI explains the change to me, answers my questions about edge cases, and tells me whether the naming makes sense. What I add is the approval itself, the moment a human says “yes” and takes responsibility for it. Which raises an uncomfortable question: what exactly is a human for in this loop?</p>
+<h2 id="meat-proxies">Meat proxies</h2>
+<p>My answer, for now: to fill the gaps.</p>
+<p>We’re in a transition period. On one side is the AI we started with, which couldn’t be trusted and couldn’t do much. On the other is AI that can be trusted with the whole job: it has the facts, does the research, and has every tool it needs. We’re somewhere in between, and that space in between is where engineers currently live.</p>
+<p>Some of the gaps are about trust. AI still makes mistakes, less often than before, but often enough that someone has to approve its work before it reaches production. That someone is me. And my approval isn’t valuable because I’m smarter than the model. It’s valuable because I’m accountable, and the model isn’t.</p>
+<p>Other gaps are about reach. Not every system has an API, and not every tool has a connector. Some context lives in a meeting, in a client’s head, or in legacy software nobody wants to modernize. Some actions need production credentials that nobody, reasonably, wants to hand to an agent yet. So I do those parts. I go to the meeting and bring back the notes. I click through the old interface. I run the command with my credentials after the AI tells me which command to run.</p>
+<p>Described this way, my work starts to sound less like engineering and more like being a proxy. A meat proxy: a piece of biological intelligence with a better interface to the parts of the world AI can’t reach yet. AI makes the decision, and I carry it to the place it can’t get to on its own.</p>
+<p>That’s not as bleak as it sounds, at least not yet. Filling these gaps still takes judgment: knowing which meeting matters, which command is safe to run, which “yes” is risky. But the important word is “yet.” Every one of these gaps is the kind that closes. Trust grows with every release that doesn’t break production. Connectors get written. Context gets written down. Each new model and each new tool removes one more gap, and with it, one more reason for me to be in the loop.</p>
+<p>Not everyone believes these gaps will close, of course. The most popular argument against it points at vibe coders.</p>
+<h2 id="the-case-for-humans-and-why-its-shrinking">The case for humans, and why it’s shrinking</h2>
+<p>The argument goes like this: if AI is so powerful, why haven’t people with no engineering background used it to build startups that replace the existing businesses? Or, more modestly, why can’t what they build match existing products, in features or in quality?</p>
+<p>My answer, and I think the answer of anyone who has tried vibe coding, is that bad decisions stack, and they stack terribly. Here’s an oversimplified model. Say AI on its own implements a feature that works in 90% of cases, and an experienced engineer working with AI makes the same feature work in 95% of cases. Now build a workflow out of four such features, where the workflow only succeeds if every step succeeds. The vibe-coded version works 65.61% of the time. The engineer’s version works 81.45% of the time. A five-point difference per feature becomes a sixteen-point difference per workflow, and real systems have hundreds of thousands of lines of code and far more than four dependent parts.</p>
+<p>Real systems aren’t simple chains, of course. Good architecture isolates failures, retries what can be retried, and catches errors before they spread. But that only strengthens the point: knowing how to build that kind of system is exactly what the experienced engineer brings, and the vibe coder doesn’t.</p>
+<p>It’s a good argument for humans. If you came here looking for hope, this is a good place to stop reading.</p>
+<p>Because the gap is shrinking, and I don’t see what stops it. What separates the engineer from the vibe coder is experience: knowing what works and what fails, which shortcuts come back to bite you, which designs survive contact with production. And experience is exactly what AI is accumulating faster than any of us. It learned from everything people wrote on the internet, and it keeps learning from every session we run with it: which PRs got merged and which got reverted, which builds failed, which changes caused bugs a week later. No engineer has seen that many trials and errors. Eventually, AI will know better than any of us what works and what doesn’t, simply because it has watched us find out.</p>
+<p>When AI alone reaches 95%, the gap between the vibe coder and the engineer disappears, at least as far as code is concerned. What’s left is the part skeptics now point to: knowing what to build in the first place.</p>
+<h2 id="what-to-build">What to build</h2>
+<p>Wolff’s original tweet compared generated code to compiler output, and the analogy is better than it looks. We don’t read compiler output because there’s overwhelming evidence that it works: decades of testing, and in some cases, like the CompCert C compiler, a mathematical proof that the generated code does exactly what the source says. AI could, in principle, earn the same trust the same way, by writing code together with a machine-checked proof that it does what it’s supposed to. But a proof needs a specification, a precise statement of what the code should do. And writing that is exactly what Wolff’s second tweet calls the hard part: figuring out what to build.</p>
+<p><img src="/wolff-tweet-coding-was-the-easy-part.png" alt="Adam Wolff on X, follow-up: “I love programming, and it’s a little scary to think it might not be a big part of my job. But coding was always the easy part. The hard part is requirements, goals, feedback—figuring out what to build and whether it’s working.”"></p>
+<p>So is it really that hard? I think it helps to split it into two questions: what to build technically, and what to build for the people involved.</p>
+<p>The technical part is, in my experience, no longer the problem. Once AI knows what we’re building and for whom, it doesn’t propose one solution, it proposes a dozen, and it asks the right questions to settle on one. When it fails, it’s almost always because it didn’t have the context. And I know how that sounds, since “it was missing context” can explain any failure. But I see the difference every day. When I start a task with nothing but my prompt, AI makes the mistakes you’d expect. When the task comes with logs, the Slack conversation, a proper description, and access to the database and to APIs, the result is perfect or close to it. The model was just as smart both times. The second time, it simply knew more.</p>
+<p>And the information is getting easier to find. For years, a lot of it was lost: decisions made verbally, agreements nobody wrote down, knowledge living in one person’s head. That’s changing. Teams are building knowledge bases, AI fills tasks with context so it doesn’t get lost, and every Zoom call now comes with a transcript and a summary. The context problem isn’t solved, but it’s shrinking every month.</p>
+<p>The second question is harder, and it’s not about information at all. Requirements come from people, and people have interests. Sales, security, product, and the client all want different things, and not because anyone is being irrational. Each of them wants what benefits their side most, and ignoring any of them hurts someone. Wolff’s tweet names one more hard part: figuring out whether it’s working. That depends on who you ask, too. Some features are built to make the company more popular, some to make it more profitable, some because a competitor has them. You can’t settle that by picking a metric either: once a metric becomes the goal, it stops measuring what you cared about. AI knows this problem well. It’s the same instinct that once made it delete tests to make them pass.</p>
+<p>Given enough context about each side, I think AI can find good compromises, probably better than most of us. But finding the compromise isn’t the hard part. Getting everyone to accept it is. That takes conversations, persuasion, and finding the right words for each person, and people want to have those conversations with people. Customers do too: most would rather give feedback to a human than to a bot. And AI still can’t read a room. I can’t picture AI in voice mode calming down a tense meeting anytime soon.</p>
+<p>So Wolff is right that this part is hard, and right that it will stay human for a while. But look at what it is: negotiation, persuasion, politics. It’s real work, and it matters. It just isn’t software engineering. And even here, we end up as meat proxies again: AI finds the compromise, and a human carries it into the room.</p>
+<h2 id="whats-left-for-humans">What’s left for humans</h2>
+<p>So what’s left for humans? I can think of three answers, and I’m not equally convinced by all of them.</p>
+<p>The first is responsibility. AI will never be perfect, and when something critical happens, when customers lose money, it would be strange for a company’s leadership to blame the model, or Anthropic. Somebody has to pull the trigger and own the outcome. This isn’t a new idea, either. Part of the reason consulting firms exist is that a decision backed by outside analysis is easier to defend than one made alone.</p>
+<p>But I’m not convinced responsibility is enough to keep engineers around. Software engineers are expensive, and being accountable for AI’s output doesn’t obviously justify an engineer’s salary. Why couldn’t any manager run the prompts and sign off just as well? And it’s not clear the sign-off itself will survive. If autonomous AI becomes the industry norm, accepting its decisions without a human in between may become as ordinary as trusting the compiler.</p>
+<p>The second answer is judgment: deciding what to do, not just doing it. Here it helps to look at how AI as a product has evolved. First, it was text in, text out. Then it learned to act on the world outside the chat: calling tools, running scripts. That made it a worker, something that gathers context in order to change things. Now it orchestrates multiple workers to manage its own context window. The next step seems obvious: orchestrating thinkers, agents that gather context not to act on it, but to analyze it and draw conclusions. Thinkers decide what should be done and in what order, and workers do it.</p>
+<p>Picture someone opening a session and writing: “I want to build a better Salesforce. These are my values and what I care about. Analyze the market and build it.” The orchestrator asks a few clarifying questions, spawns thinkers to research the market and the competition, assembles a specification, and hands it to workers. Oversimplified, sure. But which step is impossible?</p>
+<p>The fully automated company sounds bizarre, but maybe only because our experience with AI so far has taught us not to leave it alone, and maybe a little because it hurts our ego. What would actually stop it? Output quality, for now. And something subtler: AI has no sense of time. It doesn’t feel a project growing. Left alone, it could keep adding features until the product spreads like a tumor and its customers no longer understand it. But I suspect even that is mostly a matter of the prompt, of someone telling it what not to build.</p>
+<p>Notice who is still in that picture, though: the person writing the first prompt. The one who brings the values, decides what matters, and says what not to build. That’s the owner, not the engineer.</p>
+<p>The third answer is the one I’m most sure of, and it’s the physical world. Back in the 1980s, AI researchers noticed something strange, now known as Moravec’s paradox: what’s hard for humans, like math, logic, and chess, turned out to be easy for computers, while what’s effortless for us, like seeing, moving, and handling objects, turned out to be extremely hard. It still holds. An agent browsing a website by moving a cursor is far slower than a person. An average gamer will beat AI at a random game it was never trained on. I have a hard time imagining a fully autonomous plumber, or surgeon.</p>
+<p>But that doesn’t mean humans stay in charge there. AI can’t hold the wrench, but it can diagnose the leak and tell the plumber exactly what to do. Even when a robot plumber becomes possible, a human with an AI in their ear may stay cheaper for a long time. And this isn’t science fiction: warehouse workers already follow instructions from software that tells them which shelf to go to, and delivery drivers follow routes an app decided for them. The decisions are made elsewhere, and the human is the hands and eyes.</p>
+<p>That’s the meat proxy again, only this time not for engineers, but for people in general. AI decides, and humans go where it can’t reach, or where sending a robot isn’t worth the money.</p>
+<p>Responsibility, judgment, the physical world: none of them needs many software engineers.</p>
+<h2 id="when-code-is-cheap">When code is cheap</h2>
+<p>“Why buy their solution if we can just build it with AI?” is a question I hear more and more in engineering teams, at different companies. And often, they’re not wrong. Today’s AI is autonomous enough, and its output good enough, that building in-house is a realistic option for things we used to pay for. Open source is benefiting too. For years, its biggest problem was that very smart people did it for free while still having to earn a living, and many contributors eventually left. Now the same output takes a fraction of the time, so contributing is far more sustainable. It’s not all good news for maintainers, who are also flooded with AI-generated bug reports and pull requests of questionable quality, but the overall direction is clear: alternatives to paid software are getting easier to build, by companies and by communities.</p>
+<p>The result is that the whole classic IT industry is moving toward lower prices. A company with fewer employees and fewer third-party subscriptions can undercut its competitors, and with open source alternatives getting stronger, cutting costs this way is a good decision anyway.</p>
+<p>So if any company can rebuild your software, what protects you? I think value is moving from code to everything that can’t be generated.</p>
+<p>Think back to the person asking AI to build a better Salesforce. Even if it works, Salesforce doesn’t die overnight. Its customers’ data lives there. Thousands of integrations depend on it. Switching is expensive and risky. The software was never its only advantage.</p>
+<p>Data matters most. It’s food for AI, and a company with data nobody else has, whether about its customers, its domain, or its operations, owns something AI can’t produce on its own.</p>
+<p>Infrastructure matters too. AI is a layer on top of existing physical and computational infrastructure, and it amplifies whatever is underneath. Chip makers, data center owners, and energy providers win no matter which AI product succeeds, the same way people selling shovels got rich in a gold rush regardless of who found gold. A company running its own data centers can outcompete one that rents them, no matter how good the other’s software is.</p>
+<p>Then there’s secrecy. Topaz, the company behind the popular image and video upscalers, moved some of its models to the cloud. Whatever their actual reasons, it’s a smart move now: there’s nothing to copy if the model never leaves their servers. I expect this to become a trend: less transparency, more things hidden behind an API.</p>
+<p>And finally, reputation. It’s no longer cool to be the disruptive startup. When anyone can launch a product in a weekend, thousands of products will disappear just as fast, and having been around for twenty years becomes a selling point again. Classic enterprise companies will learn to move faster, maybe not as fast as AI startups, but people will choose them anyway, because they’ve earned their reputation over years and they aren’t going anywhere.</p>
+<p>Companies have options. Software engineers don’t. There’s no clever trick we can use to reduce our competition with AI.</p>
+<p>So how many engineers will a company keep? I don’t think there’s a fixed answer anymore. There’s a minimum, set by need: enough people to verify that generated code makes sense, and to pull the plug if AI starts doing irreversible damage. Above that, it’s just a budget decision. A company keeps as many engineers as it can afford without hurting itself financially, and every competitor that keeps fewer is a reason to reconsider.</p>
+<p>The usual counterargument is Jevons paradox: when using a resource becomes cheaper, we end up using more of it, not less. When steam engines became more efficient, coal consumption went up. When programming became easier, through compilers, high-level languages, and the cloud, the number of programmers grew. And I think the paradox will hold again. Software will become far more accessible, often even free, and we’ll use much more of it than today. But the resource that’s becoming cheaper isn’t the engineer anymore. It’s compute. Demand for software will grow, and demand for tokens with it, but I’m not sure demand for the people who write software will. If Jevons paradox applies to anyone this time, it’s to the data centers, not to us.</p>
+<h2 id="where-that-leaves-us">Where that leaves us</h2>
+<p>So where does that leave us, in October 2026?</p>
+<p>Somewhere in the middle. AI already does most of the engineering: it investigates, writes, tests, and ships. But it still needs us for the rest. We approve every change it makes, we go to the meetings it can’t attend, and we carry its decisions to the places it can’t reach. For now, we’re its meat proxies.</p>
+<p>That’s not a bad role, and it’s not a useless one. Proxies are only needed where the gaps are, and right now there are plenty of gaps. The most useful thing an engineer can do today is help close them: write things down, connect the tools, put the context where AI can find it. As far as I can tell, AI’s output is almost always good when it has the right context and a clear idea of what’s expected. The prompt is the easy part. The context is the work.</p>
+<p>The transition period won’t last forever. The gaps are closing with every model and every new connector, and one day “software engineering is done” won’t be a controversial phrase anymore. Wolff was wrong about the date. I’m not going to guess a new one.</p>
+<p>But some gaps will stay open much longer than others: the negotiation room, the owner’s values, the physical world. Wherever AI makes the decisions and can’t carry them out, there will still be a human to do it. That’s where most of us will end up. Not as engineers, maybe, but still very much needed.</p>
+<footer data-astro-cid-g5songws><a class="back" href="/posts/" data-astro-cid-g5songws>&larr; All posts</a><a class="edit" href="https://github.com/Awethon/awethon.github.io/blob/master/src/content/posts/software-engineering-is-done.md" data-astro-cid-g5songws>Suggest changes</a></footer></article></main><footer data-astro-cid-jo6i4kqk><div class="wrap inner" data-astro-cid-jo6i4kqk>&copy; 2026 Aleksey Polovinkin</div></footer></div></body></html>
