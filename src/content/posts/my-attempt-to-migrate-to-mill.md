@@ -2,6 +2,7 @@
 title: "My Attempt to Migrate to Mill"
 date: 2025-03-31T03:10:43+02:00
 draft: false
+tags: ["Scala", "Mill", "SBT", "Build Tools"]
 ---
 
 In the year of 2025 I have attended Scalar Conference in Warsaw that had Li Haoyi as one of the speakers. 
