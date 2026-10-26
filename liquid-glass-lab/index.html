@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Liquid Glass Lab</title>
+  <meta name="description" content="Real refractive liquid glass in WebGL: thickness, refraction, dispersion, Fresnel light and liquid merging. Tune it, drag it, share it.">
+  <meta property="og:title" content="Liquid Glass Lab">
+  <meta property="og:description" content="Real refractive liquid glass in WebGL. Tune it, drag it, share it.">
+  <meta name="theme-color" content="#07080c">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23f4f1ff'/%3E%3Cstop offset='1' stop-color='%237f8cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='13' fill='url(%23g)' opacity='.9'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-backdrop="lines">
+  <canvas id="gl" aria-label="Liquid glass canvas"></canvas>
+
+  <header class="brand">
+    <h1>Liquid Glass Lab</h1>
+    <p>Real refraction through glass with thickness, rendered in WebGL.</p>
+  </header>
+
+  <div id="hint" class="hint">Drag the glass</div>
+
+  <div id="content" class="content"></div>
+  <div id="drop" class="drop" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="M12 3.5l2.2 5.6 5.8.4-4.5 3.7 1.4 5.7L12 15.8l-4.9 3.1 1.4-5.7L4 9.5l5.8-.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  </div>
+
+  <template id="tpl-circle">
+    <span class="k-label">Volume</span>
+    <span class="k-value">72</span>
+    <div class="k-btns">
+      <button type="button" data-act="down" aria-label="Quieter">−</button>
+      <button type="button" data-act="up" aria-label="Louder">+</button>
+    </div>
+  </template>
+
+  <template id="tpl-rect">
+    <h2>Liquid Glass</h2>
+    <p>A lens with real thickness bends the lines behind it. Drag it around and tune it on the right.</p>
+    <div class="row">
+      <button type="button" class="solid" data-act="random">Randomize</button>
+      <button type="button" class="ghost" data-act="share">Copy link</button>
+    </div>
+  </template>
+
+  <template id="tpl-group">
+    <span class="g-title">Pull</span>
+    <span class="g-sub">the whole group</span>
+  </template>
+
+  <template id="tpl-capsule">
+    <nav class="tabs">
+      <button type="button" class="on" data-act="tab">Home</button>
+      <button type="button" data-act="tab">Explore</button>
+      <button type="button" data-act="tab">Library</button>
+      <button type="button" data-act="tab">Profile</button>
+    </nav>
+  </template>
+
+  <button id="expand" class="expand" type="button" aria-label="Show controls">
+    <svg viewBox="0 0 24 24"><path d="M4 7h10M4 17h6M18 7h2M14 17h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="16" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+    Controls
+  </button>
+
+  <aside id="panel" class="panel" aria-label="Controls">
+    <div class="panel-head">
+      <button id="share" class="act primary" type="button">
+        <svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Copy link
+      </button>
+      <button id="random" class="act" type="button" aria-label="Randomize" title="Randomize">
+        <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="9" r="1.3" fill="currentColor"/><circle cx="15" cy="15" r="1.3" fill="currentColor"/><circle cx="15" cy="9" r="1.3" fill="currentColor"/><circle cx="9" cy="15" r="1.3" fill="currentColor"/></svg>
+      </button>
+      <button id="reset" class="act" type="button" aria-label="Reset to preset" title="Reset to preset">
+        <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button id="collapse" class="act" type="button" aria-label="Hide controls" title="Hide controls (H)">
+        <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <div class="panel-scroll">
+      <section class="block">
+        <h3>Presets</h3>
+        <div id="presets" class="chips"></div>
+      </section>
+
+      <section class="block">
+        <h3>Shape</h3>
+        <div class="seg icons" data-key="shape">
+          <button type="button" data-v="circle"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Circle</button>
+          <button type="button" data-v="rect"><svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Rounded</button>
+          <button type="button" data-v="capsule"><svg viewBox="0 0 24 24"><rect x="2.5" y="8" width="19" height="8" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Capsule</button>
+          <button type="button" data-v="group"><svg viewBox="0 0 24 24"><circle cx="11" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="18.5" cy="9" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="5" cy="16.5" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="14" cy="19.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Group</button>
+        </div>
+        <label class="check"><input type="checkbox" id="dropToggle" checked><span class="switch"></span><span>Second drop that merges</span></label>
+      </section>
+
+      <section class="block">
+        <h3>Backdrop</h3>
+        <div class="seg" data-key="backdrop">
+          <button type="button" data-v="lines">Lines</button>
+          <button type="button" data-v="grid">Grid</button>
+          <button type="button" data-v="rings">Rings</button>
+          <button type="button" data-v="page">Page</button>
+        </div>
+      </section>
+
+      <section id="section" class="block">
+        <div class="block-head">
+          <h3>Side view</h3>
+          <div class="seg tiny" data-key="along">
+            <button type="button" data-v="across">Across</button>
+            <button type="button" data-v="along">Along</button>
+          </div>
+        </div>
+        <canvas></canvas>
+        <p class="caption">A cut through the glass at true scale. Lines of sight come down from above and land where that spot of glass takes its picture from.</p>
+      </section>
+
+      <div id="groups"></div>
+
+      <p class="panel-foot"><span id="fps">—</span><span>Double-click a slider to reset it · H hides the panel</span></p>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <footer class="credit">Made by Awethon &amp; Claude</footer>
+  <p class="fallback">Liquid Glass Lab needs WebGL2, which this browser does not provide.</p>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
