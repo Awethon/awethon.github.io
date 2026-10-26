@@ -83,13 +83,13 @@ const GROUP = [
   [5, -46, 40, 20, 70],
   [-1, 24, -90, 26, 100],
 ];
-const SHAPE_FLOOR = { group: { body: 0.7 } };
-const DEFAULTS = { shape: 'group', backdrop: 'page' };
+const SHAPE_FLOOR = { group: { body: 0.4 } };
+const DEFAULTS = { shape: 'rect', backdrop: 'page' };
 
 function withShape(values, shape) {
-  const floor = SHAPE_FLOOR[shape];
-  if (!floor) return values;
   const next = { ...values };
+  const floor = SHAPE_FLOOR[shape];
+  if (!floor) return next;
   for (const [key, min] of Object.entries(floor)) if (values.thick > 0) next[key] = Math.max(values[key], min);
   return next;
 }
@@ -106,7 +106,7 @@ const PANEL_SPACE = 372;
 const MOBILE = 760;
 
 const state = {
-  shape: 'group',
+  shape: 'rect',
   backdrop: 'page',
   drop: true,
   follow: false,
