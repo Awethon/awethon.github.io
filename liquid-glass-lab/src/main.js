@@ -19,7 +19,7 @@ const PRESETS = [
   ['pebble', 'Pebble', { ...BASE, thick: 46, ior: 1.6, bevel: 44, curve: 2.2, body: 1, lens: 0.4, spec: 0.45, shadow: 0.38 }],
   ['bubble', 'Soap bubble', { ...BASE, thick: 22, ior: 1.33, disp: 0.12, bevel: 30, lens: 0.3, irid: 0.75, refl: 0.9, tintA: 0, rim: 0.4 }],
   ['slab', 'Cut slab', { ...BASE, thick: 30, ior: 1.7, bevel: 16, curve: 1, cut: 0.25, lens: 0, spec: 0.3 }],
-  ['css', 'CSS blur', { ...BASE, thick: 0, ior: 1, bevel: 2, lens: 0, merge: 0, frost: 26, flip: 1, light: 0, elev: 45, spec: 0, refl: 0, rim: 0.14, rimDir: 0, tintA: 0.7, shadow: 0.45, shadowDist: 18, shadowBlur: 50, sat: 1.3, tilt: 0 }],
+  ['css', 'CSS blur', { ...BASE, thick: 0, ior: 1, bevel: 2, lens: 0, merge: 0, frost: 13.5, flip: 1, light: 0, elev: 45, spec: 0, refl: 0, rim: 0.14, rimDir: 0, tintA: 0.7, shadow: 0.45, shadowDist: 18, shadowBlur: 50, sat: 1.3, tilt: 0 }],
 ];
 
 const GROUPS = [
