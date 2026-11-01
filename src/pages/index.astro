@@ -16,8 +16,8 @@ const socials = [
 <Base>
   <section class="hero wrap">
     <StatusPill />
-    <h1>Scala developer and <em>functional programming</em> enthusiast.</h1>
-    <p class="lede">Wanna be Principal Software Engineer</p>
+    <h1>Scala developer and <em>functional programming</em> enthusiast</h1>
+    <p class="lede">Having fun while I can</p>
     <ul class="socials">
       {socials.map((social) => <li><a href={social.href}>{social.label}</a></li>)}
     </ul>
@@ -55,6 +55,13 @@ const socials = [
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    text-wrap: balance;
+  }
+  /* Keep the highlighted phrase on one line wherever it fits; on phones it's wider than the screen. */
+  @media (min-width: 34rem) {
+    h1 em {
+      white-space: nowrap;
+    }
   }
 
   h1 em {
