@@ -1,0 +1,25 @@
+---
+// Puts several Shots side by side, typically a desktop view next to the same view on a phone.
+---
+
+<div class="shots"><slot /></div>
+
+<style>
+  .shots {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-block: 1.75em;
+  }
+  @media (max-width: 34rem) {
+    .shots {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .shots > :global(.shot.phone) {
+      flex-basis: auto;
+      width: 60%;
+      align-self: center;
+    }
+  }
+</style>
