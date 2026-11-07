@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="google-site-verification" content="qgixNnkm2LoCsgWFtvfJRVqnkpqtr1Xzc5YTPoCL2zc"><meta name="yandex-verification" content="c25e903254c44b74"><title>Meet vibemusic — Awethon</title><meta name="description" content="Scala developer and functional programming enthusiast. Having fun while I can."><link rel="canonical" href="https://awethon.com/posts/meet-vibemusic/"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta property="og:type" content="website"><meta property="og:title" content="Meet vibemusic — Awethon"><meta property="og:description" content="Scala developer and functional programming enthusiast. Having fun while I can."><meta property="og:url" content="https://awethon.com/posts/meet-vibemusic/"><meta name="twitter:card" content="summary_large_image"><style>header[data-astro-cid-g5songws]{padding-block:clamp(2.5rem,8vh,4.5rem) 1.5rem}h1[data-astro-cid-g5songws]{font-size:var(--step-4)}.subtitle[data-astro-cid-g5songws]{font-size:var(--step-1);color:var(--ink-muted);margin:.6rem 0 0}.meta[data-astro-cid-g5songws]{font-family:var(--font-mono);font-size:var(--step--1);color:var(--ink-muted);flex-wrap:wrap;gap:.45rem;margin:0 0 .9rem;display:flex}.tags[data-astro-cid-g5songws]{flex-wrap:wrap;gap:.4rem;margin:1.2rem 0 0;padding:0;list-style:none;display:flex}.tags[data-astro-cid-g5songws] a[data-astro-cid-g5songws]{font-family:var(--font-mono);color:var(--ink-muted);border:1px solid var(--border);border-radius:999px;padding:.12rem .62rem;font-size:.75rem;text-decoration:none}.tags[data-astro-cid-g5songws] a[data-astro-cid-g5songws]:hover{color:var(--accent);border-color:var(--accent)}.toc[data-astro-cid-g5songws]{border-inline-start:2px solid var(--border);background:color-mix(in oklch, var(--surface) 55%, transparent);border-radius:0 var(--radius) var(--radius) 0;margin-block:1rem 2.5rem;padding:1rem 1.2rem}.toc-title[data-astro-cid-g5songws]{font-family:var(--font-mono);font-size:var(--step--1);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin:0 0 .6rem}.toc[data-astro-cid-g5songws] ol[data-astro-cid-g5songws]{font-size:var(--step--1);gap:.3rem;margin:0;padding:0;list-style:none;display:grid}.toc[data-astro-cid-g5songws] li[data-astro-cid-g5songws][data-depth="3"]{padding-inline-start:1.1rem}.toc[data-astro-cid-g5songws] a[data-astro-cid-g5songws]{color:var(--ink-muted);text-decoration:none}.toc[data-astro-cid-g5songws] a[data-astro-cid-g5songws]:hover{color:var(--accent)}footer[data-astro-cid-g5songws]{border-block-start:1px solid var(--border);font-family:var(--font-mono);font-size:var(--step--1);justify-content:space-between;gap:1rem;margin-block-start:4rem;padding-block-start:1.5rem;display:flex}footer[data-astro-cid-g5songws] a[data-astro-cid-g5songws]{color:var(--ink-muted);text-decoration:none}footer[data-astro-cid-g5songws] a[data-astro-cid-g5songws]:hover{color:var(--accent)}
+</style><link rel="stylesheet" href="/_astro/Base.Daeuiu89.css"><style>.shot[data-astro-cid-aatdr2li]{flex:1 1 0;min-width:0;margin:0}.shot[data-astro-cid-aatdr2li].phone{flex:0 0 min(32%,15rem)}img[data-astro-cid-aatdr2li],video[data-astro-cid-aatdr2li]{border-radius:var(--radius);border:1px solid var(--border);width:100%;height:auto;display:block}.planned[data-astro-cid-aatdr2li]{aspect-ratio:16/10;border-radius:var(--radius);border:1px dashed var(--border-strong);background:var(--surface);color:var(--ink-muted);flex-direction:column;justify-content:center;gap:.5em;padding:1.25em;font-size:.85em;line-height:1.45;display:flex}.phone[data-astro-cid-aatdr2li] .planned[data-astro-cid-aatdr2li]{aspect-ratio:9/19.5}.kind[data-astro-cid-aatdr2li]{color:var(--accent);letter-spacing:.08em;text-transform:uppercase;font-size:.8em;font-weight:600}figcaption[data-astro-cid-aatdr2li]{color:var(--ink-muted);text-align:center;margin-top:.6em;font-size:.85em}.shots[data-astro-cid-xftgjkdt]{align-items:flex-start;gap:1rem;margin-block:1.75em;display:flex}@media (width<=34rem){.shots[data-astro-cid-xftgjkdt]{flex-direction:column;align-items:stretch}.shots[data-astro-cid-xftgjkdt]>.shot.phone{flex-basis:auto;align-self:center;width:60%}}
+</style></head><body class="dim"><div class="sky" aria-hidden="true" data-astro-cid-va2ckxt3></div><canvas id="aurora-gl" aria-hidden="true" data-astro-cid-va2ckxt3></canvas><script type="x-shader/x-vertex" id="aurora-vs">
+  attribute vec2 a;
+  void main(){gl_Position=vec4(a,0.0,1.0);}
+</script><script type="x-shader/x-fragment" id="aurora-fs">
+  #ifdef GL_FRAGMENT_PRECISION_HIGH
+  precision highp float;
+  #else
+  precision mediump float;
+  #endif
+  uniform vec2 u_res;
+  uniform float u_time;
+  uniform float u_scale;
+
+  float hash(vec2 p){
+    p=fract(p*vec2(123.34,456.21));
+    p+=dot(p,p+45.32);
+    return fract(p.x*p.y);
+  }
+  float hash12(vec2 p){
+    vec3 q=fract(p.xyx*0.1031);
+    q+=dot(q,q.yzx+33.33);
+    return fract((q.x+q.y)*q.z);
+  }
+  float vnoise(vec2 p){
+    vec2 i=floor(p),f=fract(p);
+    vec2 u=f*f*(3.0-2.0*f);
+    float a=hash(i);
+    float b=hash(i+vec2(1.0,0.0));
+    float c=hash(i+vec2(0.0,1.0));
+    float d=hash(i+vec2(1.0,1.0));
+    return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);
+  }
+  float fbm(vec2 p){
+    float v=0.0,a=0.5;
+    for(int i=0;i<3;i++){
+      v+=a*vnoise(p);
+      p=p*2.03+vec2(1.7,9.2);
+      a*=0.5;
+    }
+    return v;
+  }
+  vec3 band(vec2 p,float t,float yb,float a1,float f1,float a2,float f2,
+            float drift,float sp2,float ext,float feather,vec3 ca,vec3 cb,float seed){
+    float xx=p.x+t*drift;
+    float bob=0.032*sin(t*0.11+seed);
+    float warp=(fbm(vec2(p.x*1.6+seed*3.0,t*0.05+seed))-0.5)*0.07;
+    float c=yb+bob+warp+a1*sin(xx*f1+seed)+a2*sin(xx*f2-t*sp2+seed*2.0);
+    float d=p.y-c;
+    float edge=smoothstep(feather,-feather*0.6,d);
+    float up=exp(-max(-d,0.0)/ext);
+    float hn=clamp((fbm(vec2(p.x*1.8+t*0.05+seed*5.0,yb*4.0+t*0.03))-0.30)/0.36,0.0,1.0);
+    return mix(ca,cb,hn)*edge*up;
+  }
+  void main(){
+    vec2 p=gl_FragCoord.xy/u_res;
+    p.y=1.0-p.y;
+    float ar=u_res.x/max(u_res.y,1.0);
+    vec2 q=vec2((p.x-0.5)*clamp(ar,0.8,2.2)+0.5,p.y);
+    float t=u_time;
+
+    vec3 base=vec3(0.0314,0.0353,0.0471);
+    vec3 sky=base
+      +vec3(0.026,0.062,0.098)*smoothstep(0.82,-0.06,p.y)
+      +vec3(0.010,0.030,0.038)*smoothstep(0.42,-0.12,p.y);
+
+    vec3 glow=vec3(0.0);
+    glow+=band(q,t,0.075,0.075,5.0,0.030, 9.0, 0.055,0.31,0.30,0.052,vec3(0.15,0.98,0.52),vec3(0.16,0.90,0.80),0.0)*0.34;
+    glow+=band(q,t,0.135,0.100,3.4,0.038, 6.3,-0.040,0.24,0.34,0.060,vec3(0.16,0.82,1.00),vec3(0.30,0.56,1.00),1.7)*0.30;
+    glow+=band(q,t,0.215,0.065,6.0,0.026,11.2, 0.080,0.43,0.26,0.044,vec3(0.34,0.54,1.00),vec3(0.62,0.38,1.00),3.1)*0.27;
+    glow+=band(q,t,0.295,0.140,2.0,0.050, 4.6,-0.028,0.19,0.38,0.068,vec3(0.66,0.36,1.00),vec3(0.96,0.36,0.80),4.6)*0.24;
+    glow+=band(q,t,0.385,0.100,3.4,0.030, 7.4, 0.065,0.36,0.24,0.050,vec3(0.18,0.94,0.74),vec3(0.20,0.78,0.98),6.2)*0.26;
+    glow*=smoothstep(0.80,0.02,p.y);
+    glow=vec3(1.0)-exp(-glow*1.15);
+    glow=max(mix(vec3(dot(glow,vec3(0.299,0.587,0.114))),glow,1.4),vec3(0.0));
+
+    float vig=smoothstep(1.40,0.34,length((p-vec2(0.5,0.16))*vec2(0.98,1.08)));
+    vec3 col=sky+glow*vig;
+
+    vec2 cell=floor(gl_FragCoord.xy/(u_scale*2.0));
+    float star=smoothstep(0.9992,1.0,hash12(cell))*smoothstep(0.62,0.02,p.y);
+    float tw=0.55+0.45*sin(t*(0.6+1.4*hash12(cell+17.0))+6.283*hash12(cell+41.0));
+    col+=vec3(0.72,0.80,1.0)*star*tw*0.8;
+
+    col+=(hash(gl_FragCoord.xy+fract(t)*13.0)-0.5)*0.0045;
+    gl_FragColor=vec4(col,1.0);
+  }
+</script><script>
+  (function () {
+    var cv = document.getElementById('aurora-gl')
+    if (!cv || cv.dataset.bound) return
+    cv.dataset.bound = 'true'
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    var raf = 0
+    var gl = null
+
+    function fail() {
+      document.documentElement.classList.add('no-webgl')
+    }
+
+    var opts = { alpha: false, antialias: false, depth: false, stencil: false, powerPreference: 'low-power' }
+    try {
+      gl = cv.getContext('webgl', opts) || cv.getContext('experimental-webgl', opts)
+    } catch (e) {
+      gl = null
+    }
+    if (!gl) return fail()
+
+    function compile(type, src) {
+      var s = gl.createShader(type)
+      gl.shaderSource(s, src)
+      gl.compileShader(s)
+      return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null
+    }
+    var vs = compile(gl.VERTEX_SHADER, document.getElementById('aurora-vs').textContent)
+    var fs = compile(gl.FRAGMENT_SHADER, document.getElementById('aurora-fs').textContent)
+    if (!vs || !fs) return fail()
+    var prog = gl.createProgram()
+    gl.attachShader(prog, vs)
+    gl.attachShader(prog, fs)
+    gl.linkProgram(prog)
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return fail()
+    gl.useProgram(prog)
+
+    var buf = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW)
+    var loc = gl.getAttribLocation(prog, 'a')
+    gl.enableVertexAttribArray(loc)
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
+    var uRes = gl.getUniformLocation(prog, 'u_res')
+    var uTime = gl.getUniformLocation(prog, 'u_time')
+    var uScale = gl.getUniformLocation(prog, 'u_scale')
+
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 1.25)
+      var w = Math.max(1, Math.round(cv.clientWidth * dpr))
+      var h = Math.max(1, Math.round(cv.clientHeight * dpr))
+      if (w > 1280) {
+        h = Math.max(1, Math.round((h * 1280) / w))
+        w = 1280
+      }
+      if (cv.width !== w || cv.height !== h) {
+        cv.width = w
+        cv.height = h
+        gl.viewport(0, 0, w, h)
+        gl.uniform2f(uRes, w, h)
+        gl.uniform1f(uScale, w / Math.max(1, cv.clientWidth))
+      }
+    }
+
+    function draw(t) {
+      gl.uniform1f(uTime, t)
+      gl.drawArrays(gl.TRIANGLES, 0, 3)
+    }
+
+    var t0 = 0
+    var last = -1e9
+    function frame(now) {
+      if (!t0) t0 = now
+      if (now - last >= 33) {
+        last = now
+        resize()
+        draw((now - t0) / 1000)
+      }
+      raf = requestAnimationFrame(frame)
+    }
+
+    function start() {
+      if (raf) cancelAnimationFrame(raf)
+      raf = 0
+      resize()
+      if (mq.matches) return draw(9)
+      t0 = 0
+      last = -1e9
+      raf = requestAnimationFrame(frame)
+    }
+
+    cv.addEventListener('webglcontextlost', function (e) {
+      e.preventDefault()
+      if (raf) cancelAnimationFrame(raf)
+      raf = 0
+      fail()
+    })
+    var rt = 0
+    window.addEventListener('resize', function () {
+      if (!mq.matches) return
+      clearTimeout(rt)
+      rt = setTimeout(start, 160)
+    })
+    if (mq.addEventListener) mq.addEventListener('change', start)
+    start()
+  })()
+</script><div class="progress"></div><div class="shell"><header data-astro-cid-nen7h5rs><div class="wrap bar" data-astro-cid-nen7h5rs><a class="brand" href="/" data-astro-cid-nen7h5rs><span class="mark" data-astro-cid-nen7h5rs>/</span>awethon</a><nav data-astro-cid-nen7h5rs><a href="/posts/" aria-current="page" data-astro-cid-nen7h5rs>Posts</a><a href="/tags/" data-astro-cid-nen7h5rs>Tags</a></nav></div></header><main><article class="prose" data-astro-cid-g5songws><header data-astro-cid-g5songws><p class="meta" data-astro-cid-g5songws><time datetime="2026-11-07" data-astro-cid-g5songws>7 November 2026</time><span data-astro-cid-g5songws>&middot;</span><span data-astro-cid-g5songws>5 min read</span></p><h1 style="view-transition-name: post--posts-meet-vibemusic-" data-astro-cid-g5songws>Meet vibemusic</h1><p class="subtitle" data-astro-cid-g5songws>Music streaming, rethought for the music you own</p><ul class="tags" data-astro-cid-g5songws><li data-astro-cid-g5songws><a href="/tags/vibemusic/" data-astro-cid-g5songws>vibemusic</a></li><li data-astro-cid-g5songws><a href="/tags/self-hosting/" data-astro-cid-g5songws>Self-hosting</a></li><li data-astro-cid-g5songws><a href="/tags/music/" data-astro-cid-g5songws>Music</a></li></ul></header><nav class="toc" aria-label="Table of contents" data-astro-cid-g5songws><p class="toc-title" data-astro-cid-g5songws>Contents</p><ol data-astro-cid-g5songws><li data-depth="2" data-astro-cid-g5songws><a href="#a-home-page-that-suggests-what-to-play" data-astro-cid-g5songws>A home page that suggests what to play</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#every-album-paints-the-app" data-astro-cid-g5songws>Every album paints the app</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#playlists-that-make-themselves" data-astro-cid-g5songws>Playlists that make themselves</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#your-collection-across-the-years" data-astro-cid-g5songws>Your collection, across the years</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#share-anything-with-a-link" data-astro-cid-g5songws>Share anything, with a link</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#every-screen-is-a-remote" data-astro-cid-g5songws>Every screen is a remote</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#fast-with-gestures-that-feel-natural" data-astro-cid-g5songws>Fast, with gestures that feel natural</a></li><li data-depth="2" data-astro-cid-g5songws><a href="#try-it" data-astro-cid-g5songws>Try it</a></li></ol></nav><div class="shots" data-astro-cid-xftgjkdt><figure class="shot" data-astro-cid-aatdr2li><video src="/meet-vibemusic/colours.mp4" poster="/meet-vibemusic/colours.webp" aria-label="The background and accent colour changing as playback moves between two albums" autoplay muted loop playsinline preload="metadata" data-astro-cid-aatdr2li></video></figure></div>
+<p>This is vibemusic: a music player for the library you own, built to feel like the streaming apps
+at their best, and to run on your own server next to Navidrome.</p>
+<p>Streaming apps get one thing right: the moment you open them, there’s something to play. Open a
+self-hosted library and you get a list of everything you own, and it’s up to you to remember
+what’s in it. vibemusic is about that first moment, and everything after it. It’s free, open
+source, and works with the Navidrome you already have.</p>
+<h2 id="a-home-page-that-suggests-what-to-play">A home page that suggests what to play</h2>
+<div class="shots" data-astro-cid-xftgjkdt><figure class="shot" data-astro-cid-aatdr2li><img src="/meet-vibemusic/home.webp" alt="vibemusic's home page on a desktop" loading="lazy" decoding="async" data-astro-cid-aatdr2li></figure><figure class="shot phone" data-astro-cid-aatdr2li><img src="/meet-vibemusic/home-phone.webp" alt="vibemusic's home page on a phone" loading="lazy" decoding="async" data-astro-cid-aatdr2li></figure></div>
+<p>Open vibemusic and the home page has something for you: what you played recently, a mix of your
+playlists and the generated ones, and your genres as tiles to dip into. It isn’t a wall of every
+album you own sorted by date. The library is still all there, one click away, but the first
+screen is about what to play next.</p>
+<h2 id="every-album-paints-the-app">Every album paints the app</h2>
+<p>Each cover gets its colours picked out when it first plays: not just the biggest patches of
+colour, but the small details that make a cover what it is, like a red logo on a black sleeve or
+the white of a title. Those colours drift slowly across the background, and the interface takes
+its accent from the album: switches, highlights, the current track, even the browser tab’s icon.
+Change the album and everything follows, gently, as in the video at the top.</p>
+<p>The full-screen player keeps all of that and gets out of the way: the cover, the track, synced
+lyrics when there are any, and a background that moves with the music.</p>
+<div class="shots" data-astro-cid-xftgjkdt><figure class="shot" data-astro-cid-aatdr2li><img src="/meet-vibemusic/player.webp" alt="The full-screen player on a desktop" loading="lazy" decoding="async" data-astro-cid-aatdr2li></figure><figure class="shot phone" data-astro-cid-aatdr2li><img src="/meet-vibemusic/player-phone.webp" alt="The full-screen player on a phone" loading="lazy" decoding="async" data-astro-cid-aatdr2li></figure></div>
+<p>There’s a second background, too. Turn on <strong>Caustics</strong> in Settings and the album’s colours become
+light at the bottom of a pool: the most colourful parts of the cover make the bright ripples, and
+the darkest part becomes the floor beneath them. Like the drifting colours, it stays dark enough to
+read over, whatever the cover.</p>
+<div class="shots" data-astro-cid-xftgjkdt><figure class="shot" data-astro-cid-aatdr2li><video src="/meet-vibemusic/caustics.mp4" poster="/meet-vibemusic/caustics.webp" aria-label="The Caustics background while C418's 148 plays: red light rippling across a dark floor" autoplay muted loop playsinline preload="metadata" data-astro-cid-aatdr2li></video></figure></div>
+<h2 id="playlists-that-make-themselves">Playlists that make themselves</h2>
+<p>This is the part I’m proudest of, and the one plain Navidrome doesn’t have at all.</p>
+<p>Navidrome shows your genres exactly as your tags spell them. If one album says “Hip Hop”, another
+“hip-hop” and a third “Rap”, that’s three genres. Its answer to generated playlists is smart
+playlists: rules you write yourself, in a file.</p>
+<p>vibemusic starts by understanding your library. It maps all those spellings onto one genre tree,
+with sub-genres under their parents, so post-punk counts as punk and rock as well. Tags are
+cross-checked against MusicBrainz and Deezer, so an album with a vague or missing genre still ends
+up in the right place. Then it builds a playlist for each genre you have enough of:</p>
+<ul>
+<li><strong>the tracks people actually know first</strong>, using popularity from Deezer and Apple, plus your
+own plays and likes;</li>
+<li><strong>a few tracks from each artist</strong>, spaced out so nobody plays twice in a row;</li>
+<li><strong>reshuffled every week</strong>, so a genre you know still sounds a little different;</li>
+<li><strong>no near-duplicates</strong>: if nearly all your rock is indie rock, you get one playlist, not two
+copies.</li>
+</ul>
+<p>Each one gets a generated cover from its own albums. Alongside them, every artist with enough
+tracks gets a <strong>“This is”</strong> playlist of their best-known tracks that you own, with a cover drawn
+in the colours of their newest album. Open the app on any day and there’s something new to play.</p>
+<div class="shots" data-astro-cid-xftgjkdt><figure class="shot" data-astro-cid-aatdr2li><img src="/meet-vibemusic/genre-playlists.webp" alt="Genre playlists with their generated covers" loading="lazy" decoding="async" data-astro-cid-aatdr2li></figure></div>
+<p>An artist’s “This is” playlist lives on their page: the top five become a <strong>Popular</strong> list next to
+its cover, and <strong>Similar in your library</strong> suggests related artists you actually have.</p>
+<div class="shots" data-astro-cid-xftgjkdt><figure class="shot" data-astro-cid-aatdr2li><img src="/meet-vibemusic/artist.webp" alt="An artist page with its Popular tracks and &quot;This is&quot; playlist" loading="lazy" decoding="async" data-astro-cid-aatdr2li></figure></div>
+<h2 id="your-collection-across-the-years">Your collection, across the years</h2>
+<p>The timeline lays out your albums by the year they came out, one lane per artist. Who was busy
+when, which years are crowded, where the gaps are: you see the shape of a whole collection at
+once, and every cover is one click from playing.</p>
+<div class="shots" data-astro-cid-xftgjkdt><figure class="shot" data-astro-cid-aatdr2li><video src="/meet-vibemusic/timeline.mp4" poster="/meet-vibemusic/timeline.webp" aria-label="Moving through the timeline" autoplay muted loop playsinline preload="metadata" data-astro-cid-aatdr2li></video></figure></div>
+<h2 id="share-anything-with-a-link">Share anything, with a link</h2>
+<p>Right-click an album, a playlist or a single track and vibemusic copies a link. Whoever you send
+it to can listen in their browser, no account needed, on a page that takes its colours from the
+cover. Paste it into a chat and the preview shows the name, the number of tracks and the cover.</p>
+<div class="shots" data-astro-cid-xftgjkdt><figure class="shot" data-astro-cid-aatdr2li><video src="/meet-vibemusic/sharing.mp4" poster="/meet-vibemusic/sharing.webp" aria-label="Sharing an album from its context menu" autoplay muted loop playsinline preload="metadata" data-astro-cid-aatdr2li></video></figure><figure class="shot phone" data-astro-cid-aatdr2li><img src="/meet-vibemusic/share-phone.webp" alt="The shared album playing on a phone, without an account" loading="lazy" decoding="async" data-astro-cid-aatdr2li></figure></div>
+<h2 id="every-screen-is-a-remote">Every screen is a remote</h2>
+<p>Every open vibemusic on your account knows about the others. Start music on the computer that’s
+connected to the speakers, then pause, skip or add to the queue from your phone. Or move playback
+from one device to the other and carry on from the same second.</p>
+<div class="shots" data-astro-cid-xftgjkdt><figure class="shot" data-astro-cid-aatdr2li><video src="/meet-vibemusic/remote.mp4" poster="/meet-vibemusic/remote.webp" aria-label="A phone controlling playback on a desktop" autoplay muted loop playsinline preload="metadata" data-astro-cid-aatdr2li></video></figure></div>
+<h2 id="fast-with-gestures-that-feel-natural">Fast, with gestures that feel natural</h2>
+<p>Your whole library lives in the browser, so search, filters and sorting answer with every
+keystroke, whether you have five hundred tracks or fifty thousand. Playback is gapless, and your
+queue follows you between devices. On a trackpad, swipe to bring in the queue or resize the
+sidebar; on a phone, pull down to close the player and press and hold for options.</p>
+<h2 id="try-it">Try it</h2>
+<p>vibemusic runs with Docker next to Navidrome, and a setup script does most of the work: it asks
+a few questions, starts everything, and the first visit creates your account. Pick the guide that
+matches what you have:</p>
+<ul>
+<li><strong>No Navidrome yet:</strong> a
+<a href="https://github.com/Awethon/vibemusic/blob/main/docs/install-new.md">new setup with its own Navidrome</a>,
+which reads your music folder without changing it.</li>
+<li><strong>A Navidrome you already run:</strong> install vibemusic
+<a href="https://github.com/Awethon/vibemusic/blob/main/docs/install-existing-navidrome.md">next to your Navidrome</a>
+and sign in with your Navidrome account.</li>
+<li><strong>One compose file for all your services:</strong>
+<a href="https://github.com/Awethon/vibemusic/blob/main/docs/install-own-compose.md">add two services to it</a>.</li>
+<li><strong>Your own domain or reverse proxy:</strong> put it
+<a href="https://github.com/Awethon/vibemusic/blob/main/docs/reverse-proxy.md">behind Caddy, nginx or a Cloudflare Tunnel</a>.</li>
+</ul>
+<p>It’s early days. Expect rough edges and breaking changes, and please tell me what feels off in the
+<a href="https://github.com/Awethon/vibemusic/issues">issue tracker</a>. The whole project, every line of code
+and every page of its docs, was written by AI, with me deciding what to build and how it should
+feel. It’s licensed under the AGPL, and the source is on
+<a href="https://github.com/Awethon/vibemusic">GitHub</a>.</p><footer data-astro-cid-g5songws><a class="back" href="/posts/" data-astro-cid-g5songws>&larr; All posts</a><a class="edit" href="https://github.com/Awethon/awethon.github.io/blob/master/src/content/posts/meet-vibemusic.mdx" data-astro-cid-g5songws>Suggest changes</a></footer></article></main><footer data-astro-cid-jo6i4kqk><div class="wrap inner" data-astro-cid-jo6i4kqk>&copy; 2026 Aleksey Polovinkin</div></footer></div></body></html>
